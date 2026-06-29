@@ -419,6 +419,9 @@ git commit -m "session-21: constraints as guardrails"</code></pre>
   function clearFeedback(question) {
     question.querySelectorAll('.quiz-option').forEach((option) => {
       option.classList.remove('selected', 'correct', 'wrong');
+      option.classList.add('locked');
+      const input = option.querySelector('input');
+      if (input) input.disabled = true;
       const existing = option.querySelector('.quiz-feedback');
       if (existing) existing.remove();
     });
@@ -436,6 +439,11 @@ git commit -m "session-21: constraints as guardrails"</code></pre>
   document.querySelectorAll('.quiz-question').forEach((question) => {
     question.querySelectorAll('.quiz-option').forEach((option) => {
       option.addEventListener('click', () => {
+        if (question.dataset.locked === 'true') {
+          return;
+        }
+
+        question.dataset.locked = 'true';
         clearFeedback(question);
 
         const selectedLetter = option.dataset.option;
@@ -452,6 +460,12 @@ git commit -m "session-21: constraints as guardrails"</code></pre>
         }
 
         setFeedback(option, isCorrect, explanation, correctLetter);
+        question.querySelectorAll('.quiz-option').forEach((lockedOption) => {
+          const lockedInput = lockedOption.querySelector('input');
+          if (lockedInput) lockedInput.disabled = true;
+          lockedOption.style.pointerEvents = 'none';
+        });
+        option.style.pointerEvents = 'auto';
       });
     });
   });

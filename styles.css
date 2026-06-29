@@ -642,6 +642,11 @@ pre {
   transform: translateY(-1px);
 }
 
+.quiz-option.locked {
+  cursor: not-allowed;
+  opacity: 0.82;
+}
+
 .quiz-option input {
   margin-right: 10px;
 }
