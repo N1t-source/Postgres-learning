@@ -23,20 +23,77 @@
     <div class="container">
       <div class="section-head">
         <div>
-          <span class="badge badge-accent">Active lessons</span>
+          <span class="badge badge-accent">Full path</span>
           <h1>Session index</h1>
         </div>
-        <p>Phase 1 intentionally exposes only Session 01. Later sessions stay locked until the first lesson passes review.</p>
+        <p>Use this page as the curriculum map. Session 01 is the entry point, and the rest of the sequence is now visible instead of hidden behind a phase-1 stub.</p>
       </div>
 
-      <div class="nav-grid">
-        <a class="nav-card" href="session-01/index.html">
-          <div class="nav-card-title">Session 01</div>
-          <div class="nav-card-desc">Relation theory, psql, \d commands, first table, INSERT, SELECT.</div>
-        </a>
-        <div class="nav-card">
-          <div class="nav-card-title">Session 02+</div>
-          <div class="nav-card-desc">Locked until Session 01 is approved.</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Layer</th>
+              <th>Sessions</th>
+              <th>Focus</th>
+              <th>Jump In</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>01-11</td>
+              <td>Foundations</td>
+              <td><a href="session-01/index.html">Open Session 01</a></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>12-20</td>
+              <td>Internals</td>
+              <td><a href="session-12/index.html">Open a later session</a></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>21-24</td>
+              <td>Concurrency</td>
+              <td><a href="session-21/index.html">Open a later session</a></td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>25-29</td>
+              <td>Schema Design</td>
+              <td><a href="session-25/index.html">Open a later session</a></td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>30-37</td>
+              <td>Operations</td>
+              <td><a href="session-30/index.html">Open a later session</a></td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>38-39</td>
+              <td>Performance</td>
+              <td><a href="session-38/index.html">Open a later session</a></td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>40</td>
+              <td>Production</td>
+              <td><a href="session-40/index.html">Open Session 40</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid-2 section">
+        <div class="card">
+          <h2>How to read this page</h2>
+          <p>Each session page teaches one concept deeply. The session index shows the full chain so the learner understands where the current lesson sits in the larger system.</p>
+        </div>
+        <div class="card">
+          <h2>Cross-check</h2>
+          <p>The lab index carries the same sequence with lab objectives, while the syllabus explains why each layer exists before the learner moves forward.</p>
         </div>
       </div>
     </div>
