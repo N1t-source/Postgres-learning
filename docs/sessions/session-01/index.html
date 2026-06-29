@@ -396,6 +396,23 @@ FROM authors;</code></pre>
           <p><strong>Proof:</strong> the learner can create a table, insert a row, and inspect the relation with psql.</p>
         </div>
       </section>
+
+      <section class="section" id="next-session" hidden>
+        <div class="section-head">
+          <div>
+            <span class="badge badge-good">Continue</span>
+            <h2>Next Session</h2>
+          </div>
+          <p>Finish the post-quiz, then move straight into the next lesson.</p>
+        </div>
+        <div class="card">
+          <p>When you are done here, open Session 02 and keep the bookstore sequence moving.</p>
+          <div class="hero-actions">
+            <a class="button" href="../session-02/index.html">Go to Session 02</a>
+            <a class="button-secondary" href="../index.html">Back to Session Index</a>
+          </div>
+        </div>
+      </section>
     </div>
   </main>
 
@@ -480,6 +497,7 @@ FROM authors;</code></pre>
       'breaks-if-removed',
       'what-was-learned'
     ].map((id) => document.getElementById(id));
+    const nextSession = document.getElementById('next-session');
 
     document.getElementById('pre-quiz-check').addEventListener('click', () => {
       const result = scoreQuiz(document.getElementById('pre-quiz-shell'));
@@ -501,7 +519,19 @@ FROM authors;</code></pre>
     document.getElementById('post-quiz-check').addEventListener('click', () => {
       const result = scoreQuiz(document.getElementById('post-quiz-shell'));
       const status = document.getElementById('post-quiz-status');
-      status.textContent = 'Post-quiz score: ' + result.score + '/5. Use the reflection section to capture the remaining gaps.';
+      if (result.answered < 5) {
+        status.textContent = 'You have answered ' + result.answered + '/5. Finish all five post-quiz questions to unlock the next session link.';
+        return;
+      }
+
+      if (result.score >= 4) {
+        status.textContent = 'Post-quiz passed: ' + result.score + '/5. The next session link is now unlocked.';
+        if (nextSession) {
+          nextSession.hidden = false;
+        }
+      } else {
+        status.textContent = 'Post-quiz score: ' + result.score + '/5. Review the lesson and try again before moving on.';
+      }
     });
   </script>
 </body>
