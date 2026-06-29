@@ -1,9 +1,28 @@
-# Postgres Learning Environment
+# Postgres Learning Operating System
 
-A 40-session PostgreSQL curriculum in the RL-AI documentation style.
+Phase 1 establishes the educational shell for a deep PostgreSQL curriculum built for experienced engineers.
 
-Serve locally with:
+What this repository is:
+- a static documentation system
+- a prerequisite-first curriculum
+- a single growing bookstore project
+- a phase-gated set of lesson pages
+
+What it is not:
+- a tutorial dump
+- an ORM demo
+- a GUI-first workflow
+- a blog or note archive
+
+Start here:
+1. Open `docs/index.html`
+2. Review `docs/syllabus/index.html`
+3. Study `docs/sessions/session-01/index.html`
+
+Local Postgres:
 
 ```bash
-python -m http.server 6969 --directory outputs/postgres-learning
+docker compose up -d
 ```
+
+The learning flow uses `psql`, plain SQL, and static HTML. PostgreSQL 17 is the only database engine assumed in phase 1.

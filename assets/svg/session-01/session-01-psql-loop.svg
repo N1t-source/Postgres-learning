@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 370" width="680" height="370" role="img" aria-labelledby="title desc">
+  <title id="title">psql loop diagram</title>
+  <desc id="desc">A loop diagram for connect, inspect, define, insert, and select.</desc>
+  <rect width="680" height="370" fill="#111111"/>
+  <circle cx="340" cy="185" r="112" fill="none" stroke="#ff5ca8" stroke-width="2"/>
+  <circle cx="340" cy="185" r="72" fill="none" stroke="#353535" stroke-width="1.5"/>
+  <g fill="#ffffff" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="14">
+    <text x="307" y="53">CONNECT</text>
+    <text x="502" y="189">INSPECT</text>
+    <text x="292" y="332">DEFINE</text>
+    <text x="96" y="189">INSERT</text>
+  </g>
+  <g fill="#bfbfbf" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11">
+    <text x="301" y="73">psql -d bookstore</text>
+    <text x="486" y="209">\d authors</text>
+    <text x="281" y="352">CREATE TABLE</text>
+    <text x="90" y="209">INSERT INTO</text>
+  </g>
+  <g stroke="#ff5ca8" stroke-width="2" fill="none">
+    <path d="M340 73 V97"/>
+    <path d="M455 185 H483"/>
+    <path d="M340 297 V273"/>
+    <path d="M197 185 H226"/>
+    <path d="M396 116 C430 134, 446 152, 456 176"/>
+    <path d="M472 215 C448 246, 420 268, 389 278"/>
+    <path d="M291 282 C257 269, 225 242, 208 216"/>
+    <path d="M187 157 C204 130, 225 109, 254 96"/>
+  </g>
+</svg>

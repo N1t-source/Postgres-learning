@@ -3,39 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Architecture — Postgres Learning</title>
-  <link rel="stylesheet" href="../../styles.css" />
+  <title>Architecture - Postgres Learning</title>
+  <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
-
-  <nav>
-    <div class="container nav-row">
-      <a class="brand " href="../../index.html">⌘ Postgres Learning</a>
-      <a class="" href="../../docs/syllabus/index.html">Syllabus</a><a class="" href="../../docs/sessions/index.html">Sessions</a><a class="" href="../../docs/quizzes/index.html">Quizzes</a><a class="" href="../../docs/labs/index.html">Labs</a><a class="active" href="../../docs/architecture/index.html">Architecture</a><a class="" href="../../docs/notes/index.html">Notes</a><a class="" href="../../docs/commits/index.html">Commits</a><a class="" href="../../docs/prompts/index.html">Prompts</a>
+  <main>
+    <div class="container">
+      <div class="placeholder">
+        <span class="badge badge-locked">Placeholder</span>
+        <h1>Architecture notes will be filled after Session 01 lands.</h1>
+        <p>This page is reserved for deeper design notes about the curriculum system, layer unlocks, and visual standards.</p>
+      </div>
     </div>
-  </nav>
-<main>
-  <div class="container">
-
-    <h1>Architecture Decisions</h1>
-    <div class="card">
-      <p><strong>Decision:</strong> Static HTML docs are the source of truth.</p>
-      <p><strong>Why:</strong> The site should be readable locally without a build step.</p>
-    </div>
-    <div class="card">
-      <p><strong>Decision:</strong> Curriculum follows a strict dependency order.</p>
-      <p><strong>Why:</strong> Postgres concepts build on each other, especially queries, modeling, and transactions.</p>
-    </div>
-    <div class="card">
-      <p><strong>Decision:</strong> pgAdmin is the local learning interface.</p>
-      <p><strong>Why:</strong> The user already has pgAdmin installed and wants practical database work.</p>
-    </div>
-    <div class="card">
-      <p><strong>Decision:</strong> Prompt history is logged in <code>docs/prompts</code>.</p>
-      <p><strong>Why:</strong> Each session should preserve the instructional context that created it.</p>
-    </div>
-  
-  </div>
-</main>
+  </main>
 </body>
 </html>

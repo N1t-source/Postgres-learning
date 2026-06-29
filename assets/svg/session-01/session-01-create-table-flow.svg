@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 370" width="680" height="370" role="img" aria-labelledby="title desc">
+  <title id="title">Create table flow diagram</title>
+  <desc id="desc">A flow from a CREATE TABLE statement into catalog state and inspection.</desc>
+  <rect width="680" height="370" fill="#111111"/>
+  <g fill="none" stroke="#ff5ca8" stroke-width="2">
+    <rect x="32" y="106" width="176" height="158" rx="18"/>
+    <rect x="252" y="106" width="176" height="158" rx="18"/>
+    <rect x="472" y="106" width="176" height="158" rx="18"/>
+    <path d="M208 185 H252"/>
+    <path d="M428 185 H472"/>
+  </g>
+  <g fill="#ffffff" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="14">
+    <text x="58" y="138">CREATE TABLE</text>
+    <text x="280" y="138">CATALOG STATE</text>
+    <text x="510" y="138">\d TABLE</text>
+  </g>
+  <g fill="#bfbfbf" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11">
+    <text x="58" y="164">definition text</text>
+    <text x="58" y="184">columns + types</text>
+    <text x="58" y="204">primary key</text>
+    <text x="278" y="164">visible to server</text>
+    <text x="278" y="184">stored in catalog</text>
+    <text x="278" y="204">survives disconnect</text>
+    <text x="500" y="164">inspect metadata</text>
+    <text x="500" y="184">confirm shape</text>
+    <text x="500" y="204">reason about changes</text>
+  </g>
+</svg>

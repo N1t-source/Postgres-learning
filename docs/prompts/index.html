@@ -3,30 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prompts — Postgres Learning</title>
-  <link rel="stylesheet" href="../../styles.css" />
+  <title>Prompts - Postgres Learning</title>
+  <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
-
   <nav>
     <div class="container nav-row">
-      <a class="brand " href="../../index.html">⌘ Postgres Learning</a>
-      <a class="" href="../../docs/syllabus/index.html">Syllabus</a><a class="" href="../../docs/sessions/index.html">Sessions</a><a class="" href="../../docs/quizzes/index.html">Quizzes</a><a class="" href="../../docs/labs/index.html">Labs</a><a class="" href="../../docs/architecture/index.html">Architecture</a><a class="" href="../../docs/notes/index.html">Notes</a><a class="" href="../../docs/commits/index.html">Commits</a><a class="active" href="../../docs/prompts/index.html">Prompts</a>
+      <a class="nav-link brand" href="../index.html">Postgres Learning</a>
+      <a class="nav-link" href="../syllabus/index.html">Syllabus</a>
+      <a class="nav-link" href="../sessions/session-01/index.html">Session 01</a>
+      <a class="nav-link" href="../session-notes/index.html">Session Notes</a>
+      <a class="nav-link" href="../quizzes/index.html">Quizzes</a>
+      <a class="nav-link" href="../architecture/index.html">Architecture</a>
+      <a class="nav-link active" href="index.html">Prompts</a>
     </div>
   </nav>
-<main>
-  <div class="container">
 
-    <h1>Prompt Log</h1>
-    <div class="card">
-      <p>This log records the prompts used to build the project. Append every new instruction here as the project grows.</p>
+  <main>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="badge badge-accent">Prompt trail</span>
+          <h1>Implementation checkpoints</h1>
+        </div>
+        <p>Phase 1 keeps a short prompt ledger so the curriculum can be resumed without losing the reasoning behind the structure.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Checkpoint</th>
+              <th>Purpose</th>
+              <th>Output</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Architecture pass</td>
+              <td>Reverse engineer the teaching system before writing PostgreSQL content.</td>
+              <td>Layered curriculum, session anatomy, quiz policy, SVG rules.</td>
+            </tr>
+            <tr>
+              <td>Phase 1 shell</td>
+              <td>Lay down the repo's static documentation structure.</td>
+              <td>Landing page, syllabus, session 01, placeholders, shared styles.</td>
+            </tr>
+            <tr>
+              <td>Session 01 design</td>
+              <td>Anchor the first lesson in relation theory and psql usage.</td>
+              <td>Pre-quiz gate, prerequisite concept, table creation lab, visuals.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="prompt-entry">
-      <div class="prompt-meta"><span>#1</span><span>2026-06-29</span><span>Session: Project Initialization</span></div>
-      <div class="prompt-text">Build a 40-session PostgreSQL curriculum site in the RL-AI documentation style, with session pages, quizzes, labs, architecture notes, prompts, and SVG teaching diagrams.</div>
-    </div>
-  
-  </div>
-</main>
+  </main>
 </body>
 </html>
