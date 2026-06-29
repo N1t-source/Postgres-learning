@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Session 36 — Importing and Exporting Data</title>
-  <link rel="stylesheet" href="../../../styles.css" />
+  <link rel="stylesheet" href="../../styles.css" />
 </head>
 <body>
 
@@ -255,14 +255,22 @@
     </div>
     <h2>Lab</h2>
     <div class="card">
-      <div class="alert alert-success"><strong>Lab objective:</strong> Import a CSV of countries into pgAdmin</div>
+      <div class="alert alert-good"><strong>Lab objective:</strong> Import a CSV of countries into pgAdmin</div>
       <p>This is the hands-on checkpoint for the session. Work in small steps, verify every result, and only move forward once the current screen or query output matches the lesson goal.</p>
       <h3>Lab Setup</h3>
       <ul>
-        <li>Open pgAdmin and connect to the local PostgreSQL server.</li>
-        <li>Open the lesson database or schema used in this session.</li>
+        <li>Open psql or the lesson's approved client and connect to PostgreSQL.</li>
+        <li>Open the lesson database used in this session. If it does not exist yet, create it first from the lesson instructions.</li>
         <li>Keep the lesson notes visible so you can compare each step with the prompt.</li>
       </ul>
+      <h3>Starter SQL</h3>
+      <p>If you are new to the lesson object, this is the shape of a table creation step:</p>
+      <pre><code>CREATE TABLE lesson_notes (
+  id SERIAL PRIMARY KEY,
+  title TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);</code></pre>
+      <p class="muted">The exact table name changes by session. The point is to see how a table is defined before you query or modify it.</p>
       <h3>Step-by-Step</h3>
       <ol>
         <li>Read the objective out loud and restate it in plain English.</li>
