@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Session 02 — Reading Tables Like a Pro</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <nav>
+    <div class="container nav-row">
+      <a class="brand " href="/index.html">⌘ Postgres Learning</a>
+      <a class="" href="/docs/syllabus/index.html">Syllabus</a><a class="active" href="/docs/sessions/index.html">Sessions</a><a class="" href="/docs/quizzes/index.html">Quizzes</a><a class="" href="/docs/labs/index.html">Labs</a><a class="" href="/docs/architecture/index.html">Architecture</a><a class="" href="/docs/notes/index.html">Notes</a><a class="" href="/docs/commits/index.html">Commits</a><a class="" href="/docs/prompts/index.html">Prompts</a>
+    </div>
+  </nav>
+<main>
+  <div class="container">
+
+    <div class="session-head">
+      <span class="badge badge-layer">Session 02</span>
+      <span class="badge badge-current">Foundations</span>
+      <span class="session-meta">Estimated time: one hour</span>
+    </div>
+    <h1>Reading Tables Like a Pro</h1>
+    <p class="subtitle">Understand how rows and columns store data and inspect a table before querying it.</p>
+    <div class="alert alert-info"><strong>Focus:</strong> Tables, rows, columns, data types, table inspection</div>
+    <h2>Learning Objective</h2>
+    <div class="card">
+      <ul>
+        <li>Understand how rows and columns store data and inspect a table before querying it.</li>
+        <li>Explain the concept in plain language.</li>
+        <li>Complete the lab without skipping steps.</li>
+        <li>Know what would break if we skipped this session.</li>
+      </ul>
+    </div>
+    <h2>One-Hour Flow</h2>
+    <div class="card">
+      <ol>
+        <li><strong>0-10 min:</strong> pre-quiz and warm-up discussion.</li>
+        <li><strong>10-25 min:</strong> concept explanation and visual walkthrough.</li>
+        <li><strong>25-45 min:</strong> lab in pgAdmin with live edits and retries.</li>
+        <li><strong>45-55 min:</strong> review mistakes, compare answers, and reinforce the mental model.</li>
+        <li><strong>55-60 min:</strong> post-quiz and commit checkpoint.</li>
+      </ol>
+    </div>
+    
+    <h2>Pre-quiz</h2>
+    <div class="card">
+      <p>Answer these before the concept section. We are checking starting understanding, not perfection.</p>
+      <div class="quiz" data-quiz-mode="pre" data-session="2">
+        
+        <div class="quiz-question" data-answer="b" data-explanation="B is correct because the session is centered on Tables, rows, columns, data types, table inspection.">
+          <div class="question-num">Question 1 of 5</div>
+          <p>What best describes the topic of Reading Tables Like a Pro?</p>
+          
+            <label class="quiz-option" data-option="a">
+              <input type="radio" name="pre-2-0" />
+              <span>A. Rows, columns, and data types</span>
+            </label>
+            <label class="quiz-option" data-option="b">
+              <input type="radio" name="pre-2-0" />
+              <span>B. Tables, rows, columns, data types, table inspection</span>
+            </label>
+            <label class="quiz-option" data-option="c">
+              <input type="radio" name="pre-2-0" />
+              <span>C. Create a simple countries table and inspect its columns</span>
+            </label>
+            <label class="quiz-option" data-option="d">
+              <input type="radio" name="pre-2-0" />
+              <span>D. Session 01</span>
+            </label>
+        </div>
+        <div class="quiz-question" data-answer="c" data-explanation="C is correct because the lab is to Create a simple countries table and inspect its columns.">
+          <div class="question-num">Question 2 of 5</div>
+          <p>Which lab action would you expect in this session?</p>
+          
+            <label class="quiz-option" data-option="a">
+              <input type="radio" name="pre-2-1" />
+              <span>A. Understand how rows and columns store data and inspect a table before querying it.</span>
+            </label>
+            <label class="quiz-option" data-option="b">
+              <input type="radio" name="pre-2-1" />
+              <span>B. Tables, rows, columns, data types, table inspection</span>
+            </label>
+            <label class="quiz-option" data-option="c">
+              <input type="radio" name="pre-2-1" />
+              <span>C. Create a simple countries table and inspect its columns</span>
+            </label>
+            <label class="quiz-option" data-option="d">
+              <input type="radio" name="pre-2-1" />
+              <span>D. Session 01</span>
+            </label>
+        </div>
+        <div class="quiz-question" data-answer="d" data-explanation="D is correct because this lesson builds on Session 01.">
+          <div class="question-num">Question 3 of 5</div>
+          <p>What earlier idea supports this lesson most directly?</p>
+          
+            <label class="quiz-option" data-option="a">
+              <input type="radio" name="pre-2-2" />
+              <span>A. Understand how rows and columns store data and inspect a table before querying it.</span>
+            </label>
+            <label class="quiz-option" data-option="b">
+              <input type="radio" name="pre-2-2" />
+              <span>B. Tables, rows, columns, data types, table inspection</span>
+            </label>
+            <label class="quiz-option" data-option="c">
+              <input type="radio" name="pre-2-2" />
+              <span>C. Create a simple countries table and inspect its columns</span>
+            </label>
+            <label class="quiz-option" data-option="d">
+              <input type="radio" name="pre-2-2" />
+              <span>D. Session 01</span>
+            </label>
+        </div>
+        <div class="quiz-question" data-answer="a" data-explanation="A is correct because the quiz focus is Rows, columns, and data types.">
+          <div class="question-num">Question 4 of 5</div>
+          <p>Which detail should you watch most closely in the quiz?</p>
+          
+            <label class="quiz-option" data-option="a">
+              <input type="radio" name="pre-2-3" />
+              <span>A. Rows, columns, and data types</span>
+            </label>
+            <label class="quiz-option" data-option="b">
+              <input type="radio" name="pre-2-3" />
+              <span>B. Tables, rows, columns, data types, table inspection</span>
+            </label>
+            <label class="quiz-option" data-option="c">
+              <input type="radio" name="pre-2-3" />
+              <span>C. Create a simple countries table and inspect its columns</span>
+            </label>
+            <label class="quiz-option" data-option="d">
+              <input type="radio" name="pre-2-3" />
+              <span>D. Session 01</span>
+            </label>
+        </div>
+        <div class="quiz-question" data-answer="a" data-explanation="A is correct because the session objective is the end-state you are aiming to explain.">
+          <div class="question-num">Question 5 of 5</div>
+          <p>What should you be able to explain by the end of this session?</p>
+          
+            <label class="quiz-option" data-option="a">
+              <input type="radio" name="pre-2-4" />
+              <span>A. Understand how rows and columns store data and inspect a table before querying it.</span>
+            </label>
+            <label class="quiz-option" data-option="b">
+              <input type="radio" name="pre-2-4" />
+              <span>B. Tables, rows, columns, data types, table inspection</span>
+            </label>
+            <label class="quiz-option" data-option="c">
+              <input type="radio" name="pre-2-4" />
+              <span>C. Create a simple countries table and inspect its columns</span>
+            </label>
+            <label class="quiz-option" data-option="d">
+              <input type="radio" name="pre-2-4" />
+              <span>D. Session 01</span>
+            </label>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <h2>Concept</h2>
+    <div class="card">
+      <p><strong>Underlying idea:</strong> Tables, rows, columns, data types, table inspection</p>
+      <p>This lesson follows the same documentation-first format as RL-AI: pre-quiz, concept, lab, commit checkpoint, and post-quiz.</p>
+      <p>Use pgAdmin locally to practice the SQL directly against a database you own.</p>
+    </div>
+    <h2>Schema Story</h2>
+    <div class="card">
+      
+    <p><strong>Fictional database:</strong> We use one shared practice schema called <code>world_learning</code>.</p>
+    <ul>
+      <li><code>countries(id, name, region, population, capital, region_id)</code></li>
+      <li><code>regions(id, name)</code></li>
+      <li><code>cities(id, name, country_id)</code></li>
+      <li><code>languages(id, name)</code></li>
+      <li><code>country_languages(country_id, language_id)</code></li>
+    </ul>
+      <p class="muted">The exact table names change a little by lesson, but they all live in the same fictional database so the course stays coherent.</p>
+    </div>
+    <h2>Practice Dataset</h2>
+    <div class="card">
+      <p>Use these sample rows when you picture the query in your head. The examples are tiny on purpose so you can reason about every result.</p>
+      
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Table</th><th>Sample Columns</th><th>Example Row</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>countries</code></td><td>id, name, region, population, capital, region_id</td><td>1 | Canada | Americas | 38000000 | Ottawa | 1</td></tr>
+          <tr><td><code>regions</code></td><td>id, name</td><td>1 | Americas</td></tr>
+          <tr><td><code>cities</code></td><td>id, name, country_id</td><td>1 | Ottawa | 1</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+    <div class="diagram-wrap">
+      <img src="/assets/svg/sql-01-db-table-row-column.svg" alt="Reading Tables Like a Pro diagram" />
+    </div>
+    <h2>Diagram Example</h2>
+    <div class="card">
+      <p>This diagram shows the main idea for Session 02: Tables, rows, columns, data types, table inspection. Read it left to right, then connect each part back to the lab.</p>
+      <p>The colors and arrows are there to show flow, identity, or dependency. Use them to explain the lesson out loud before the lab.</p>
+    </div>
+    <h2>Big Idea</h2>
+    <div class="card">
+      <p>Understand how rows and columns store data and inspect a table before querying it.</p>
+      <p>When you work through this topic, do not think of it as a single trick. Think of it as part of how a database team reasons about data shape, correctness, and readable queries.</p>
+      <p>For this lesson, the thing to keep repeating is: <strong>Tables, rows, columns, data types, table inspection</strong>.</p>
+    </div>
+    <h2>Worked Walkthrough</h2>
+    <div class="card">
+      <ol>
+        <li>Look at the problem first, not the syntax.</li>
+        <li>Identify the data object you are touching, such as a table, row, filter, or relationship.</li>
+        <li>Write the smallest possible SQL or database action that proves the idea.</li>
+        <li>Inspect the result before you move on, even if it looks obvious.</li>
+      </ol>
+    </div>
+    <h2>SQL Examples</h2>
+    <div class="card">
+      <pre><code>CREATE TABLE countries (id SERIAL PRIMARY KEY, name TEXT, region TEXT);</code></pre>
+      <pre><code>SELECT * FROM countries LIMIT 3;</code></pre>
+      <p class="muted">These are starter examples. Change the table name, filter, or output column and predict what happens before you run them.</p>
+    </div>
+    <h2>Common Mistakes</h2>
+    <div class="card">
+      <ul>
+        <li>Using the right syntax but the wrong mental model.</li>
+        <li>Changing too many things at once and losing track of what changed the result.</li>
+        <li>Skipping the check step and assuming the first answer is correct.</li>
+      </ul>
+    </div>
+    <h2>Teaching Notes</h2>
+    <div class="card">
+      <p>Say the concept out loud in plain English before you touch the keyboard.</p>
+      <p>Ask yourself which part is the data, which part is the rule, and which part is the result.</p>
+      <p>If the lesson feels easy, slow down and explain why it works. That is where the understanding lives.</p>
+    </div>
+    <h2>Lab</h2>
+    <div class="card">
+      <div class="alert alert-success"><strong>Lab objective:</strong> Create a simple countries table and inspect its columns</div>
+      <ol>
+        <li>Open pgAdmin and connect to the local PostgreSQL server.</li>
+        <li>Create or open the sample database for this lesson.</li>
+        <li>Run the SQL step by step and read the output carefully.</li>
+        <li>Write down anything unexpected before moving on.</li>
+        <li>Try one small variation after the first successful run.</li>
+        <li>Explain the result to yourself before you leave the lab section.</li>
+      </ol>
+    </div>
+    <h2>Extra Practice</h2>
+    <div class="card">
+      <ul>
+        <li>Redo the lab without looking at the instructions.</li>
+        <li>Change one value or condition and predict the new output first.</li>
+        <li>Tell the story of the lesson in one minute using the words Tables, rows, columns, data types, table inspection.</li>
+      </ul>
+    </div>
+    <h2>Expected Files</h2>
+    <div class="card">
+      <ul>
+        <li><code>docs/sessions/session-02/index.html</code></li>
+        <li><code>docs/labs/index.html</code></li>
+        <li><code>docs/quizzes/index.html</code></li>
+      </ul>
+    </div>
+    <h2>Commit Checkpoint</h2>
+    <div class="card">
+      <pre><code>git add .
+git commit -m "session-02: reading tables like a pro"</code></pre>
+    </div>
+    
+    <h2>Post-quiz</h2>
+    <div class="card">
+      <p>Retake the same ideas after the lab. A score below 80% means we revisit the lesson.</p>
+      <div class="quiz" data-quiz-mode="post" data-session="2">
+        
+        <div class="quiz-question" data-answer="b" data-explanation="B is correct because Tables, rows, columns, data types, table inspection is the core idea taught in this session.">
+          <div class="question-num">Question 1 of 5</div>
+          <p>Can you explain Tables, rows, columns, data types, table inspection?</p>
+          
+            <label class="quiz-option" data-option="a">
+              <input type="radio" name="post-2-0" />
+              <span>A. Understand how rows and columns store data and inspect a table before querying it.</span>
+            </label>
+            <label class="quiz-option" data-option="b">
+              <input type="radio" name="post-2-0" />
+              <span>B. Tables, rows, columns, data types, table inspection</span>
+            </label>
+            <label class="quiz-option" data-option="c">
+              <input type="radio" name="post-2-0" />
+              <span>C. Create a simple countries table and inspect its columns</span>
+            </label>
+            <label class="quiz-option" data-option="d">
+              <input type="radio" name="post-2-0" />
+              <span>D. Rows, columns, and data types</span>
+            </label>
+        </div>
+        <div class="quiz-question" data-answer="c" data-explanation="C is correct because the lab objective is to Create a simple countries table and inspect its columns.">
+          <div class="question-num">Question 2 of 5</div>
+          <p>Can you describe the lab goal from memory?</p>
+          
+            <label class="quiz-option" data-option="a">
+              <input type="radio" name="post-2-1" />
+              <span>A. Understand how rows and columns store data and inspect a table before querying it.</span>
+            </label>
+            <label class="quiz-option" data-option="b">
+              <input type="radio" name="post-2-1" />
+              <span>B. Tables, rows, columns, data types, table inspection</span>
+            </label>
+            <label class="quiz-option" data-option="c">
+              <input type="radio" name="post-2-1" />
+              <span>C. Create a simple countries table and inspect its columns</span>
+            </label>
+            <label class="quiz-option" data-option="d">
+              <input type="radio" name="post-2-1" />
+              <span>D. Rows, columns, and data types</span>
+            </label>
+        </div>
+        <div class="quiz-question" data-answer="b" data-explanation="B is correct because the concept definition captures the syntax or object we are learning.">
+          <div class="question-num">Question 3 of 5</div>
+          <p>Which syntax or database object matters most here?</p>
+          
+            <label class="quiz-option" data-option="a">
+              <input type="radio" name="post-2-2" />
+              <span>A. Understand how rows and columns store data and inspect a table before querying it.</span>
+            </label>
+            <label class="quiz-option" data-option="b">
+              <input type="radio" name="post-2-2" />
+              <span>B. Tables, rows, columns, data types, table inspection</span>
+            </label>
+            <label class="quiz-option" data-option="c">
+              <input type="radio" name="post-2-2" />
+              <span>C. Create a simple countries table and inspect its columns</span>
+            </label>
+            <label class="quiz-option" data-option="d">
+              <input type="radio" name="post-2-2" />
+              <span>D. Rows, columns, and data types</span>
+            </label>
+        </div>
+        <div class="quiz-question" data-answer="d" data-explanation="D is correct because the quiz focus names the thing that tends to break if the lesson is missed: Rows, columns, and data types.">
+          <div class="question-num">Question 4 of 5</div>
+          <p>What breaks if this concept is misunderstood?</p>
+          
+            <label class="quiz-option" data-option="a">
+              <input type="radio" name="post-2-3" />
+              <span>A. Understand how rows and columns store data and inspect a table before querying it.</span>
+            </label>
+            <label class="quiz-option" data-option="b">
+              <input type="radio" name="post-2-3" />
+              <span>B. Tables, rows, columns, data types, table inspection</span>
+            </label>
+            <label class="quiz-option" data-option="c">
+              <input type="radio" name="post-2-3" />
+              <span>C. Create a simple countries table and inspect its columns</span>
+            </label>
+            <label class="quiz-option" data-option="d">
+              <input type="radio" name="post-2-3" />
+              <span>D. Rows, columns, and data types</span>
+            </label>
+        </div>
+        <div class="quiz-question" data-answer="a" data-explanation="A is correct because the session objective summarizes the next skill you should be able to carry forward.">
+          <div class="question-num">Question 5 of 5</div>
+          <p>What is the next idea this session prepares you for?</p>
+          
+            <label class="quiz-option" data-option="a">
+              <input type="radio" name="post-2-4" />
+              <span>A. Understand how rows and columns store data and inspect a table before querying it.</span>
+            </label>
+            <label class="quiz-option" data-option="b">
+              <input type="radio" name="post-2-4" />
+              <span>B. Tables, rows, columns, data types, table inspection</span>
+            </label>
+            <label class="quiz-option" data-option="c">
+              <input type="radio" name="post-2-4" />
+              <span>C. Create a simple countries table and inspect its columns</span>
+            </label>
+            <label class="quiz-option" data-option="d">
+              <input type="radio" name="post-2-4" />
+              <span>D. Rows, columns, and data types</span>
+            </label>
+        </div>
+      </div>
+    </div>
+    <h2>Reflection</h2>
+    <div class="card">
+      <ol>
+        <li>What changed in your understanding after the lab?</li>
+        <li>What would fail if we used the wrong syntax here?</li>
+        <li>Which later session depends on this one?</li>
+        <li>What part still feels fuzzy enough to revisit once more?</li>
+      </ol>
+    </div>
+    <h2>What Breaks If We Skip This?</h2>
+    <div class="card">
+      <p>If this concept is shaky, later lessons in joins, transactions, performance, or schema design become much harder to reason about.</p>
+    </div>
+    <h2>What We Learned</h2>
+    <div class="card">
+      <p><strong>SQL/Postgres concept mastered:</strong> Tables, rows, columns, data types, table inspection</p>
+      <p><strong>Next session:</strong> SELECT and Basic Projection</p>
+    </div>
+    
+<script>
+  function clearFeedback(question) {
+    question.querySelectorAll('.quiz-option').forEach((option) => {
+      option.classList.remove('selected', 'correct', 'wrong');
+      const existing = option.querySelector('.quiz-feedback');
+      if (existing) existing.remove();
+    });
+  }
+
+  function setFeedback(option, isCorrect, explanation, correctLetter) {
+    const feedback = document.createElement('div');
+    feedback.className = 'quiz-feedback';
+    feedback.textContent = isCorrect
+      ? 'Correct. ' + explanation
+      : 'Not quite. The correct answer is ' + correctLetter.toUpperCase() + '. ' + explanation;
+    option.appendChild(feedback);
+  }
+
+  document.querySelectorAll('.quiz-question').forEach((question) => {
+    question.querySelectorAll('.quiz-option').forEach((option) => {
+      option.addEventListener('click', () => {
+        clearFeedback(question);
+
+        const selectedLetter = option.dataset.option;
+        const correctLetter = question.dataset.answer;
+        const explanation = question.dataset.explanation || '';
+        const isCorrect = selectedLetter === correctLetter;
+
+        option.classList.add('selected');
+        option.classList.add(isCorrect ? 'correct' : 'wrong');
+
+        const correctOption = question.querySelector('.quiz-option[data-option="' + correctLetter + '"]');
+        if (correctOption && correctOption !== option) {
+          correctOption.classList.add('correct');
+        }
+
+        setFeedback(option, isCorrect, explanation, correctLetter);
+      });
+    });
+  });
+</script>
+  
+  </div>
+</main>
+</body>
+</html>

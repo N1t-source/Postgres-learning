@@ -1,0 +1,14 @@
+
+      <svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Normalization diagram">
+        <rect width="1200" height="700" fill="#0b0f14"/>
+        <text x="80" y="100" fill="#93c5fd" font-family="monospace" font-size="30">split repeated facts into related tables</text>
+        <rect x="90" y="190" width="320" height="340" rx="20" fill="#0f172a" stroke="#f87171" stroke-width="3"/>
+        <text x="130" y="245" fill="#ffffff" font-family="monospace" font-size="26">before</text>
+        <text x="130" y="320" fill="#9ca3af" font-family="monospace" font-size="22">country + region + language</text>
+        <text x="130" y="370" fill="#9ca3af" font-family="monospace" font-size="22">repeated text everywhere</text>
+        <rect x="500" y="190" width="600" height="340" rx="20" fill="#0f172a" stroke="#34d399" stroke-width="3"/>
+        <text x="540" y="245" fill="#ffffff" font-family="monospace" font-size="26">after</text>
+        <text x="540" y="320" fill="#9ca3af" font-family="monospace" font-size="22">countries table</text>
+        <text x="540" y="370" fill="#9ca3af" font-family="monospace" font-size="22">regions table</text>
+        <text x="540" y="420" fill="#9ca3af" font-family="monospace" font-size="22">languages table</text>
+      </svg>

@@ -1,0 +1,343 @@
+{
+  "title": "Postgres Learning Environment",
+  "sessions": [
+    {
+      "num": 1,
+      "title": "PostgreSQL and pgAdmin Basics",
+      "concept": "Server, database, schema, query tool, pgAdmin navigation",
+      "lab": "Connect to local PostgreSQL in pgAdmin and run SELECT 1;",
+      "diagram": "sql-01-db-table-row-column.svg"
+    },
+    {
+      "num": 2,
+      "title": "Reading Tables Like a Pro",
+      "concept": "Tables, rows, columns, data types, table inspection",
+      "lab": "Create a simple countries table and inspect its columns",
+      "diagram": "sql-01-db-table-row-column.svg"
+    },
+    {
+      "num": 3,
+      "title": "SELECT and Basic Projection",
+      "concept": "SELECT, column lists, aliases",
+      "lab": "Query country columns with readable aliases",
+      "diagram": "sql-02-select-query-flow.svg"
+    },
+    {
+      "num": 4,
+      "title": "Filtering with WHERE",
+      "concept": "WHERE, comparison operators, text versus numeric filters",
+      "lab": "Filter countries by region and population",
+      "diagram": "sql-03-projection-filtering.svg"
+    },
+    {
+      "num": 5,
+      "title": "Sorting and Limiting",
+      "concept": "ORDER BY, ASC, DESC, LIMIT, OFFSET",
+      "lab": "List the top 10 countries by population",
+      "diagram": "sql-02-select-query-flow.svg"
+    },
+    {
+      "num": 6,
+      "title": "NULL and Three-Valued Logic",
+      "concept": "NULL, IS NULL, IS NOT NULL, three-valued logic",
+      "lab": "Add a nullable column and query for missing values",
+      "diagram": "sql-07-constraints-checks.svg"
+    },
+    {
+      "num": 7,
+      "title": "Pattern Matching and Ranges",
+      "concept": "LIKE, ILIKE, BETWEEN, IN",
+      "lab": "Find countries by name pattern and region list",
+      "diagram": "sql-03-projection-filtering.svg"
+    },
+    {
+      "num": 8,
+      "title": "Functions on Data",
+      "concept": "Scalar functions, text functions, numeric functions",
+      "lab": "Format country names and computed display fields",
+      "diagram": "sql-02-select-query-flow.svg"
+    },
+    {
+      "num": 9,
+      "title": "Aggregation Basics",
+      "concept": "COUNT, SUM, AVG, MIN, MAX",
+      "lab": "Produce summary stats for regions",
+      "diagram": "sql-06-aggregate-group-by.svg"
+    },
+    {
+      "num": 10,
+      "title": "GROUP BY and HAVING",
+      "concept": "GROUP BY, HAVING",
+      "lab": "Count countries per region and filter large regions",
+      "diagram": "sql-06-aggregate-group-by.svg"
+    },
+    {
+      "num": 11,
+      "title": "Data Types and Casting",
+      "concept": "integer, numeric, text, boolean, date, casts",
+      "lab": "Insert mixed data correctly and cast values in queries",
+      "diagram": "sql-13-normalization-forms.svg"
+    },
+    {
+      "num": 12,
+      "title": "Creating Tables Properly",
+      "concept": "CREATE TABLE, defaults, identity columns",
+      "lab": "Create a cities table with keys and timestamps",
+      "diagram": "sql-01-db-table-row-column.svg"
+    },
+    {
+      "num": 13,
+      "title": "Inserting and Updating Rows",
+      "concept": "INSERT, UPDATE, RETURNING",
+      "lab": "Insert sample cities and update one row",
+      "diagram": "sql-03-projection-filtering.svg"
+    },
+    {
+      "num": 14,
+      "title": "Deleting Rows Safely",
+      "concept": "DELETE, WHERE, transaction awareness",
+      "lab": "Delete test rows while preserving real ones",
+      "diagram": "sql-10-transactions-acid.svg"
+    },
+    {
+      "num": 15,
+      "title": "Keys and Uniqueness",
+      "concept": "PRIMARY KEY, UNIQUE, candidate keys",
+      "lab": "Add keys to country and city tables",
+      "diagram": "sql-04-primary-foreign-key.svg"
+    },
+    {
+      "num": 16,
+      "title": "Relationships Between Tables",
+      "concept": "FOREIGN KEY, one-to-many relationships",
+      "lab": "Build regions and link countries to it",
+      "diagram": "sql-04-primary-foreign-key.svg"
+    },
+    {
+      "num": 17,
+      "title": "Joining Two Tables",
+      "concept": "INNER JOIN, join condition, table aliases",
+      "lab": "Query countries with their region names",
+      "diagram": "sql-05-join-types-map.svg"
+    },
+    {
+      "num": 18,
+      "title": "Left Joins and Missing Matches",
+      "concept": "LEFT JOIN, unmatched rows, NULL output",
+      "lab": "Show countries even when a region lookup is missing",
+      "diagram": "sql-05-join-types-map.svg"
+    },
+    {
+      "num": 19,
+      "title": "Many-to-Many Relationships",
+      "concept": "Junction tables, composite keys",
+      "lab": "Build country_languages linking countries and languages",
+      "diagram": "sql-04-primary-foreign-key.svg"
+    },
+    {
+      "num": 20,
+      "title": "Join Practice and Query Reading",
+      "concept": "Multi-table joins, aliases, result interpretation",
+      "lab": "Write one query that joins three tables",
+      "diagram": "sql-05-join-types-map.svg"
+    },
+    {
+      "num": 21,
+      "title": "Constraints as Guardrails",
+      "concept": "NOT NULL, CHECK, DEFAULT, UNIQUE, REFERENCES",
+      "lab": "Harden existing tables with constraints",
+      "diagram": "sql-07-constraints-checks.svg"
+    },
+    {
+      "num": 22,
+      "title": "Normalization Basics",
+      "concept": "1NF, 2NF, 3NF intuition, redundancy",
+      "lab": "Refactor a duplicated table into related tables",
+      "diagram": "sql-13-normalization-forms.svg"
+    },
+    {
+      "num": 23,
+      "title": "Transactions as a Unit",
+      "concept": "BEGIN, COMMIT, ROLLBACK",
+      "lab": "Practice a multi-step change and undo it safely",
+      "diagram": "sql-10-transactions-acid.svg"
+    },
+    {
+      "num": 24,
+      "title": "Isolation and Concurrency",
+      "concept": "Locks, isolation basics, concurrency hazards",
+      "lab": "Simulate two edit sessions in pgAdmin",
+      "diagram": "sql-11-isolation-locking.svg"
+    },
+    {
+      "num": 25,
+      "title": "Indexes and Performance Intuition",
+      "concept": "CREATE INDEX, selective columns, planner intuition",
+      "lab": "Add an index and compare query behavior",
+      "diagram": "sql-08-index-btree.svg"
+    },
+    {
+      "num": 26,
+      "title": "Reading Query Plans",
+      "concept": "EXPLAIN, EXPLAIN ANALYZE, sequential scan, index scan",
+      "lab": "Inspect a query plan for a filtered search",
+      "diagram": "sql-09-explain-plan-pipeline.svg"
+    },
+    {
+      "num": 27,
+      "title": "Subqueries",
+      "concept": "Scalar subquery, IN subquery, correlated subquery",
+      "lab": "Find countries above their region average population",
+      "diagram": "sql-02-select-query-flow.svg"
+    },
+    {
+      "num": 28,
+      "title": "CTEs for Readability",
+      "concept": "WITH, common table expressions",
+      "lab": "Rewrite a nested query using CTEs",
+      "diagram": "sql-02-select-query-flow.svg"
+    },
+    {
+      "num": 29,
+      "title": "Set Operations",
+      "concept": "UNION, UNION ALL, INTERSECT, EXCEPT",
+      "lab": "Merge similar lookup results from two tables",
+      "diagram": "sql-03-projection-filtering.svg"
+    },
+    {
+      "num": 30,
+      "title": "Window Functions Intro",
+      "concept": "OVER, PARTITION BY, ORDER BY in windows",
+      "lab": "Rank countries within each region",
+      "diagram": "sql-06-aggregate-group-by.svg"
+    },
+    {
+      "num": 31,
+      "title": "Window Functions for Analysis",
+      "concept": "ROW_NUMBER, RANK, LAG, running totals",
+      "lab": "Build a region ranking report",
+      "diagram": "sql-06-aggregate-group-by.svg"
+    },
+    {
+      "num": 32,
+      "title": "Views and Reusable Queries",
+      "concept": "VIEW, read-only reporting layer",
+      "lab": "Create a view for country summaries",
+      "diagram": "sql-02-select-query-flow.svg"
+    },
+    {
+      "num": 33,
+      "title": "Functions and Parameterized Logic",
+      "concept": "SQL functions, RETURNS, parameters",
+      "lab": "Create a function that returns countries by region",
+      "diagram": "sql-09-explain-plan-pipeline.svg"
+    },
+    {
+      "num": 34,
+      "title": "Working with JSON in Postgres",
+      "concept": "json, jsonb, key operators, path access",
+      "lab": "Add a JSON profile field and query inside it",
+      "diagram": "sql-14-jsonb-vs-relational.svg"
+    },
+    {
+      "num": 35,
+      "title": "Text Search and Clean Data",
+      "concept": "Trimming, case handling, text comparison, unaccent concept",
+      "lab": "Clean imported country names and search variants",
+      "diagram": "sql-03-projection-filtering.svg"
+    },
+    {
+      "num": 36,
+      "title": "Importing and Exporting Data",
+      "concept": "CSV import, export, encoding, delimiters",
+      "lab": "Import a CSV of countries into pgAdmin",
+      "diagram": "sql-12-backup-replication.svg"
+    },
+    {
+      "num": 37,
+      "title": "Backups and Restore Basics",
+      "concept": "Dump and restore concepts, pg_dump, pg_restore",
+      "lab": "Export a backup and restore into a fresh database",
+      "diagram": "sql-12-backup-replication.svg"
+    },
+    {
+      "num": 38,
+      "title": "Security and Roles",
+      "concept": "Roles, users, privileges, GRANT, REVOKE",
+      "lab": "Create a read-only role for a sample dataset",
+      "diagram": "sql-12-backup-replication.svg"
+    },
+    {
+      "num": 39,
+      "title": "Maintenance and Reliability",
+      "concept": "Vacuum, autovacuum, analyze, bloat intuition, statistics",
+      "lab": "Refresh stats and inspect table health basics",
+      "diagram": "sql-12-backup-replication.svg"
+    },
+    {
+      "num": 40,
+      "title": "Capstone Review and Design",
+      "concept": "Schema design, query reading, constraints, joins, transactions, views",
+      "lab": "Build and document a complete mini country database",
+      "diagram": "sql-09-explain-plan-pipeline.svg"
+    }
+  ],
+  "diagrams": [
+    {
+      "file": "sql-01-db-table-row-column.svg",
+      "title": "Database, table, row, column"
+    },
+    {
+      "file": "sql-02-select-query-flow.svg",
+      "title": "Query flow"
+    },
+    {
+      "file": "sql-03-projection-filtering.svg",
+      "title": "Projection versus filtering"
+    },
+    {
+      "file": "sql-04-primary-foreign-key.svg",
+      "title": "Primary key and foreign key"
+    },
+    {
+      "file": "sql-05-join-types-map.svg",
+      "title": "Join types map"
+    },
+    {
+      "file": "sql-06-aggregate-group-by.svg",
+      "title": "Aggregates and grouping"
+    },
+    {
+      "file": "sql-07-constraints-checks.svg",
+      "title": "Constraints"
+    },
+    {
+      "file": "sql-08-index-btree.svg",
+      "title": "Index and B-tree"
+    },
+    {
+      "file": "sql-09-explain-plan-pipeline.svg",
+      "title": "Explain plan"
+    },
+    {
+      "file": "sql-10-transactions-acid.svg",
+      "title": "Transactions"
+    },
+    {
+      "file": "sql-11-isolation-locking.svg",
+      "title": "Isolation and locking"
+    },
+    {
+      "file": "sql-12-backup-replication.svg",
+      "title": "Backups and replication"
+    },
+    {
+      "file": "sql-13-normalization-forms.svg",
+      "title": "Normalization"
+    },
+    {
+      "file": "sql-14-jsonb-vs-relational.svg",
+      "title": "JSONB versus relational"
+    }
+  ]
+}

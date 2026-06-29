@@ -1,0 +1,17 @@
+
+      <svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Explain plan diagram">
+        <rect width="1200" height="700" fill="#0b0f14"/>
+        <text x="80" y="100" fill="#93c5fd" font-family="monospace" font-size="30">planner and executor</text>
+        <rect x="110" y="220" width="220" height="120" rx="16" fill="#0f172a" stroke="#60a5fa" stroke-width="3"/>
+        <text x="155" y="290" fill="#ffffff" font-family="monospace" font-size="26">planner</text>
+        <rect x="420" y="220" width="220" height="120" rx="16" fill="#0f172a" stroke="#34d399" stroke-width="3"/>
+        <text x="465" y="290" fill="#ffffff" font-family="monospace" font-size="26">plan node</text>
+        <rect x="730" y="220" width="220" height="120" rx="16" fill="#0f172a" stroke="#f59e0b" stroke-width="3"/>
+        <text x="780" y="290" fill="#ffffff" font-family="monospace" font-size="26">executor</text>
+        <line x1="330" y1="280" x2="415" y2="280" stroke="#60a5fa" stroke-width="4"/>
+        <polygon points="410,275 420,280 410,285" fill="#60a5fa"/>
+        <line x1="640" y1="280" x2="725" y2="280" stroke="#60a5fa" stroke-width="4"/>
+        <polygon points="720,275 730,280 720,285" fill="#60a5fa"/>
+        <text x="110" y="430" fill="#9ca3af" font-family="monospace" font-size="22">EXPLAIN shows the route before execution</text>
+        <text x="110" y="470" fill="#9ca3af" font-family="monospace" font-size="22">EXPLAIN ANALYZE runs it and reports actual timing</text>
+      </svg>

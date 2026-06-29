@@ -1,0 +1,112 @@
+
+      <svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Backup and replication diagram">
+        <defs>
+          <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="1.8" result="blur"/>
+            <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0.11 0 1 0 0 0.59 0 0 1 0 0.44 0 0 0 0.7 0"/>
+          </filter>
+        </defs>
+        <rect width="1200" height="700" fill="#0a0a0d"/>
+        <rect x="28" y="26" width="1144" height="648" rx="28" fill="#0d1016" stroke="#1c2330" stroke-width="2"/>
+        <text x="600" y="88" fill="#f5f7fb" font-family="monospace" font-size="34" text-anchor="middle">Session 36 - Importing and Exporting Data</text>
+        <text x="600" y="122" fill="#8b93a7" font-family="monospace" font-size="18" text-anchor="middle">COPY, \copy, CSV headers, pg_dump, pg_restore, and replica-friendly workflows</text>
+        <path d="M165 210 C260 176, 372 190, 462 190 S665 178, 760 198 S984 224, 1038 243
+                 C1060 250, 1070 276, 1045 308
+                 C1010 355, 1018 404, 1030 494
+                 C1040 568, 1002 601, 931 607
+                 C728 620, 506 612, 318 600
+                 C247 596, 198 586, 167 540
+                 C134 490, 122 427, 126 356
+                 C130 296, 145 243, 165 210 Z"
+              fill="none" stroke="#0a9b72" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" filter="url(#softGlow)"/>
+        <rect x="108" y="178" width="984" height="420" rx="8" fill="#0f0f13" opacity="0.46"/>
+        <g fill="none" stroke="#f5f5f5" stroke-width="2.4">
+          <rect x="124" y="180" width="220" height="222"/>
+          <rect x="356" y="180" width="220" height="222"/>
+          <rect x="588" y="180" width="220" height="222"/>
+          <rect x="820" y="180" width="220" height="222"/>
+          <rect x="124" y="430" width="220" height="222"/>
+          <rect x="356" y="430" width="220" height="222"/>
+          <rect x="588" y="430" width="220" height="222"/>
+          <rect x="820" y="430" width="220" height="222"/>
+        </g>
+        <g font-family="monospace">
+          <circle cx="141" cy="198" r="14" fill="#ff6bb8"/>
+          <text x="141" y="203" fill="#0b0b0f" font-size="17" text-anchor="middle">1</text>
+          <text x="234" y="205" fill="#ff6bb8" font-size="18" text-anchor="middle">source table</text>
+          <rect x="144" y="226" width="176" height="58" fill="none" stroke="#8b93a7" stroke-width="2"/>
+          <text x="232" y="251" fill="#ffffff" font-size="17" text-anchor="middle">countries</text>
+          <text x="232" y="271" fill="#9bd7c6" font-size="12" text-anchor="middle">ready to export</text>
+          <text x="234" y="322" fill="#d7d9de" font-size="15" text-anchor="middle">rows + columns + types</text>
+          <text x="234" y="356" fill="#7bf0a3" font-size="13" text-anchor="middle">data stays structured</text>
+
+          <circle cx="373" cy="198" r="14" fill="#ff6bb8"/>
+          <text x="373" y="203" fill="#0b0b0f" font-size="17" text-anchor="middle">2</text>
+          <text x="466" y="205" fill="#ff6bb8" font-size="18" text-anchor="middle">sql dump</text>
+          <rect x="376" y="226" width="176" height="60" fill="none" stroke="#8b93a7" stroke-width="2"/>
+          <text x="464" y="251" fill="#ffffff" font-size="16" text-anchor="middle">pg_dump</text>
+          <text x="464" y="272" fill="#ffffff" font-size="15" text-anchor="middle">--format=custom</text>
+          <line x1="466" y1="297" x2="466" y2="336" stroke="#ff6bb8" stroke-width="2.4"/>
+          <polygon points="466,340 460,330 472,330" fill="#ff6bb8"/>
+          <text x="466" y="362" fill="#ff6bb8" font-size="13" text-anchor="middle">portable backup</text>
+          <text x="466" y="395" fill="#8b93a7" font-size="12" text-anchor="middle">rebuild later anywhere</text>
+
+          <circle cx="605" cy="198" r="14" fill="#ff6bb8"/>
+          <text x="605" y="203" fill="#0b0b0f" font-size="17" text-anchor="middle">3</text>
+          <text x="698" y="205" fill="#ff6bb8" font-size="18" text-anchor="middle">csv export</text>
+          <rect x="608" y="226" width="176" height="60" fill="none" stroke="#ff6bb8" stroke-width="2.2"/>
+          <text x="696" y="251" fill="#ffffff" font-size="15" text-anchor="middle">\copy countries</text>
+          <text x="696" y="271" fill="#ffffff" font-size="15" text-anchor="middle">TO 'countries.csv'</text>
+          <text x="698" y="321" fill="#d7d9de" font-size="15" text-anchor="middle">CSV HEADER gives names</text>
+          <rect x="646" y="344" width="100" height="28" fill="none" stroke="#8b93a7" stroke-width="2"/>
+          <text x="696" y="363" fill="#ffffff" font-size="14" text-anchor="middle">delimiter ,</text>
+          <text x="698" y="395" fill="#7bf0a3" font-size="12" text-anchor="middle">best for spreadsheets</text>
+
+          <circle cx="837" cy="198" r="14" fill="#ff6bb8"/>
+          <text x="837" y="203" fill="#0b0b0f" font-size="17" text-anchor="middle">4</text>
+          <text x="930" y="205" fill="#ff6bb8" font-size="18" text-anchor="middle">restore path</text>
+          <rect x="840" y="226" width="176" height="60" fill="none" stroke="#8b93a7" stroke-width="2"/>
+          <text x="928" y="251" fill="#ffffff" font-size="16" text-anchor="middle">pg_restore</text>
+          <text x="928" y="271" fill="#ffffff" font-size="15" text-anchor="middle">or psql</text>
+          <line x1="928" y1="298" x2="928" y2="336" stroke="#ff6bb8" stroke-width="2.4"/>
+          <polygon points="928,340 922,330 934,330" fill="#ff6bb8"/>
+          <text x="928" y="362" fill="#ff6bb8" font-size="13" text-anchor="middle">recreate schema first</text>
+          <text x="928" y="395" fill="#8b93a7" font-size="12" text-anchor="middle">then reload data</text>
+
+          <circle cx="141" cy="448" r="14" fill="#ff6bb8"/>
+          <text x="141" y="453" fill="#0b0b0f" font-size="17" text-anchor="middle">5</text>
+          <text x="234" y="455" fill="#ff6bb8" font-size="18" text-anchor="middle">live import</text>
+          <rect x="144" y="476" width="176" height="58" fill="none" stroke="#ff6bb8" stroke-width="2"/>
+          <text x="232" y="501" fill="#ffffff" font-size="15" text-anchor="middle">\copy countries</text>
+          <text x="232" y="521" fill="#ffffff" font-size="15" text-anchor="middle">FROM 'countries.csv'</text>
+          <text x="234" y="572" fill="#d7d9de" font-size="15" text-anchor="middle">bulk load from file</text>
+          <text x="234" y="604" fill="#7bf0a3" font-size="12" text-anchor="middle">header row is skipped</text>
+
+          <circle cx="373" cy="448" r="14" fill="#ff6bb8"/>
+          <text x="373" y="453" fill="#0b0b0f" font-size="17" text-anchor="middle">6</text>
+          <text x="466" y="455" fill="#ff6bb8" font-size="18" text-anchor="middle">many files</text>
+          <rect x="376" y="476" width="176" height="44" fill="none" stroke="#8b93a7" stroke-width="2"/>
+          <text x="464" y="505" fill="#ffffff" font-size="16" text-anchor="middle">pg_dump | gzip</text>
+          <rect x="376" y="534" width="176" height="44" fill="none" stroke="#8b93a7" stroke-width="2"/>
+          <text x="464" y="563" fill="#ffffff" font-size="16" text-anchor="middle">daily backups</text>
+          <text x="466" y="616" fill="#d7d9de" font-size="15" text-anchor="middle">one import line, many steps</text>
+
+          <circle cx="605" cy="448" r="14" fill="#ff6bb8"/>
+          <text x="605" y="453" fill="#0b0b0f" font-size="17" text-anchor="middle">7</text>
+          <text x="698" y="455" fill="#ff6bb8" font-size="18" text-anchor="middle">replication</text>
+          <rect x="608" y="476" width="176" height="82" fill="none" stroke="#ff6bb8" stroke-width="2"/>
+          <text x="696" y="503" fill="#ffffff" font-size="16" text-anchor="middle">primary</text>
+          <text x="696" y="526" fill="#ffffff" font-size="15" text-anchor="middle">streaming WAL</text>
+          <text x="698" y="568" fill="#d7d9de" font-size="15" text-anchor="middle">hot standby copy</text>
+          <text x="698" y="604" fill="#7bf0a3" font-size="12" text-anchor="middle">read traffic can move</text>
+
+          <circle cx="837" cy="448" r="14" fill="#ff6bb8"/>
+          <text x="837" y="453" fill="#0b0b0f" font-size="17" text-anchor="middle">8</text>
+          <text x="930" y="455" fill="#ff6bb8" font-size="18" text-anchor="middle">pgAdmin</text>
+          <rect x="840" y="476" width="176" height="82" fill="none" stroke="#8b93a7" stroke-width="2"/>
+          <text x="928" y="503" fill="#ffffff" font-size="16" text-anchor="middle">Export / Import</text>
+          <text x="928" y="526" fill="#ffffff" font-size="15" text-anchor="middle">wizard paths</text>
+          <text x="930" y="568" fill="#d7d9de" font-size="15" text-anchor="middle">good for visual learners</text>
+          <text x="930" y="604" fill="#ff6bb8" font-size="12" text-anchor="middle">same data, different route</text>
+        </g>
+      </svg>

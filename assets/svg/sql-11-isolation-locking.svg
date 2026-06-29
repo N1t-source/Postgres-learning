@@ -1,0 +1,15 @@
+
+      <svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Isolation and locking diagram">
+        <rect width="1200" height="700" fill="#0b0f14"/>
+        <text x="80" y="100" fill="#93c5fd" font-family="monospace" font-size="30">two sessions touching the same row</text>
+        <rect x="110" y="190" width="360" height="340" rx="20" fill="#0f172a" stroke="#60a5fa" stroke-width="3"/>
+        <text x="150" y="245" fill="#ffffff" font-family="monospace" font-size="26">session A</text>
+        <text x="150" y="315" fill="#9ca3af" font-family="monospace" font-size="22">reads row</text>
+        <text x="150" y="365" fill="#9ca3af" font-family="monospace" font-size="22">locks row</text>
+        <text x="150" y="415" fill="#9ca3af" font-family="monospace" font-size="22">commits</text>
+        <rect x="600" y="190" width="360" height="340" rx="20" fill="#0f172a" stroke="#34d399" stroke-width="3"/>
+        <text x="640" y="245" fill="#ffffff" font-family="monospace" font-size="26">session B</text>
+        <text x="640" y="315" fill="#9ca3af" font-family="monospace" font-size="22">tries to update</text>
+        <text x="640" y="365" fill="#fbbf24" font-family="monospace" font-size="22">waits for lock</text>
+        <text x="640" y="415" fill="#9ca3af" font-family="monospace" font-size="22">then continues</text>
+      </svg>

@@ -1,0 +1,16 @@
+
+      <svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Constraints diagram">
+        <rect width="1200" height="700" fill="#0b0f14"/>
+        <text x="80" y="100" fill="#93c5fd" font-family="monospace" font-size="30">database guardrails</text>
+        <rect x="120" y="190" width="280" height="320" rx="18" fill="#0f172a" stroke="#60a5fa" stroke-width="3"/>
+        <text x="155" y="240" fill="#ffffff" font-family="monospace" font-size="24">NOT NULL</text>
+        <text x="155" y="285" fill="#ffffff" font-family="monospace" font-size="24">UNIQUE</text>
+        <text x="155" y="330" fill="#ffffff" font-family="monospace" font-size="24">CHECK</text>
+        <text x="155" y="375" fill="#ffffff" font-family="monospace" font-size="24">DEFAULT</text>
+        <text x="155" y="420" fill="#ffffff" font-family="monospace" font-size="24">REFERENCES</text>
+        <rect x="520" y="190" width="560" height="320" rx="18" fill="#0f172a" stroke="#34d399" stroke-width="3"/>
+        <text x="560" y="240" fill="#ffffff" font-family="monospace" font-size="24">INSERT / UPDATE</text>
+        <text x="560" y="305" fill="#fbbf24" font-family="monospace" font-size="22">passes checks</text>
+        <text x="560" y="360" fill="#f87171" font-family="monospace" font-size="22">violates rule -> rejected</text>
+        <text x="560" y="430" fill="#9ca3af" font-family="monospace" font-size="22">the database enforces the rule</text>
+      </svg>

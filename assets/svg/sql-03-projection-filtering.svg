@@ -1,0 +1,17 @@
+
+      <svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Projection and filtering diagram">
+        <rect width="1200" height="700" fill="#0b0f14"/>
+        <rect x="80" y="130" width="1040" height="430" rx="22" fill="#111827" stroke="#2b3648" stroke-width="3"/>
+        <text x="120" y="185" fill="#93c5fd" font-family="monospace" font-size="28">projection = choose columns</text>
+        <text x="650" y="185" fill="#34d399" font-family="monospace" font-size="28">filtering = choose rows</text>
+        <rect x="130" y="240" width="380" height="220" rx="18" fill="#0f172a" stroke="#60a5fa" stroke-width="3"/>
+        <text x="165" y="280" fill="#9ca3af" font-family="monospace" font-size="22">SELECT name, region</text>
+        <text x="165" y="335" fill="#ffffff" font-family="monospace" font-size="22">Canada | Americas</text>
+        <text x="165" y="375" fill="#ffffff" font-family="monospace" font-size="22">Japan  | Asia</text>
+        <text x="165" y="415" fill="#ffffff" font-family="monospace" font-size="22">Kenya  | Africa</text>
+        <rect x="600" y="240" width="380" height="220" rx="18" fill="#0f172a" stroke="#34d399" stroke-width="3"/>
+        <text x="635" y="280" fill="#9ca3af" font-family="monospace" font-size="22">WHERE region = 'Asia'</text>
+        <text x="635" y="335" fill="#ffffff" font-family="monospace" font-size="22">Japan  | Asia</text>
+        <text x="635" y="375" fill="#475569" font-family="monospace" font-size="22">Canada | Americas</text>
+        <text x="635" y="415" fill="#475569" font-family="monospace" font-size="22">Kenya  | Africa</text>
+      </svg>

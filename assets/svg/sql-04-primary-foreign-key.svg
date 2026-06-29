@@ -1,0 +1,20 @@
+
+      <svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Primary and foreign key relationship diagram">
+        <rect width="1200" height="700" fill="#0b0f14"/>
+        <text x="90" y="100" fill="#93c5fd" font-family="monospace" font-size="30">identity and relationships</text>
+        <rect x="100" y="170" width="360" height="360" rx="20" fill="#0f172a" stroke="#60a5fa" stroke-width="3"/>
+        <text x="145" y="220" fill="#ffffff" font-family="monospace" font-size="26">regions</text>
+        <text x="145" y="290" fill="#fbbf24" font-family="monospace" font-size="22">id (PK)</text>
+        <text x="145" y="340" fill="#ffffff" font-family="monospace" font-size="22">1  Americas</text>
+        <text x="145" y="390" fill="#ffffff" font-family="monospace" font-size="22">2  Asia</text>
+        <text x="145" y="440" fill="#ffffff" font-family="monospace" font-size="22">3  Africa</text>
+        <rect x="650" y="170" width="430" height="360" rx="20" fill="#0f172a" stroke="#34d399" stroke-width="3"/>
+        <text x="695" y="220" fill="#ffffff" font-family="monospace" font-size="26">countries</text>
+        <text x="695" y="290" fill="#fbbf24" font-family="monospace" font-size="22">region_id (FK)</text>
+        <text x="695" y="340" fill="#ffffff" font-family="monospace" font-size="22">1  Canada   1</text>
+        <text x="695" y="390" fill="#ffffff" font-family="monospace" font-size="22">2  Japan    2</text>
+        <text x="695" y="440" fill="#ffffff" font-family="monospace" font-size="22">3  Kenya    3</text>
+        <line x1="460" y1="340" x2="645" y2="340" stroke="#fbbf24" stroke-width="5"/>
+        <polygon points="640,335 650,340 640,345" fill="#fbbf24"/>
+        <text x="500" y="320" fill="#fbbf24" font-family="monospace" font-size="22">references</text>
+      </svg>

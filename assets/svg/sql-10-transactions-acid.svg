@@ -1,0 +1,15 @@
+
+      <svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Transactions diagram">
+        <rect width="1200" height="700" fill="#0b0f14"/>
+        <text x="80" y="100" fill="#93c5fd" font-family="monospace" font-size="30">atomic changes</text>
+        <rect x="140" y="190" width="260" height="360" rx="20" fill="#0f172a" stroke="#60a5fa" stroke-width="3"/>
+        <text x="190" y="250" fill="#ffffff" font-family="monospace" font-size="28">BEGIN</text>
+        <text x="175" y="330" fill="#9ca3af" font-family="monospace" font-size="22">step 1</text>
+        <text x="175" y="380" fill="#9ca3af" font-family="monospace" font-size="22">step 2</text>
+        <text x="175" y="430" fill="#9ca3af" font-family="monospace" font-size="22">step 3</text>
+        <rect x="500" y="190" width="260" height="360" rx="20" fill="#0f172a" stroke="#f59e0b" stroke-width="3"/>
+        <text x="550" y="250" fill="#ffffff" font-family="monospace" font-size="28">COMMIT</text>
+        <text x="540" y="330" fill="#34d399" font-family="monospace" font-size="22">all changes saved</text>
+        <text x="540" y="380" fill="#34d399" font-family="monospace" font-size="22">or</text>
+        <text x="540" y="430" fill="#f87171" font-family="monospace" font-size="22">ROLLBACK</text>
+      </svg>
