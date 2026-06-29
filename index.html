@@ -7,48 +7,133 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-
   <nav>
     <div class="container nav-row">
-      <a class="brand active" href="index.html">⌘ Postgres Learning</a>
-      <a class="" href="docs/syllabus/index.html">Syllabus</a><a class="" href="docs/sessions/index.html">Sessions</a><a class="" href="docs/quizzes/index.html">Quizzes</a><a class="" href="docs/labs/index.html">Labs</a><a class="" href="docs/architecture/index.html">Architecture</a><a class="" href="docs/notes/index.html">Notes</a><a class="" href="docs/commits/index.html">Commits</a><a class="" href="docs/prompts/index.html">Prompts</a>
+      <a class="brand active" href="index.html">Postgres Learning</a>
+      <a href="docs/syllabus/index.html">Syllabus</a>
+      <a href="docs/sessions/index.html">Sessions</a>
+      <a href="docs/quizzes/index.html">Quizzes</a>
+      <a href="docs/labs/index.html">Labs</a>
+      <a href="docs/architecture/index.html">Architecture</a>
+      <a href="docs/notes/index.html">Notes</a>
+      <a href="docs/commits/index.html">Commits</a>
+      <a href="docs/prompts/index.html">Prompts</a>
     </div>
   </nav>
-<main>
-  <div class="container">
 
-    <h1>PostgreSQL Learning Environment</h1>
-    <p class="subtitle">A 40-session, one-hour curriculum for learning SQL and PostgreSQL with pgAdmin, modeled after the RL-AI documentation style.</p>
-    <div class="card">
-      <div class="card-title">Current Session</div>
-      <p>Session 01 — PostgreSQL and pgAdmin Basics</p>
-      <p class="muted">Pre-quiz → concept → lab → commit checkpoint → post-quiz</p>
+  <main>
+    <div class="container">
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">40-session learning path</div>
+          <h1>PostgreSQL, but taught like a polished studio course.</h1>
+          <p class="subtitle">A one-hour curriculum for learning SQL and PostgreSQL with pgAdmin, built as a clear, navigable documentation experience that keeps the course structure visible at every step.</p>
+          <div class="hero-actions">
+            <a class="button" href="docs/sessions/index.html">Start with Sessions</a>
+            <a class="button-secondary" href="docs/syllabus/index.html">View the Syllabus</a>
+          </div>
+          <div class="stat-grid">
+            <div class="stat">
+              <div class="stat-value">40</div>
+              <div class="stat-label">sessions from basics to capstone</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">7</div>
+              <div class="stat-label">curriculum layers with unlocks</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">1 hr</div>
+              <div class="stat-label">per lesson, with practice built in</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">pgAdmin</div>
+              <div class="stat-label">hands-on learning environment</div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-aside" aria-label="Course summary">
+          <div class="hero-panel">
+            <span class="badge badge-current">Current Session</span>
+            <h3>Session 01</h3>
+            <p>PostgreSQL and pgAdmin Basics</p>
+            <p class="footnote">Pre-quiz, concept, lab, commit checkpoint, and post-quiz are all part of the flow.</p>
+          </div>
+          <div class="hero-panel">
+            <h3>What this site gives you</h3>
+            <ul class="hero-list">
+              <li>One lesson page per session with the same structure throughout.</li>
+              <li>Quiz and lab indexes that make review easy to scan.</li>
+              <li>Supporting docs for architecture, notes, commits, and prompts.</li>
+            </ul>
+          </div>
+        </aside>
+      </section>
+
+      <div class="section-intro">
+        <div>
+          <span class="badge badge-pill">Course map</span>
+          <h2>Navigate the learning path</h2>
+        </div>
+        <p>The homepage keeps the important paths visible so you can jump straight into the full syllabus, the session list, or the support docs without hunting around.</p>
+      </div>
+
+      <div class="nav-grid">
+        <a class="nav-card" href="docs/syllabus/index.html">
+          <div class="nav-card-title">Syllabus</div>
+          <div class="nav-card-desc">All 40 sessions, dependencies, and unlock gates.</div>
+        </a>
+        <a class="nav-card" href="docs/sessions/index.html">
+          <div class="nav-card-title">Sessions</div>
+          <div class="nav-card-desc">One lesson page per session with the full lesson flow.</div>
+        </a>
+        <a class="nav-card" href="docs/labs/index.html">
+          <div class="nav-card-title">Labs</div>
+          <div class="nav-card-desc">Lab objective index for each session.</div>
+        </a>
+        <a class="nav-card" href="docs/quizzes/index.html">
+          <div class="nav-card-title">Quizzes</div>
+          <div class="nav-card-desc">Quiz tracker and review bank.</div>
+        </a>
+        <a class="nav-card" href="docs/architecture/index.html">
+          <div class="nav-card-title">Architecture</div>
+          <div class="nav-card-desc">Design decisions and learning structure.</div>
+        </a>
+        <a class="nav-card" href="docs/prompts/index.html">
+          <div class="nav-card-title">Prompts</div>
+          <div class="nav-card-desc">Chronological prompt log for this project.</div>
+        </a>
+      </div>
+
+      <div class="section-intro">
+        <div>
+          <span class="badge badge-pill">Curriculum layers</span>
+          <h2>How the course progresses</h2>
+        </div>
+        <p>The whole learning experience is organized into visible layers so the progression feels intentional instead of a flat list of pages.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Layer</th>
+              <th>Topic</th>
+              <th>Sessions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="badge badge-layer">1</span></td><td>Foundations</td><td>01-10</td></tr>
+            <tr><td><span class="badge badge-layer">2</span></td><td>Modeling</td><td>11-22</td></tr>
+            <tr><td><span class="badge badge-layer">3</span></td><td>Reliability</td><td>23-26</td></tr>
+            <tr><td><span class="badge badge-layer">4</span></td><td>Advanced Querying</td><td>27-31</td></tr>
+            <tr><td><span class="badge badge-layer">5</span></td><td>Reusable Database</td><td>32-35</td></tr>
+            <tr><td><span class="badge badge-layer">6</span></td><td>Ops and Delivery</td><td>36-39</td></tr>
+            <tr><td><span class="badge badge-layer">7</span></td><td>Capstone</td><td>40</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="nav-grid">
-      <a class="nav-card" href="docs/syllabus/index.html"><div class="nav-card-title">Syllabus</div><div class="nav-card-desc">All 40 sessions, ordered dependencies, and unlock gates.</div></a>
-      <a class="nav-card" href="docs/sessions/index.html"><div class="nav-card-title">Sessions</div><div class="nav-card-desc">One lesson page per session with full lesson flow.</div></a>
-      <a class="nav-card" href="docs/labs/index.html"><div class="nav-card-title">Labs</div><div class="nav-card-desc">Lab objective index for each session.</div></a>
-      <a class="nav-card" href="docs/quizzes/index.html"><div class="nav-card-title">Quizzes</div><div class="nav-card-desc">Quiz tracker and review bank.</div></a>
-      <a class="nav-card" href="docs/architecture/index.html"><div class="nav-card-title">Architecture</div><div class="nav-card-desc">Design decisions and learning structure.</div></a>
-      <a class="nav-card" href="docs/prompts/index.html"><div class="nav-card-title">Prompts</div><div class="nav-card-desc">Chronological prompt log for this project.</div></a>
-    </div>
-    <h2>Curriculum Layers</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Layer</th><th>Topic</th><th>Sessions</th></tr></thead>
-        <tbody>
-          <tr><td><span class="badge badge-layer">1</span></td><td>Foundations</td><td>01-10</td></tr>
-          <tr><td><span class="badge badge-layer">2</span></td><td>Modeling</td><td>11-22</td></tr>
-          <tr><td><span class="badge badge-layer">3</span></td><td>Reliability</td><td>23-26</td></tr>
-          <tr><td><span class="badge badge-layer">4</span></td><td>Advanced Querying</td><td>27-31</td></tr>
-          <tr><td><span class="badge badge-layer">5</span></td><td>Reusable Database</td><td>32-35</td></tr>
-          <tr><td><span class="badge badge-layer">6</span></td><td>Ops and Delivery</td><td>36-39</td></tr>
-          <tr><td><span class="badge badge-layer">7</span></td><td>Capstone</td><td>40</td></tr>
-        </tbody>
-      </table>
-    </div>
-  
-  </div>
-</main>
+  </main>
 </body>
 </html>
