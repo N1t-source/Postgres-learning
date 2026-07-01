@@ -24,13 +24,28 @@ const missing = [];
 
 for (const file of htmlFiles) {
   const text = fs.readFileSync(file, "utf8");
-  for (const match of text.matchAll(/href="(\/docs\/[^"]+)"/g)) {
-    const relTarget = match[1].replace(/^\/docs\//, "docs/");
-    const fullTarget = path.join(root, relTarget);
+  for (const match of text.matchAll(/href="([^"]+)"/g)) {
+    const href = match[1];
+    if (
+      href.startsWith("http://") ||
+      href.startsWith("https://") ||
+      href.startsWith("mailto:") ||
+      href.startsWith("#")
+    ) {
+      continue;
+    }
+
+    const fullTarget = path.resolve(path.dirname(file), href);
+    const isHtmlLike = fullTarget.endsWith(".html") || fullTarget.endsWith(".css");
+
+    if (!isHtmlLike) {
+      continue;
+    }
+
     if (!fs.existsSync(fullTarget)) {
       missing.push({
         file: path.relative(root, file),
-        target: relTarget,
+        target: href,
       });
     }
   }

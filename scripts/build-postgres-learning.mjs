@@ -33,20 +33,31 @@ function escapeHtml(value) {
 }
 
 const navItems = [
-  ["Home", "/docs/index.html", "home"],
-  ["Syllabus", "/docs/syllabus/index.html", "syllabus"],
-  ["Sessions", "/docs/sessions/index.html", "sessions"],
-  ["Lessons", "/docs/lessons/index.html", "lessons"],
-  ["Labs", "/docs/labs/index.html", "labs"],
-  ["Quizzes", "/docs/quizzes/index.html", "quizzes"],
-  ["References", "/docs/references/index.html", "references"],
-  ["Schema Notes", "/docs/schema-notes/index.html", "schema"],
-  ["Query Notes", "/docs/query-notes/index.html", "queries"],
-  ["Architecture", "/docs/architecture/index.html", "architecture"],
-  ["Session Notes", "/docs/session-notes/index.html", "session-notes"],
-  ["Commit Reviews", "/docs/commit-reviews/index.html", "commit-reviews"],
-  ["Prompts", "/docs/prompts/index.html", "prompts"],
+  ["Home", "docs/index.html", "home"],
+  ["Syllabus", "docs/syllabus/index.html", "syllabus"],
+  ["Sessions", "docs/sessions/index.html", "sessions"],
+  ["Lessons", "docs/lessons/index.html", "lessons"],
+  ["Labs", "docs/labs/index.html", "labs"],
+  ["Quizzes", "docs/quizzes/index.html", "quizzes"],
+  ["References", "docs/references/index.html", "references"],
+  ["Schema Notes", "docs/schema-notes/index.html", "schema"],
+  ["Query Notes", "docs/query-notes/index.html", "queries"],
+  ["Architecture", "docs/architecture/index.html", "architecture"],
+  ["Session Notes", "docs/session-notes/index.html", "session-notes"],
+  ["Commit Reviews", "docs/commit-reviews/index.html", "commit-reviews"],
+  ["Prompts", "docs/prompts/index.html", "prompts"],
 ];
+
+function relativeHref(fromPath, toPath) {
+  const fromDir = path.posix.dirname(`/${fromPath.replace(/\\/g, "/")}`);
+  const to = `/${toPath.replace(/\\/g, "/")}`;
+  const rel = path.posix.relative(fromDir, to);
+  return rel || path.posix.basename(to);
+}
+
+function navHref(currentPath, targetPath) {
+  return relativeHref(currentPath, targetPath);
+}
 
 const sessions = [
   { n: 1, phase: "Foundations", title: "Why databases exist" },
@@ -745,7 +756,10 @@ function quizFor(session) {
   return generic;
 }
 
-function pageShell({ title, active, body, description = "PostgreSQL learning track" }) {
+function pageShell({ title, active, body, currentPath, description = "PostgreSQL learning track" }) {
+  const styleHref = navHref(currentPath, "docs/styles.css");
+  const homeHref = navHref(currentPath, "docs/index.html");
+  const navLinks = navItems.map(([label, href, key]) => `<a class="${key === active ? "active" : ""}" href="${navHref(currentPath, href)}">${label}</a>`).join("");
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -753,21 +767,21 @@ function pageShell({ title, active, body, description = "PostgreSQL learning tra
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}" />
-  <link rel="stylesheet" href="/docs/styles.css" />
+  <link rel="stylesheet" href="${styleHref}" />
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to content</a>
   <header class="topbar">
     <div class="container topbar-inner">
-      <a class="brand" href="/docs/index.html">
-        <span class="brand-mark">PG</span>
+      <a class="brand" href="${homeHref}">
+        <span class="brand-mark">PL</span>
         <span>
           <strong>PostgreSQL Learning Track</strong>
           <small>Country edition</small>
         </span>
       </a>
-      <nav class="nav">
-        ${navItems.map(([label, href, key]) => `<a class="${key === active ? "active" : ""}" href="${href}">${label}</a>`).join("")}
+      <nav class="nav" aria-label="Primary">
+        ${navLinks}
       </nav>
     </div>
   </header>
@@ -831,6 +845,7 @@ function officialRefsForSession(session) {
 }
 
 function referencesPage() {
+  const currentPath = "docs/references/index.html";
   const rows = [
     ["Core entry point", "PostgreSQL 18.4 documentation home", "https://www.postgresql.org/docs/current/index.html"],
     ["Getting started", "Tutorial: Getting Started", "https://www.postgresql.org/docs/current/tutorial-start.html"],
@@ -849,6 +864,7 @@ function referencesPage() {
   return pageShell({
     title: "References - PostgreSQL Learning Track",
     active: "references",
+    currentPath,
     body: `
       <section class="page-heading">
         <p class="eyebrow">Upstream references</p>
@@ -870,19 +886,27 @@ function referencesPage() {
 }
 
 function docHome() {
+  const currentPath = "docs/index.html";
+  const href = (target) => navHref(currentPath, target);
   return pageShell({
     title: "PostgreSQL Learning Track",
     active: "home",
+    currentPath,
     description: "Static learning site for a country-themed PostgreSQL curriculum.",
     body: `
       <section class="hero">
         <div class="hero-copy">
           <p class="eyebrow">Documentation first. Understanding first.</p>
-          <h1>Learn PostgreSQL by building a country database one concept at a time.</h1>
-          <p class="lede">This repository is a static learning environment, not a feature sprint. The documentation is the source of truth, and every session teaches one beginner-readable slice of database thinking.</p>
+          <h1>Learn PostgreSQL with a curriculum that refuses to skip the hard parts.</h1>
+          <p class="lede">This portal is built for experienced developers who want to stop guessing through database work. Every session is tiny, reviewable, and designed to make the reasoning visible before the syntax.</p>
           <div class="actions">
-            <a class="button primary" href="/docs/syllabus/index.html">Open the syllabus</a>
-            <a class="button" href="/docs/sessions/session-01/index.html">Start Session 01</a>
+            <a class="button primary" href="${href("docs/syllabus/index.html")}">Open the syllabus</a>
+            <a class="button" href="${href("docs/sessions/session-01/index.html")}">Start Session 01</a>
+          </div>
+          <div class="hero-metrics">
+            <div><strong>40</strong><span>sessions</span></div>
+            <div><strong>1</strong><span>concept per commit</span></div>
+            <div><strong>80%</strong><span>quiz gate</span></div>
           </div>
         </div>
         <aside class="hero-panel">
@@ -896,8 +920,8 @@ function docHome() {
             </ul>
           </div>
           <div class="panel compass">
-            <div class="compass-ring">*</div>
-            <p>Country data gives us a familiar way to talk about tables, keys, joins, constraints, and transactions without hiding the core database ideas.</p>
+            <div class="compass-ring">01</div>
+            <p>Country data gives us a familiar domain for tables, keys, joins, constraints, and transactions without hiding the core database mechanics.</p>
           </div>
         </aside>
       </section>
@@ -911,10 +935,10 @@ function docHome() {
           <p>The pages below are the learning map. They explain the progression, the lesson format, the prompt archive, and the review flow that future AI sessions should follow before making changes.</p>
         </div>
         <div class="card-grid four">
-          <a class="card" href="/docs/syllabus/index.html"><strong>Syllabus</strong><span>Dependency order for the full 40-session track.</span></a>
-          <a class="card" href="/docs/sessions/index.html"><strong>Sessions</strong><span>Every lesson page in order, grouped by phase.</span></a>
-          <a class="card" href="/docs/prompts/index.html"><strong>Prompt archive</strong><span>Major project instructions and what changed because of them.</span></a>
-          <a class="card" href="/docs/architecture/index.html"><strong>Architecture</strong><span>How future AI sessions should initialize and work.</span></a>
+          <a class="card" href="${href("docs/syllabus/index.html")}"><strong>Syllabus</strong><span>See the dependency order for the full 40-session track.</span></a>
+          <a class="card" href="${href("docs/sessions/index.html")}"><strong>Sessions</strong><span>Open every lesson page in sequence.</span></a>
+          <a class="card" href="${href("docs/prompts/index.html")}"><strong>Prompt archive</strong><span>Track the major instructions that changed the project.</span></a>
+          <a class="card" href="${href("docs/architecture/index.html")}"><strong>Architecture</strong><span>Review the operating rules future sessions must follow.</span></a>
         </div>
       </section>
 
@@ -931,10 +955,10 @@ function docHome() {
         </div>
       </section>
       <section class="section">
-        <div class="panel">
+        <div class="panel callout">
           <p class="eyebrow">Official source</p>
           <h2>Built against the PostgreSQL docs</h2>
-          <p>This curriculum uses the official PostgreSQL documentation as its upstream technical reference. See <a href="/docs/references/index.html">the references page</a> for the current doc set and core chapter links.</p>
+          <p>This curriculum uses the official PostgreSQL documentation as its upstream technical reference. See <a href="${href("docs/references/index.html")}">the references page</a> for the current doc set and core chapter links.</p>
         </div>
       </section>
     `,
@@ -942,6 +966,7 @@ function docHome() {
 }
 
 function syllabusPage() {
+  const currentPath = "docs/syllabus/index.html";
   const rows = phases.map((phase) => {
     const range = sessions.filter((s) => s.phase === phase.name);
     return `<tr><td>${escapeHtml(phase.name)}</td><td>${phase.range}</td><td>${escapeHtml(phase.summary)}</td><td>${escapeHtml(range[0].title)} → ${escapeHtml(range[range.length - 1].title)}</td></tr>`;
@@ -949,6 +974,7 @@ function syllabusPage() {
   return pageShell({
     title: "Syllabus - PostgreSQL Learning Track",
     active: "syllabus",
+    currentPath,
     body: `
       <section class="page-heading">
         <p class="eyebrow">Curriculum map</p>
@@ -978,13 +1004,16 @@ function syllabusPage() {
 }
 
 function sessionsPage() {
+  const currentPath = "docs/sessions/index.html";
+  const href = (target) => navHref(currentPath, target);
   const rows = sessions.map((session) => {
-    const link = `/docs/sessions/session-${pad(session.n)}/index.html`;
+    const link = href(`docs/sessions/session-${pad(session.n)}/index.html`);
     return `<tr><td>${pad(session.n)}</td><td>${escapeHtml(session.phase)}</td><td>${escapeHtml(session.title)}</td><td><a href="${link}">Open</a></td></tr>`;
   }).join("");
   return pageShell({
     title: "Sessions - PostgreSQL Learning Track",
     active: "sessions",
+    currentPath,
     body: `
       <section class="page-heading">
         <p class="eyebrow">Lesson index</p>
@@ -1004,9 +1033,12 @@ function sessionsPage() {
 }
 
 function lessonsPage() {
+  const currentPath = "docs/lessons/index.html";
+  const href = (target) => navHref(currentPath, target);
   return pageShell({
     title: "Lessons - PostgreSQL Learning Track",
     active: "lessons",
+    currentPath,
     body: `
       <section class="page-heading">
         <p class="eyebrow">Lesson anatomy</p>
@@ -1034,8 +1066,8 @@ function lessonsPage() {
       </section>
       <section class="section">
         <div class="actions">
-          <a class="button primary" href="/docs/sessions/session-01/index.html">Open Session 01</a>
-          <a class="button" href="/docs/quizzes/index.html">Read quiz policy</a>
+          <a class="button primary" href="${href("docs/sessions/session-01/index.html")}">Open Session 01</a>
+          <a class="button" href="${href("docs/quizzes/index.html")}">Read quiz policy</a>
         </div>
       </section>
     `,
@@ -1043,10 +1075,12 @@ function lessonsPage() {
 }
 
 function labsPage() {
+  const currentPath = "docs/labs/index.html";
   const rows = sessions.map((session) => `<tr><td>${pad(session.n)}</td><td>${escapeHtml(session.title)}</td><td>${escapeHtml(sessionTheme(session).lab)}</td></tr>`).join("");
   return pageShell({
     title: "Labs - PostgreSQL Learning Track",
     active: "labs",
+    currentPath,
     body: `
       <section class="page-heading">
         <p class="eyebrow">Hands-on work</p>
@@ -1066,9 +1100,12 @@ function labsPage() {
 }
 
 function quizzesPage() {
+  const currentPath = "docs/quizzes/index.html";
+  const href = (target) => navHref(currentPath, target);
   return pageShell({
     title: "Quizzes - PostgreSQL Learning Track",
     active: "quizzes",
+    currentPath,
     body: `
       <section class="page-heading">
         <p class="eyebrow">Assessment</p>
@@ -1087,8 +1124,8 @@ function quizzesPage() {
       </section>
       <section class="section">
         <div class="actions">
-          <a class="button primary" href="/docs/sessions/session-01/index.html">Try the first quiz</a>
-          <a class="button" href="/docs/lessons/index.html">Review lesson anatomy</a>
+          <a class="button primary" href="${href("docs/sessions/session-01/index.html")}">Try the first quiz</a>
+          <a class="button" href="${href("docs/lessons/index.html")}">Review lesson anatomy</a>
         </div>
       </section>
     `,
@@ -1109,9 +1146,11 @@ function referencesPageLinkBlock(session) {
 }
 
 function schemaNotesPage() {
+  const currentPath = "docs/schema-notes/index.html";
   return pageShell({
     title: "Schema Notes - PostgreSQL Learning Track",
     active: "schema",
+    currentPath,
     body: `
       <section class="page-heading">
         <p class="eyebrow">Schema notes</p>
@@ -1133,9 +1172,11 @@ function schemaNotesPage() {
 }
 
 function queryNotesPage() {
+  const currentPath = "docs/query-notes/index.html";
   return pageShell({
     title: "Query Notes - PostgreSQL Learning Track",
     active: "queries",
+    currentPath,
     body: `
       <section class="page-heading">
         <p class="eyebrow">Query notes</p>
@@ -1157,9 +1198,11 @@ function queryNotesPage() {
 }
 
 function architecturePage() {
+  const currentPath = "docs/architecture/index.html";
   return pageShell({
     title: "Architecture - PostgreSQL Learning Track",
     active: "architecture",
+    currentPath,
     body: `
       <section class="page-heading">
         <p class="eyebrow">Operating rules</p>
@@ -1200,9 +1243,12 @@ function architecturePage() {
 }
 
 function sessionNotesPage() {
+  const currentPath = "docs/session-notes/index.html";
+  const href = (target) => navHref(currentPath, target);
   return pageShell({
     title: "Session Notes - PostgreSQL Learning Track",
     active: "session-notes",
+    currentPath,
     body: `
       <section class="page-heading">
         <p class="eyebrow">Session notes</p>
@@ -1218,7 +1264,7 @@ function sessionNotesPage() {
                 <td>2026-06-30</td>
                 <td>Pre-curriculum</td>
                 <td>Initialize the learning system, docs structure, and 40-session scaffold.</td>
-                <td><a href="/docs/session-notes/2026-06-30-initialization.html">Open note</a></td>
+                <td><a href="${href("docs/session-notes/2026-06-30-initialization.html")}">Open note</a></td>
               </tr>
             </tbody>
           </table>
@@ -1229,9 +1275,12 @@ function sessionNotesPage() {
 }
 
 function commitReviewsPage() {
+  const currentPath = "docs/commit-reviews/index.html";
+  const href = (target) => navHref(currentPath, target);
   return pageShell({
     title: "Commit Reviews - PostgreSQL Learning Track",
     active: "commit-reviews",
+    currentPath,
     body: `
       <section class="page-heading">
         <p class="eyebrow">Commit reviews</p>
@@ -1265,7 +1314,7 @@ function commitReviewsPage() {
                 <td>2026-06-30</td>
                 <td>Pre-curriculum initialization</td>
                 <td>Created the docs-first static learning system and generated the full session scaffold.</td>
-                <td><a href="/docs/commit-reviews/2026-06-30-initialization.html">Open review</a></td>
+                <td><a href="${href("docs/commit-reviews/2026-06-30-initialization.html")}">Open review</a></td>
               </tr>
             </tbody>
           </table>
@@ -1276,9 +1325,11 @@ function commitReviewsPage() {
 }
 
 function initializationSessionNotePage() {
+  const currentPath = "docs/session-notes/2026-06-30-initialization.html";
   return pageShell({
     title: "Initialization Session Note - PostgreSQL Learning Track",
     active: "session-notes",
+    currentPath,
     body: `
       <section class="page-heading">
         <p class="eyebrow">Session note</p>
@@ -1315,9 +1366,11 @@ function initializationSessionNotePage() {
 }
 
 function initializationCommitReviewPage() {
+  const currentPath = "docs/commit-reviews/2026-06-30-initialization.html";
   return pageShell({
     title: "Initialization Commit Review - PostgreSQL Learning Track",
     active: "commit-reviews",
+    currentPath,
     body: `
       <section class="page-heading">
         <p class="eyebrow">Commit review</p>
@@ -1358,9 +1411,12 @@ function initializationCommitReviewPage() {
 }
 
 function promptsPage() {
+  const currentPath = "docs/prompts/index.html";
+  const href = (target) => navHref(currentPath, target);
   return pageShell({
     title: "Prompts - PostgreSQL Learning Track",
     active: "prompts",
+    currentPath,
     body: `
       <section class="page-heading">
         <p class="eyebrow">Prompt archive</p>
@@ -1377,7 +1433,7 @@ function promptsPage() {
                 <td>2026-06-30</td>
                 <td>Pre-curriculum</td>
                 <td>Define the 40-session PostgreSQL learning track and the docs-first architecture.</td>
-                <td><a href="/docs/prompts/2026-06-30-project-initialization.html">Open prompt page</a></td>
+                <td><a href="${href("docs/prompts/2026-06-30-project-initialization.html")}">Open prompt page</a></td>
               </tr>
             </tbody>
           </table>
@@ -1388,6 +1444,7 @@ function promptsPage() {
 }
 
 function promptDetailPage() {
+  const currentPath = "docs/prompts/2026-06-30-project-initialization.html";
   const text = `PostgreSQL Learning Track Project Initialization Prompt
 
 Date: 2026-06-30
@@ -1426,6 +1483,7 @@ Design the full 40-session curriculum, show dependency ordering, show the propos
   return pageShell({
     title: "Project Initialization Prompt - PostgreSQL Learning Track",
     active: "prompts",
+    currentPath,
     body: `
       <section class="page-heading">
         <p class="eyebrow">Prompt record</p>
@@ -1461,6 +1519,8 @@ function phasePill(phase) {
 }
 
 function sessionPage(session) {
+  const currentPath = `docs/sessions/session-${pad(session.n)}/index.html`;
+  const href = (target) => navHref(currentPath, target);
   const details = sessionTheme(session);
   const index = session.n - 1;
   const prev = sessions[index - 1];
@@ -1472,6 +1532,7 @@ function sessionPage(session) {
   return pageShell({
     title: `Session ${pad(session.n)} - ${session.title}`,
     active: "sessions",
+    currentPath,
     description: `${session.title} in the PostgreSQL learning track.`,
     body: `
       <section class="session-hero">
@@ -1481,9 +1542,9 @@ function sessionPage(session) {
           <h1>${escapeHtml(session.title)}</h1>
           <p class="lede">${escapeHtml(details.objective)}</p>
           <div class="actions">
-            ${prev ? `<a class="button" href="/docs/sessions/session-${pad(prev.n)}/index.html">Previous</a>` : ""}
-            <a class="button primary" href="/docs/sessions/index.html">Back to session index</a>
-            ${next ? `<a class="button" href="/docs/sessions/session-${pad(next.n)}/index.html">Next</a>` : ""}
+            ${prev ? `<a class="button" href="${href(`docs/sessions/session-${pad(prev.n)}/index.html`)}">Previous</a>` : ""}
+            <a class="button primary" href="${href("docs/sessions/index.html")}">Back to session index</a>
+            ${next ? `<a class="button" href="${href(`docs/sessions/session-${pad(next.n)}/index.html`)}">Next</a>` : ""}
           </div>
         </div>
         <aside class="session-side">
@@ -1604,12 +1665,12 @@ function rootIndex() {
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta http-equiv="refresh" content="0; url=/docs/index.html" />
+  <meta http-equiv="refresh" content="0; url=docs/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PostgreSQL Learning Track</title>
 </head>
 <body>
-  <p>Open <a href="/docs/index.html">the documentation home</a>.</p>
+  <p>Open <a href="docs/index.html">the documentation home</a>.</p>
 </body>
 </html>`;
 }
@@ -1617,18 +1678,22 @@ function rootIndex() {
 function stylesCss() {
   return `
 :root {
-  --bg: #f5efe4;
-  --paper: #fbf8f2;
-  --panel: #f8f3e9;
-  --ink: #1c2a3d;
-  --muted: #5d6776;
-  --accent: #9a4d26;
-  --accent-dark: #213b63;
-  --accent-soft: #d9c7b4;
-  --line: rgba(28, 42, 61, 0.14);
-  --shadow: 0 18px 45px rgba(28, 42, 61, 0.08);
-  --radius: 20px;
-  --radius-sm: 14px;
+  --bg: #f7f5f1;
+  --bg-strong: #ece8e1;
+  --surface: rgba(255, 255, 255, 0.86);
+  --surface-strong: #ffffff;
+  --ink: #101114;
+  --muted: #555a66;
+  --soft: #747b8a;
+  --accent: #d9468d;
+  --accent-deep: #111114;
+  --line: rgba(16, 17, 20, 0.1);
+  --line-strong: rgba(16, 17, 20, 0.18);
+  --shadow: 0 20px 60px rgba(16, 17, 20, 0.08);
+  --shadow-strong: 0 28px 100px rgba(16, 17, 20, 0.12);
+  --radius: 28px;
+  --radius-sm: 18px;
+  --content: 1240px;
   color-scheme: light;
 }
 
@@ -1644,11 +1709,11 @@ body {
   margin: 0;
   color: var(--ink);
   background:
-    radial-gradient(circle at top left, rgba(154, 77, 38, 0.08), transparent 30%),
-    radial-gradient(circle at right 15%, rgba(33, 59, 99, 0.08), transparent 32%),
-    linear-gradient(180deg, #fbf7ef 0%, #f5efe4 100%);
-  font-family: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  line-height: 1.6;
+    radial-gradient(circle at top left, rgba(217, 70, 141, 0.09), transparent 28%),
+    radial-gradient(circle at 85% 12%, rgba(17, 17, 20, 0.06), transparent 26%),
+    linear-gradient(180deg, #faf9f7 0%, #f4f0ea 100%);
+  font-family: "Aptos", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.65;
   min-height: 100vh;
 }
 
@@ -1657,35 +1722,37 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.18;
-  background-image:
-    linear-gradient(to right, rgba(28, 42, 61, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(28, 42, 61, 0.05) 1px, transparent 1px);
-  background-size: 28px 28px;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 92%);
+  opacity: 0.32;
+  background:
+    linear-gradient(to right, rgba(16, 17, 20, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(16, 17, 20, 0.03) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 86%);
 }
 
 a {
   color: inherit;
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.15em;
+  text-underline-offset: 0.14em;
 }
 
-code, pre {
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+code,
+pre {
+  font-family: "Cascadia Code", Consolas, "SFMono-Regular", Menlo, monospace;
 }
 
 .container {
-  width: min(1180px, calc(100vw - 32px));
+  width: min(var(--content), calc(100vw - 32px));
   margin: 0 auto;
 }
 
 .skip-link {
   position: absolute;
   left: -999px;
-  top: 16px;
-  background: var(--paper);
-  padding: 8px 12px;
+  top: 14px;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  padding: 10px 14px;
   border-radius: 999px;
   z-index: 1000;
 }
@@ -1698,23 +1765,23 @@ code, pre {
   position: sticky;
   top: 0;
   z-index: 50;
-  backdrop-filter: blur(12px);
-  background: rgba(251, 248, 242, 0.82);
-  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(18px);
+  background: rgba(247, 245, 241, 0.82);
+  border-bottom: 1px solid rgba(16, 17, 20, 0.08);
 }
 
 .topbar-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
-  padding: 14px 0;
+  gap: 20px;
+  padding: 16px 0;
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   text-decoration: none;
 }
 
@@ -1723,28 +1790,41 @@ code, pre {
   display: block;
 }
 
+.brand strong,
+.hero-copy h1,
+.page-heading h1,
+.session-meta h1,
+.section-head h2,
+.panel h2,
+.quiz-item h3,
+.session-side h2,
+.session-side h3,
+.card strong {
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+}
+
 .brand strong {
-  font-family: Georgia, "Times New Roman", serif;
-  letter-spacing: 0.02em;
-  font-size: 1.02rem;
+  font-size: 1.08rem;
+  letter-spacing: 0.01em;
 }
 
 .brand small {
-  color: var(--muted);
-  font-size: 0.78rem;
+  color: var(--soft);
+  font-size: 0.76rem;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.22em;
 }
 
 .brand-mark {
-  width: 42px;
-  height: 42px;
+  width: 46px;
+  height: 46px;
   display: grid;
   place-items: center;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  background: linear-gradient(180deg, #fff, #f1e8d9);
-  color: var(--accent-dark);
+  border-radius: 16px;
+  background: linear-gradient(180deg, #111114, #26272d);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   box-shadow: var(--shadow);
 }
 
@@ -1758,21 +1838,29 @@ code, pre {
 .nav a {
   text-decoration: none;
   color: var(--muted);
-  padding: 7px 10px;
+  padding: 8px 12px;
   border-radius: 999px;
   border: 1px solid transparent;
   font-size: 0.92rem;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
 }
 
-.nav a.active,
-.nav a:hover {
+.nav a:hover,
+.nav a:focus-visible {
   color: var(--ink);
   border-color: var(--line);
-  background: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.75);
+  transform: translateY(-1px);
+}
+
+.nav a.active {
+  color: #fff;
+  border-color: transparent;
+  background: var(--accent-deep);
 }
 
 .page {
-  padding: 30px 0 72px;
+  padding: 30px 0 84px;
 }
 
 .hero,
@@ -1780,123 +1868,170 @@ code, pre {
 .split,
 .page-heading,
 .section {
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .hero,
 .session-hero,
 .split {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.85fr);
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.88fr);
   gap: 22px;
 }
 
 .hero-copy h1,
 .page-heading h1,
 .session-meta h1 {
-  font-family: Georgia, "Times New Roman", serif;
-  letter-spacing: -0.02em;
-  line-height: 1.02;
   margin: 0;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
 }
 
 .hero-copy h1 {
-  font-size: clamp(2.8rem, 7vw, 5.2rem);
-  max-width: 12ch;
+  font-size: clamp(3.2rem, 8vw, 6.8rem);
+  max-width: 11ch;
 }
 
 .page-heading h1,
 .session-meta h1 {
-  font-size: clamp(2.1rem, 5vw, 3.8rem);
-  max-width: 14ch;
+  font-size: clamp(2.4rem, 5vw, 4.3rem);
+  max-width: 13ch;
 }
 
 .lede {
-  font-size: 1.08rem;
+  margin: 18px 0 0;
+  font-size: 1.09rem;
   color: var(--muted);
-  max-width: 68ch;
+  max-width: 66ch;
 }
 
 .eyebrow {
-  margin: 0 0 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 0.8rem;
+  margin: 0 0 14px;
   color: var(--accent);
+  font-size: 0.77rem;
   font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 24px;
+  margin-top: 28px;
 }
 
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 10px 16px;
+  min-height: 46px;
+  padding: 11px 18px;
   border-radius: 999px;
   border: 1px solid var(--line);
-  text-decoration: none;
   background: rgba(255, 255, 255, 0.72);
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.button:hover,
+.button:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(16, 17, 20, 0.08);
 }
 
 .button.primary {
-  background: linear-gradient(180deg, var(--accent-dark), #152844);
+  background: linear-gradient(180deg, #17181d, #09090b);
   color: #fff;
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: transparent;
 }
 
+.hero-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.hero-metrics div,
 .panel,
 .card,
 .quiz-item,
 .table-wrap,
 table {
-  border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: rgba(251, 248, 242, 0.8);
+  border: 1px solid var(--line);
+  background: var(--surface);
   box-shadow: var(--shadow);
+}
+
+.hero-metrics div {
+  padding: 16px 18px;
+}
+
+.hero-metrics strong {
+  display: block;
+  font-size: 1.6rem;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.hero-metrics span {
+  color: var(--muted);
+  font-size: 0.92rem;
 }
 
 .panel,
 .quiz-item {
-  padding: 22px;
+  padding: 24px;
 }
 
 .hero-panel {
   display: grid;
-  gap: 16px;
+  gap: 18px;
 }
 
 .compass {
-  display: grid;
-  gap: 16px;
-  align-items: center;
-  justify-items: start;
+  position: relative;
+  overflow: hidden;
+}
+
+.compass::after {
+  content: "";
+  position: absolute;
+  inset: auto -40px -40px auto;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217, 70, 141, 0.14), transparent 70%);
 }
 
 .compass-ring {
-  width: 74px;
-  height: 74px;
+  width: 76px;
+  height: 76px;
   display: grid;
   place-items: center;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  background: linear-gradient(180deg, rgba(33, 59, 99, 0.12), rgba(154, 77, 38, 0.08));
-  color: var(--accent-dark);
-  font-size: 1.4rem;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #121318, #23252c);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.callout {
+  background:
+    linear-gradient(135deg, rgba(217, 70, 141, 0.08), rgba(255, 255, 255, 0.78) 35%),
+    var(--surface-strong);
 }
 
 .section-head {
   display: flex;
   align-items: end;
   justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 16px;
+  gap: 22px;
+  margin-bottom: 18px;
 }
 
 .section-head h2,
@@ -1904,18 +2039,17 @@ table {
 .quiz-item h3,
 .session-side h2,
 .session-side h3 {
-  font-family: Georgia, "Times New Roman", serif;
-  line-height: 1.1;
   margin: 0 0 10px;
+  line-height: 1;
 }
 
 .section-head h2 {
-  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-size: clamp(1.8rem, 3vw, 2.9rem);
 }
 
 .card-grid {
   display: grid;
-  gap: 16px;
+  gap: 18px;
 }
 
 .card-grid.four {
@@ -1924,13 +2058,21 @@ table {
 
 .card {
   display: grid;
-  gap: 8px;
-  padding: 18px;
+  gap: 10px;
+  padding: 20px;
   text-decoration: none;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.card:hover,
+.card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-strong);
+  border-color: var(--line-strong);
 }
 
 .card strong {
-  font-size: 1.04rem;
+  font-size: 1.18rem;
 }
 
 .card span,
@@ -1940,7 +2082,8 @@ table {
 .table-wrap td,
 .table-wrap th,
 .ordered li,
-.bullets li {
+.bullets li,
+.hero-panel p {
   color: var(--muted);
 }
 
@@ -1953,8 +2096,9 @@ table {
   border-collapse: collapse;
 }
 
-th, td {
-  padding: 14px 16px;
+th,
+td {
+  padding: 16px 18px;
   border-bottom: 1px solid var(--line);
   text-align: left;
   vertical-align: top;
@@ -1962,10 +2106,11 @@ th, td {
 
 th {
   color: var(--ink);
-  font-size: 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  background: rgba(33, 59, 99, 0.04);
+  background: rgba(16, 17, 20, 0.03);
 }
 
 tbody tr:last-child td {
@@ -1986,11 +2131,18 @@ tbody tr:last-child td {
 .quiz-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 18px;
 }
 
-.quiz-item h3 {
-  font-size: 1.15rem;
+.quiz-item summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.quiz-item details {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--line);
 }
 
 .quiz-options {
@@ -2002,24 +2154,13 @@ tbody tr:last-child td {
   margin-top: 6px;
 }
 
-.quiz-item details {
-  margin-top: 12px;
-  border-top: 1px dashed var(--line);
-  padding-top: 12px;
-}
-
-.quiz-item summary {
-  cursor: pointer;
-  font-weight: 600;
-}
-
 .code-block {
   margin: 14px 0 0;
-  padding: 18px;
-  border-radius: 16px;
+  padding: 20px;
+  border-radius: 20px;
   overflow: auto;
-  background: #162236;
-  color: #f3efe5;
+  background: #111216;
+  color: #f3f2ef;
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -2042,49 +2183,68 @@ tbody tr:last-child td {
   display: inline-flex;
   align-items: center;
   width: fit-content;
-  padding: 6px 10px;
+  padding: 7px 11px;
   border-radius: 999px;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.7);
-  color: var(--accent-dark);
-  font-size: 0.82rem;
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
 }
 
-.session-meta .actions {
-  margin-top: 18px;
+.phase-pill {
+  color: var(--accent);
 }
 
 .page-heading {
-  padding-top: 18px;
+  padding-top: 24px;
 }
 
 .ordered code,
 .bullets code {
-  font-size: 0.95em;
+  font-size: 0.96em;
 }
 
-@media (max-width: 1024px) {
-  .card-grid.four {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+@media (prefers-reduced-motion: no-preference) {
+  .panel,
+  .card,
+  .quiz-item,
+  .hero-copy,
+  .session-meta {
+    animation: rise 420ms ease-out both;
   }
 
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@media (max-width: 1080px) {
   .hero,
   .session-hero,
   .split {
     grid-template-columns: 1fr;
   }
 
+  .card-grid.four,
+  .hero-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .quiz-grid {
     grid-template-columns: 1fr;
   }
 
-  .section-head {
-    flex-direction: column;
-    align-items: start;
-  }
-
+  .section-head,
   .topbar-inner {
     flex-direction: column;
     align-items: start;
@@ -2104,17 +2264,23 @@ tbody tr:last-child td {
     padding-top: 18px;
   }
 
-  .card-grid.four {
-    grid-template-columns: 1fr;
-  }
-
   .hero-copy h1 {
-    font-size: clamp(2.4rem, 12vw, 4rem);
+    font-size: clamp(2.8rem, 13vw, 4.8rem);
   }
 
   .page-heading h1,
   .session-meta h1 {
-    font-size: clamp(2rem, 10vw, 3rem);
+    font-size: clamp(2.2rem, 11vw, 3.6rem);
+  }
+
+  .card-grid.four,
+  .hero-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .panel,
+  .quiz-item {
+    padding: 20px;
   }
 }
 `;
