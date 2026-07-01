@@ -1,525 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Session 23 — Transactions as a Unit</title>
-  <link rel="stylesheet" href="../../styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Session 23 - Foreign keys and referential actions</title>
+  <meta name="description" content="Foreign keys and referential actions in the PostgreSQL learning track." />
+  <link rel="stylesheet" href="/docs/styles.css" />
 </head>
 <body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="/docs/index.html">
+        <span class="brand-mark">PG</span>
+        <span>
+          <strong>PostgreSQL Learning Track</strong>
+          <small>Country edition</small>
+        </span>
+      </a>
+      <nav class="nav">
+        <a class="" href="/docs/index.html">Home</a><a class="" href="/docs/syllabus/index.html">Syllabus</a><a class="active" href="/docs/sessions/index.html">Sessions</a><a class="" href="/docs/lessons/index.html">Lessons</a><a class="" href="/docs/labs/index.html">Labs</a><a class="" href="/docs/quizzes/index.html">Quizzes</a><a class="" href="/docs/references/index.html">References</a><a class="" href="/docs/schema-notes/index.html">Schema Notes</a><a class="" href="/docs/query-notes/index.html">Query Notes</a><a class="" href="/docs/architecture/index.html">Architecture</a><a class="" href="/docs/session-notes/index.html">Session Notes</a><a class="" href="/docs/commit-reviews/index.html">Commit Reviews</a><a class="" href="/docs/prompts/index.html">Prompts</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="page">
+    <div class="container">
+      
+      <section class="session-hero">
+        <div class="session-meta">
+          <span class="phase-pill">Constraints</span>
+          <span class="session-number">Session 23</span>
+          <h1>Foreign keys and referential actions</h1>
+          <p class="lede">Connect tables with foreign keys and explain delete behavior.</p>
+          <div class="actions">
+            <a class="button" href="/docs/sessions/session-22/index.html">Previous</a>
+            <a class="button primary" href="/docs/sessions/index.html">Back to session index</a>
+            <a class="button" href="/docs/sessions/session-24/index.html">Next</a>
+          </div>
+        </div>
+        <aside class="session-side">
+          <div class="panel">
+            <h2>Learning objective</h2>
+            <p>Connect tables with foreign keys and explain delete behavior.</p>
+          </div>
+          <div class="panel">
+            <h2>What this lesson protects</h2>
+            <p>Without foreign keys, orphan rows appear easily.</p>
+          </div>
+        </aside>
+      </section>
 
-  <nav>
-    <div class="container nav-row">
-      <a class="brand " href="../../../index.html">⌘ Postgres Learning</a>
-      <a class="" href="../../../docs/syllabus/index.html">Syllabus</a><a class="active" href="../../../docs/sessions/index.html">Sessions</a><a class="" href="../../../docs/quizzes/index.html">Quizzes</a><a class="" href="../../../docs/labs/index.html">Labs</a><a class="" href="../../../docs/architecture/index.html">Architecture</a><a class="" href="../../../docs/notes/index.html">Notes</a><a class="" href="../../../docs/commits/index.html">Commits</a><a class="" href="../../../docs/prompts/index.html">Prompts</a>
-    </div>
-  </nav>
-<main>
-  <div class="container">
+      <section class="section split">
+        <div class="panel">
+          <h2>Concept explanation</h2>
+          <p>Foreign keys keep child rows pointed at valid parent rows.</p>
+        </div>
+        <div class="panel">
+          <h2>Underlying database or SQL idea</h2>
+          <p>Protect the data before relying on it for analysis.</p>
+        </div>
+      </section>
 
-    <div class="session-head">
-      <span class="badge badge-layer">Session 23</span>
-      <span class="badge badge-current">Reliability</span>
-      <span class="session-meta">Estimated time: one hour</span>
-    </div>
-    <h1>Transactions as a Unit</h1>
-    <p class="subtitle">Make several changes succeed or fail together.</p>
-    <div class="alert alert-info"><strong>Focus:</strong> BEGIN, COMMIT, ROLLBACK</div>
-    <h2>Learning Objective</h2>
-    <div class="card">
-      <ul>
-        <li>Make several changes succeed or fail together.</li>
-        <li>Explain the concept in plain language.</li>
-        <li>Complete the lab without skipping steps.</li>
-        <li>Know what would break if we skipped this session.</li>
-      </ul>
-    </div>
-    <h2>One-Hour Flow</h2>
-    <div class="card">
-      <ol>
-        <li><strong>0-10 min:</strong> pre-quiz and warm-up discussion.</li>
-        <li><strong>10-25 min:</strong> concept explanation and visual walkthrough.</li>
-        <li><strong>25-45 min:</strong> lab in pgAdmin with live edits and retries.</li>
-        <li><strong>45-55 min:</strong> review mistakes, compare answers, and reinforce the mental model.</li>
-        <li><strong>55-60 min:</strong> post-quiz and commit checkpoint.</li>
-      </ol>
-    </div>
-    
-    <h2>Pre-quiz</h2>
-    <div class="card">
-      <p>Answer these before the concept section. We are checking starting understanding, not perfection.</p>
-      <div class="quiz" data-quiz-mode="pre" data-session="23">
+      <section class="section">
+        <div class="panel">
+          <h2>PostgreSQL-specific explanation</h2>
+          <p>PostgreSQL can block, cascade, or null out related rows depending on the rule you choose.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Pre-lab quiz</p>
+            <h2>Five questions before the lab</h2>
+          </div>
+          <p>Answer these before the lab. Use the answer check only after you have made your choice.</p>
+        </div>
         
-        <div class="quiz-question" data-answer="b" data-explanation="B is correct because the session is centered on BEGIN, COMMIT, ROLLBACK.">
-          <div class="question-num">Question 1 of 5</div>
-          <p>What best describes the topic of Transactions as a Unit?</p>
-          
-            <label class="quiz-option" data-option="a">
-              <input type="radio" name="pre-23-0" />
-              <span>A. Why transactions protect data integrity</span>
-            </label>
-            <label class="quiz-option" data-option="b">
-              <input type="radio" name="pre-23-0" />
-              <span>B. BEGIN, COMMIT, ROLLBACK</span>
-            </label>
-            <label class="quiz-option" data-option="c">
-              <input type="radio" name="pre-23-0" />
-              <span>C. Practice a multi-step change and undo it safely</span>
-            </label>
-            <label class="quiz-option" data-option="d">
-              <input type="radio" name="pre-23-0" />
-              <span>D. Session 22</span>
-            </label>
-        </div>
-        <div class="quiz-question" data-answer="c" data-explanation="C is correct because the lab is to Practice a multi-step change and undo it safely.">
-          <div class="question-num">Question 2 of 5</div>
-          <p>Which lab action would you expect in this session?</p>
-          
-            <label class="quiz-option" data-option="a">
-              <input type="radio" name="pre-23-1" />
-              <span>A. Make several changes succeed or fail together.</span>
-            </label>
-            <label class="quiz-option" data-option="b">
-              <input type="radio" name="pre-23-1" />
-              <span>B. BEGIN, COMMIT, ROLLBACK</span>
-            </label>
-            <label class="quiz-option" data-option="c">
-              <input type="radio" name="pre-23-1" />
-              <span>C. Practice a multi-step change and undo it safely</span>
-            </label>
-            <label class="quiz-option" data-option="d">
-              <input type="radio" name="pre-23-1" />
-              <span>D. Session 22</span>
-            </label>
-        </div>
-        <div class="quiz-question" data-answer="d" data-explanation="D is correct because this lesson builds on Session 22.">
-          <div class="question-num">Question 3 of 5</div>
-          <p>What earlier idea supports this lesson most directly?</p>
-          
-            <label class="quiz-option" data-option="a">
-              <input type="radio" name="pre-23-2" />
-              <span>A. Make several changes succeed or fail together.</span>
-            </label>
-            <label class="quiz-option" data-option="b">
-              <input type="radio" name="pre-23-2" />
-              <span>B. BEGIN, COMMIT, ROLLBACK</span>
-            </label>
-            <label class="quiz-option" data-option="c">
-              <input type="radio" name="pre-23-2" />
-              <span>C. Practice a multi-step change and undo it safely</span>
-            </label>
-            <label class="quiz-option" data-option="d">
-              <input type="radio" name="pre-23-2" />
-              <span>D. Session 22</span>
-            </label>
-        </div>
-        <div class="quiz-question" data-answer="a" data-explanation="A is correct because the quiz focus is Why transactions protect data integrity.">
-          <div class="question-num">Question 4 of 5</div>
-          <p>Which detail should you watch most closely in the quiz?</p>
-          
-            <label class="quiz-option" data-option="a">
-              <input type="radio" name="pre-23-3" />
-              <span>A. Why transactions protect data integrity</span>
-            </label>
-            <label class="quiz-option" data-option="b">
-              <input type="radio" name="pre-23-3" />
-              <span>B. BEGIN, COMMIT, ROLLBACK</span>
-            </label>
-            <label class="quiz-option" data-option="c">
-              <input type="radio" name="pre-23-3" />
-              <span>C. Practice a multi-step change and undo it safely</span>
-            </label>
-            <label class="quiz-option" data-option="d">
-              <input type="radio" name="pre-23-3" />
-              <span>D. Session 22</span>
-            </label>
-        </div>
-        <div class="quiz-question" data-answer="a" data-explanation="A is correct because the session objective is the end-state you are aiming to explain.">
-          <div class="question-num">Question 5 of 5</div>
-          <p>What should you be able to explain by the end of this session?</p>
-          
-            <label class="quiz-option" data-option="a">
-              <input type="radio" name="pre-23-4" />
-              <span>A. Make several changes succeed or fail together.</span>
-            </label>
-            <label class="quiz-option" data-option="b">
-              <input type="radio" name="pre-23-4" />
-              <span>B. BEGIN, COMMIT, ROLLBACK</span>
-            </label>
-            <label class="quiz-option" data-option="c">
-              <input type="radio" name="pre-23-4" />
-              <span>C. Practice a multi-step change and undo it safely</span>
-            </label>
-            <label class="quiz-option" data-option="d">
-              <input type="radio" name="pre-23-4" />
-              <span>D. Session 22</span>
-            </label>
-        </div>
-      </div>
-    </div>
-    <hr />
-    <h2>Concept</h2>
-    <div class="card">
-      <p><strong>Underlying idea:</strong> BEGIN, COMMIT, ROLLBACK</p>
-      <p>This lesson follows the same documentation-first format as RL-AI: pre-quiz, concept, lab, commit checkpoint, and post-quiz.</p>
-      <p>Use pgAdmin locally to practice the SQL directly against a database you own.</p>
-    </div>
-    <h2>Schema Story</h2>
-    <div class="card">
+    <div class="quiz-grid">
       
+        <article class="quiz-item">
+          <h3>Question 1</h3>
+          <p>Why does Foreign keys and referential actions belong in the learning sequence before later database work?</p>
+          <ul class="quiz-options">
+            <li>It removes a conceptual blind spot that later lessons depend on.</li><li>It mainly improves query speed.</li><li>It replaces the need for a schema.</li><li>It only matters for large companies.</li>
+          </ul>
+          <details >
+            <summary>Answer check</summary>
+            <p><strong>A.</strong> Because it removes a conceptual blind spot that later lessons depend on.</p>
+          </details>
+        </article>
       
-    <p><strong>Fictional database:</strong> We use one shared practice schema called <code>world_learning</code>.</p>
-    <ul>
-      <li><code>countries(id, name, region, population, capital, region_id)</code></li>
-      <li><code>regions(id, name)</code></li>
-      <li><code>cities(id, name, country_id)</code></li>
-      <li><code>languages(id, name)</code></li>
-      <li><code>country_languages(country_id, language_id)</code></li>
-    </ul>
-      <p>For transaction and admin lessons, we also mention helper tables like <code>accounts</code>, <code>draft_rows</code>, and <code>imported_countries</code> so the operational examples stay realistic.</p>
-    
-      <p class="muted">The exact table names change a little by lesson, but they all live in the same fictional database so the course stays coherent.</p>
-    </div>
-    <h2>Practice Dataset</h2>
-    <div class="card">
-      <p>Use these sample rows when you picture the query in your head. The examples are tiny on purpose so you can reason about every result.</p>
+        <article class="quiz-item">
+          <h3>Question 2</h3>
+          <p>What is the most likely risk if we skip foreign keys and referential actions?</p>
+          <ul class="quiz-options">
+            <li>Nothing changes because PostgreSQL fills the gap automatically.</li><li>The later model will have a missing rule or a weak mental model.</li><li>All joins become invalid immediately.</li><li>The database engine stops working.</li>
+          </ul>
+          <details >
+            <summary>Answer check</summary>
+            <p><strong>B.</strong> The later model will have a missing rule or a weak mental model.</p>
+          </details>
+        </article>
       
+        <article class="quiz-item">
+          <h3>Question 3</h3>
+          <p>Which country-data habit does this lesson reinforce most?</p>
+          <ul class="quiz-options">
+            <li>Write more rows first and think later.</li><li>Prefer the most advanced feature available.</li><li>Think in terms of one clear rule, then encode it in SQL or schema.</li><li>Avoid documenting anything until the end.</li>
+          </ul>
+          <details >
+            <summary>Answer check</summary>
+            <p><strong>C.</strong> Think in terms of one clear rule, then encode it in SQL or schema.</p>
+          </details>
+        </article>
       
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Table</th><th>Sample Columns</th><th>Example Row</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>countries</code></td><td>id, name, region, population, capital, region_id</td><td>1 | Canada | Americas | 38000000 | Ottawa | 1</td></tr>
-          <tr><td><code>regions</code></td><td>id, name</td><td>1 | Americas</td></tr>
-          <tr><td><code>cities</code></td><td>id, name, country_id</td><td>1 | Ottawa | 1</td></tr>
-        </tbody>
-      </table>
+        <article class="quiz-item">
+          <h3>Question 4</h3>
+          <p>If a teammate used a spreadsheet shortcut instead of this lesson, what would you warn them about?</p>
+          <ul class="quiz-options">
+            <li>Spreadsheets are always slower in every situation.</li><li>They never support formulas.</li><li>They cannot store country data at all.</li><li>They can hide duplicated facts and missing constraints.</li>
+          </ul>
+          <details >
+            <summary>Answer check</summary>
+            <p><strong>D.</strong> Spreadsheets can hide duplicated facts and missing constraints.</p>
+          </details>
+        </article>
+      
+        <article class="quiz-item">
+          <h3>Question 5</h3>
+          <p>What should we be able to explain after the lab?</p>
+          <ul class="quiz-options">
+            <li>The concept in plain English, not just the command sequence.</li><li>Only the keyboard shortcuts we used.</li><li>Only the output row count.</li><li>Only the commit message format.</li>
+          </ul>
+          <details >
+            <summary>Answer check</summary>
+            <p><strong>A.</strong> The concept in plain English, not just the command sequence.</p>
+          </details>
+        </article>
+      
     </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th>Table</th><th>Sample Columns</th><th>Example Row</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><code>languages</code></td><td>id, name</td><td>1 | English</td></tr>
-            <tr><td><code>country_languages</code></td><td>country_id, language_id</td><td>1 | 1</td></tr>
-          </tbody>
-        </table>
-      </div>
-    
-    </div>
-    <div class="diagram-wrap">
-      <img src="../../../assets/svg/sql-10-transactions-acid.svg" alt="Transactions as a Unit diagram" />
-    </div>
-    <h2>Diagram Example</h2>
-    <div class="card">
-      <p>This diagram shows the main idea for Session 23: BEGIN, COMMIT, ROLLBACK. Read it left to right, then connect each part back to the lab.</p>
-      <p>The colors and arrows are there to show flow, identity, or dependency. Use them to explain the lesson out loud before the lab.</p>
-    </div>
-    <h2>Big Idea</h2>
-    <div class="card">
-      <p>Make several changes succeed or fail together.</p>
-      <p>When you work through this topic, do not think of it as a single trick. Think of it as part of how a database team reasons about data shape, correctness, and readable queries.</p>
-      <p>For this lesson, the thing to keep repeating is: <strong>BEGIN, COMMIT, ROLLBACK</strong>.</p>
-    </div>
-    <h2>Worked Walkthrough</h2>
-    <div class="card">
-      <ol>
-        <li>Look at the problem first, not the syntax.</li>
-        <li>Identify the data object you are touching, such as a table, row, filter, or relationship.</li>
-        <li>Write the smallest possible SQL or database action that proves the idea.</li>
-        <li>Inspect the result before you move on, even if it looks obvious.</li>
-      </ol>
-    </div>
-    <h2>SQL Examples</h2>
-    <div class="card">
-      <pre><code>BEGIN; UPDATE accounts SET balance = balance - 50 WHERE id = 1; UPDATE accounts SET balance = balance + 50 WHERE id = 2; COMMIT;</code></pre>
-      <pre><code>BEGIN; DELETE FROM draft_rows WHERE created_at < NOW() - INTERVAL '7 days'; ROLLBACK;</code></pre>
-      <p class="muted">These are starter examples. Change the table name, filter, or output column and predict what happens before you run them.</p>
-    </div>
-    <h2>Common Mistakes</h2>
-    <div class="card">
-      <ul>
-        <li>Using the right syntax but the wrong mental model.</li>
-        <li>Changing too many things at once and losing track of what changed the result.</li>
-        <li>Skipping the check step and assuming the first answer is correct.</li>
-      </ul>
-    </div>
-    <h2>Teaching Notes</h2>
-    <div class="card">
-      <p>Say the concept out loud in plain English before you touch the keyboard.</p>
-      <p>Ask yourself which part is the data, which part is the rule, and which part is the result.</p>
-      <p>If the lesson feels easy, slow down and explain why it works. That is where the understanding lives.</p>
-    </div>
-    <h2>Lab</h2>
-    <div class="card">
-      <div class="alert alert-good"><strong>Lab objective:</strong> Practice a multi-step change and undo it safely</div>
-      <p>This is the hands-on checkpoint for the session. Work in small steps, verify every result, and only move forward once the current screen or query output matches the lesson goal.</p>
-      <h3>Lab Setup</h3>
-      <ul>
-        <li>Open psql or the lesson's approved client and connect to PostgreSQL.</li>
-        <li>Open the lesson database used in this session. If it does not exist yet, create it first from the lesson instructions.</li>
-        <li>Keep the lesson notes visible so you can compare each step with the prompt.</li>
-      </ul>
-      <h3>Starter SQL</h3>
-      <p>If you are new to the lesson object, this is the shape of a table creation step:</p>
-      <pre><code>CREATE TABLE lesson_notes (
-  id SERIAL PRIMARY KEY,
-  title TEXT NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT NOW()
-);</code></pre>
-      <p class="muted">The exact table name changes by session. The point is to see how a table is defined before you query or modify it.</p>
-      <h3>Step-by-Step</h3>
-      <ol>
-        <li>Read the objective out loud and restate it in plain English.</li>
-        <li>Find the table, view, query, or database object that this lesson is about.</li>
-        <li>Complete the core action for the lab: <strong>Practice a multi-step change and undo it safely</strong>.</li>
-        <li>Run one small variation and predict the result before you execute it.</li>
-        <li>Write down anything unexpected, even if the query still worked.</li>
-        <li>Explain the result to yourself before you leave the lab section.</li>
-      </ol>
-      <h3>Success Criteria</h3>
-      <ul>
-        <li>You can describe what changed after the lab action.</li>
-        <li>You can point to the exact SQL or UI action that proved the concept.</li>
-        <li>You can predict a one-step variation before trying it.</li>
-      </ul>
-      <h3>Common Mistakes</h3>
-      <ul>
-        <li>Skipping the setup step and changing too many things at once.</li>
-        <li>Reading the answer before checking the output yourself.</li>
-        <li>Not naming the specific table, column, or database object involved.</li>
-      </ul>
-    </div>
-    <h2>Extra Practice</h2>
-    <div class="card">
-      <ul>
-        <li>Redo the lab without looking at the instructions.</li>
-        <li>Change one value or condition and predict the new output first.</li>
-        <li>Tell the story of the lesson in one minute using the words BEGIN, COMMIT, ROLLBACK.</li>
-      </ul>
-    </div>
-    <h2>Expected Files</h2>
-    <div class="card">
-      <ul>
-        <li><code>docs/sessions/session-23/index.html</code></li>
-        <li><code>docs/labs/index.html</code></li>
-        <li><code>docs/quizzes/index.html</code></li>
-      </ul>
-    </div>
-    <h2>Commit Checkpoint</h2>
-    <div class="card">
-      <pre><code>git add .
-git commit -m "session-23: transactions as a unit"</code></pre>
-    </div>
-    
-    <h2>Post-quiz</h2>
-    <div class="card">
-      <p>Retake the same ideas after the lab. A score below 80% means we revisit the lesson.</p>
-      <div class="quiz" data-quiz-mode="post" data-session="23">
-        
-        <div class="quiz-question" data-answer="b" data-explanation="B is correct because BEGIN, COMMIT, ROLLBACK is the core idea taught in this session.">
-          <div class="question-num">Question 1 of 5</div>
-          <p>Can you explain BEGIN, COMMIT, ROLLBACK?</p>
-          
-            <label class="quiz-option" data-option="a">
-              <input type="radio" name="post-23-0" />
-              <span>A. Make several changes succeed or fail together.</span>
-            </label>
-            <label class="quiz-option" data-option="b">
-              <input type="radio" name="post-23-0" />
-              <span>B. BEGIN, COMMIT, ROLLBACK</span>
-            </label>
-            <label class="quiz-option" data-option="c">
-              <input type="radio" name="post-23-0" />
-              <span>C. Practice a multi-step change and undo it safely</span>
-            </label>
-            <label class="quiz-option" data-option="d">
-              <input type="radio" name="post-23-0" />
-              <span>D. Why transactions protect data integrity</span>
-            </label>
-        </div>
-        <div class="quiz-question" data-answer="c" data-explanation="C is correct because the lab objective is to Practice a multi-step change and undo it safely.">
-          <div class="question-num">Question 2 of 5</div>
-          <p>Can you describe the lab goal from memory?</p>
-          
-            <label class="quiz-option" data-option="a">
-              <input type="radio" name="post-23-1" />
-              <span>A. Make several changes succeed or fail together.</span>
-            </label>
-            <label class="quiz-option" data-option="b">
-              <input type="radio" name="post-23-1" />
-              <span>B. BEGIN, COMMIT, ROLLBACK</span>
-            </label>
-            <label class="quiz-option" data-option="c">
-              <input type="radio" name="post-23-1" />
-              <span>C. Practice a multi-step change and undo it safely</span>
-            </label>
-            <label class="quiz-option" data-option="d">
-              <input type="radio" name="post-23-1" />
-              <span>D. Why transactions protect data integrity</span>
-            </label>
-        </div>
-        <div class="quiz-question" data-answer="b" data-explanation="B is correct because the concept definition captures the syntax or object we are learning.">
-          <div class="question-num">Question 3 of 5</div>
-          <p>Which syntax or database object matters most here?</p>
-          
-            <label class="quiz-option" data-option="a">
-              <input type="radio" name="post-23-2" />
-              <span>A. Make several changes succeed or fail together.</span>
-            </label>
-            <label class="quiz-option" data-option="b">
-              <input type="radio" name="post-23-2" />
-              <span>B. BEGIN, COMMIT, ROLLBACK</span>
-            </label>
-            <label class="quiz-option" data-option="c">
-              <input type="radio" name="post-23-2" />
-              <span>C. Practice a multi-step change and undo it safely</span>
-            </label>
-            <label class="quiz-option" data-option="d">
-              <input type="radio" name="post-23-2" />
-              <span>D. Why transactions protect data integrity</span>
-            </label>
-        </div>
-        <div class="quiz-question" data-answer="d" data-explanation="D is correct because the quiz focus names the thing that tends to break if the lesson is missed: Why transactions protect data integrity.">
-          <div class="question-num">Question 4 of 5</div>
-          <p>What breaks if this concept is misunderstood?</p>
-          
-            <label class="quiz-option" data-option="a">
-              <input type="radio" name="post-23-3" />
-              <span>A. Make several changes succeed or fail together.</span>
-            </label>
-            <label class="quiz-option" data-option="b">
-              <input type="radio" name="post-23-3" />
-              <span>B. BEGIN, COMMIT, ROLLBACK</span>
-            </label>
-            <label class="quiz-option" data-option="c">
-              <input type="radio" name="post-23-3" />
-              <span>C. Practice a multi-step change and undo it safely</span>
-            </label>
-            <label class="quiz-option" data-option="d">
-              <input type="radio" name="post-23-3" />
-              <span>D. Why transactions protect data integrity</span>
-            </label>
-        </div>
-        <div class="quiz-question" data-answer="a" data-explanation="A is correct because the session objective summarizes the next skill you should be able to carry forward.">
-          <div class="question-num">Question 5 of 5</div>
-          <p>What is the next idea this session prepares you for?</p>
-          
-            <label class="quiz-option" data-option="a">
-              <input type="radio" name="post-23-4" />
-              <span>A. Make several changes succeed or fail together.</span>
-            </label>
-            <label class="quiz-option" data-option="b">
-              <input type="radio" name="post-23-4" />
-              <span>B. BEGIN, COMMIT, ROLLBACK</span>
-            </label>
-            <label class="quiz-option" data-option="c">
-              <input type="radio" name="post-23-4" />
-              <span>C. Practice a multi-step change and undo it safely</span>
-            </label>
-            <label class="quiz-option" data-option="d">
-              <input type="radio" name="post-23-4" />
-              <span>D. Why transactions protect data integrity</span>
-            </label>
-        </div>
-      </div>
-    </div>
-    <h2>Reflection</h2>
-    <div class="card">
-      <ol>
-        <li>What changed in your understanding after the lab?</li>
-        <li>What would fail if we used the wrong syntax here?</li>
-        <li>Which later session depends on this one?</li>
-        <li>What part still feels fuzzy enough to revisit once more?</li>
-      </ol>
-    </div>
-    <h2>What Breaks If We Skip This?</h2>
-    <div class="card">
-      <p>If this concept is shaky, later lessons in joins, transactions, performance, or schema design become much harder to reason about.</p>
-    </div>
-    <h2>What We Learned</h2>
-    <div class="card">
-      <p><strong>SQL/Postgres concept mastered:</strong> BEGIN, COMMIT, ROLLBACK</p>
-      <p><strong>Next session:</strong> Isolation and Concurrency</p>
-    </div>
-
-    <section class="section" id="next-session">
-      <div class="section-head">
-        <div>
-          <span class="badge badge-good">Continue</span>
-          <h2>Next Session</h2>
-        </div>
-        <p>After you finish the quizzes, continue the sequence here.</p>
-      </div>
-      <div class="card">
-        <p>Move on to Session 24 to keep the bookstore project moving.</p>
-        <div class="hero-actions">
-          <a class="button" href="../session-24/index.html">Go to Session 24</a>
-          <a class="button-secondary" href="../index.html">Back to Session Index</a>
-        </div>
-      </div>
-    </section>
-
-<script>
-  function clearFeedback(question) {
-    question.querySelectorAll('.quiz-option').forEach((option) => {
-      option.classList.remove('selected', 'correct', 'wrong');
-      option.classList.add('locked');
-      const input = option.querySelector('input');
-      if (input) input.disabled = true;
-      const existing = option.querySelector('.quiz-feedback');
-      if (existing) existing.remove();
-    });
-  }
-
-  function setFeedback(option, isCorrect, explanation, correctLetter) {
-    const feedback = document.createElement('div');
-    feedback.className = 'quiz-feedback';
-    feedback.textContent = isCorrect
-      ? 'Correct. ' + explanation
-      : 'Not quite. The correct answer is ' + correctLetter.toUpperCase() + '. ' + explanation;
-    option.appendChild(feedback);
-  }
-
-  document.querySelectorAll('.quiz-question').forEach((question) => {
-    question.querySelectorAll('.quiz-option').forEach((option) => {
-      option.addEventListener('click', () => {
-        if (question.dataset.locked === 'true') {
-          return;
-        }
-
-        question.dataset.locked = 'true';
-        clearFeedback(question);
-
-        const selectedLetter = option.dataset.option;
-        const correctLetter = question.dataset.answer;
-        const explanation = question.dataset.explanation || '';
-        const isCorrect = selectedLetter === correctLetter;
-
-        option.classList.add('selected');
-        option.classList.add(isCorrect ? 'correct' : 'wrong');
-
-        const correctOption = question.querySelector('.quiz-option[data-option="' + correctLetter + '"]');
-        if (correctOption && correctOption !== option) {
-          correctOption.classList.add('correct');
-        }
-
-        setFeedback(option, isCorrect, explanation, correctLetter);
-        question.querySelectorAll('.quiz-option').forEach((lockedOption) => {
-          const lockedInput = lockedOption.querySelector('input');
-          if (lockedInput) lockedInput.disabled = true;
-          lockedOption.style.pointerEvents = 'none';
-        });
-        option.style.pointerEvents = 'auto';
-      });
-    });
-  });
-</script>
   
-  </div>
-</main>
+      </section>
+
+      <section class="section split">
+        <div class="panel">
+          <h2>Lab objective</h2>
+          <p>Connect cities to countries and test what happens when a parent is deleted.</p>
+          <h3>Step-by-step instructions</h3>
+          <ol class="ordered">
+            <li>Read the concept once more and explain it in one sentence.</li>
+            <li>Open the session notes and identify the exact file or SQL change this lesson expects.</li>
+            <li>Write or inspect the smallest possible example for the country model.</li>
+            <li>Run the SQL commands in the order shown below.</li>
+            <li>Check the result and compare it to the learning objective.</li>
+          </ol>
+        </div>
+        <div class="panel">
+          <h2>Expected files changed</h2>
+          <ul class="bullets"><li><code>docs/sessions/session-23/index.html</code></li><li><code>db/schema.sql</code></li><li><code>db/tests/foreign-keys.sql</code></li></ul>
+          <h3>Commit checkpoint</h3>
+          <p>Use a commit title like <code>lesson-23-foreign-keys-and-referential-actions</code>.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="panel">
+          <h2>SQL commands to run</h2>
+          <pre class="code-block"><code>ALTER TABLE cities ADD CONSTRAINT cities_country_fk FOREIGN KEY (country_id) REFERENCES countries(country_id) ON DELETE RESTRICT;
+SELECT city_name FROM cities;</code></pre>
+          <h3>Expected output or result</h3>
+          <p>You can explain how referential actions protect related rows.</p>
+        </div>
+      </section>
+
+      <section class="section split">
+        <div class="panel">
+          <h2>Code and database review checklist</h2>
+          <ul class="bullets">
+            <li>Does the change stay within this lesson's tiny scope?</li>
+            <li>Does the schema or query match the English explanation?</li>
+            <li>Are we still using beginner-readable SQL?</li>
+            <li>Can we explain what would break if this step disappeared?</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h2>Reflection questions</h2>
+          <ul class="bullets">
+            <li>What did this lesson teach us about the shape of data?</li>
+            <li>What rule does PostgreSQL enforce for us now?</li>
+            <li>What did we practice that real teams should keep doing?</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section split">
+        <div class="panel">
+          <h2>Same quiz after the lab</h2>
+          
+    <div class="quiz-grid">
+      
+        <article class="quiz-item">
+          <h3>Question 1</h3>
+          <p>Why does Foreign keys and referential actions belong in the learning sequence before later database work?</p>
+          <ul class="quiz-options">
+            <li>It removes a conceptual blind spot that later lessons depend on.</li><li>It mainly improves query speed.</li><li>It replaces the need for a schema.</li><li>It only matters for large companies.</li>
+          </ul>
+          <details open>
+            <summary>Answer check</summary>
+            <p><strong>A.</strong> Because it removes a conceptual blind spot that later lessons depend on.</p>
+          </details>
+        </article>
+      
+        <article class="quiz-item">
+          <h3>Question 2</h3>
+          <p>What is the most likely risk if we skip foreign keys and referential actions?</p>
+          <ul class="quiz-options">
+            <li>Nothing changes because PostgreSQL fills the gap automatically.</li><li>The later model will have a missing rule or a weak mental model.</li><li>All joins become invalid immediately.</li><li>The database engine stops working.</li>
+          </ul>
+          <details open>
+            <summary>Answer check</summary>
+            <p><strong>B.</strong> The later model will have a missing rule or a weak mental model.</p>
+          </details>
+        </article>
+      
+        <article class="quiz-item">
+          <h3>Question 3</h3>
+          <p>Which country-data habit does this lesson reinforce most?</p>
+          <ul class="quiz-options">
+            <li>Write more rows first and think later.</li><li>Prefer the most advanced feature available.</li><li>Think in terms of one clear rule, then encode it in SQL or schema.</li><li>Avoid documenting anything until the end.</li>
+          </ul>
+          <details open>
+            <summary>Answer check</summary>
+            <p><strong>C.</strong> Think in terms of one clear rule, then encode it in SQL or schema.</p>
+          </details>
+        </article>
+      
+        <article class="quiz-item">
+          <h3>Question 4</h3>
+          <p>If a teammate used a spreadsheet shortcut instead of this lesson, what would you warn them about?</p>
+          <ul class="quiz-options">
+            <li>Spreadsheets are always slower in every situation.</li><li>They never support formulas.</li><li>They cannot store country data at all.</li><li>They can hide duplicated facts and missing constraints.</li>
+          </ul>
+          <details open>
+            <summary>Answer check</summary>
+            <p><strong>D.</strong> Spreadsheets can hide duplicated facts and missing constraints.</p>
+          </details>
+        </article>
+      
+        <article class="quiz-item">
+          <h3>Question 5</h3>
+          <p>What should we be able to explain after the lab?</p>
+          <ul class="quiz-options">
+            <li>The concept in plain English, not just the command sequence.</li><li>Only the keyboard shortcuts we used.</li><li>Only the output row count.</li><li>Only the commit message format.</li>
+          </ul>
+          <details open>
+            <summary>Answer check</summary>
+            <p><strong>A.</strong> The concept in plain English, not just the command sequence.</p>
+          </details>
+        </article>
+      
+    </div>
+  
+        </div>
+        <div class="panel">
+          <h2>What PostgreSQL concept we learned</h2>
+          <p>Foreign keys and referential actions</p>
+          <h3>What real-world engineering habit we practiced</h3>
+          <p>Protect the relationship, not just the individual table.</p>
+          <h3>What could break if this code, schema, or query were removed</h3>
+          <p>Without foreign keys, orphan rows appear easily.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        
+    <div class="panel">
+      <h2>Official PostgreSQL references</h2>
+      <p>Read these upstream pages after the lesson concept is clear. They are reference material, not a replacement for the session flow.</p>
+      <ul class="bullets">
+        <li><a href="https://www.postgresql.org/docs/current/index.html">PostgreSQL 18.4 documentation home</a></li><li><a href="https://www.postgresql.org/docs/current/ddl.html">Data Definition</a></li><li><a href="https://www.postgresql.org/docs/current/ddl-constraints.html">Constraints</a></li>
+      </ul>
+    </div>
+  
+      </section>
+    
+    </div>
+  </main>
 </body>
 </html>

@@ -1,28 +1,26 @@
-# Postgres Learning Operating System
+# PostgreSQL Learning Track
 
-Phase 1 establishes the educational shell for a deep PostgreSQL curriculum built for experienced engineers.
+This repository is a documentation-first learning environment for PostgreSQL.
 
-What this repository is:
-- a static documentation system
-- a prerequisite-first curriculum
-- a single growing bookstore project
-- a phase-gated set of lesson pages
+What lives here:
+- a 40-session country-themed PostgreSQL curriculum
+- static HTML documentation pages
+- prompt and review archives
+- future schema, seed, query, and test files
 
-What it is not:
-- a tutorial dump
+What this repo is not:
+- a feature sprint
 - an ORM demo
-- a GUI-first workflow
-- a blog or note archive
+- a dashboard project
+- a place to skip the learning sequence
 
-Start here:
+How to start:
 1. Open `docs/index.html`
-2. Review `docs/syllabus/index.html`
-3. Study `docs/sessions/session-01/index.html`
+2. Read `docs/syllabus/index.html`
+3. Open `docs/sessions/session-01/index.html`
 
-Local Postgres:
-
-```bash
-docker compose up -d
-```
-
-The learning flow uses `psql`, plain SQL, and static HTML. PostgreSQL 17 is the only database engine assumed in phase 1.
+Rules:
+- Docs are the source of truth.
+- Every session is one small concept.
+- Every lesson has a quiz, a lab, and a commit checkpoint.
+- New prompts must be added to the prompt archive.

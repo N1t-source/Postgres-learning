@@ -1,538 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Session 01 - Connecting with psql</title>
-  <link rel="stylesheet" href="../../styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Session 01 - Why databases exist</title>
+  <meta name="description" content="Why databases exist in the PostgreSQL learning track." />
+  <link rel="stylesheet" href="/docs/styles.css" />
 </head>
 <body>
-  <nav>
-    <div class="container nav-row">
-      <a class="nav-link brand" href="../../index.html">Postgres Learning</a>
-      <a class="nav-link" href="../../syllabus/index.html">Syllabus</a>
-      <a class="nav-link active" href="../index.html">Sessions</a>
-      <a class="nav-link" href="../../prompts/index.html">Prompts</a>
-      <a class="nav-link" href="../../session-notes/index.html">Session Notes</a>
-      <a class="nav-link" href="../../quizzes/index.html">Quizzes</a>
-      <a class="nav-link" href="../../architecture/index.html">Architecture</a>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="/docs/index.html">
+        <span class="brand-mark">PG</span>
+        <span>
+          <strong>PostgreSQL Learning Track</strong>
+          <small>Country edition</small>
+        </span>
+      </a>
+      <nav class="nav">
+        <a class="" href="/docs/index.html">Home</a><a class="" href="/docs/syllabus/index.html">Syllabus</a><a class="active" href="/docs/sessions/index.html">Sessions</a><a class="" href="/docs/lessons/index.html">Lessons</a><a class="" href="/docs/labs/index.html">Labs</a><a class="" href="/docs/quizzes/index.html">Quizzes</a><a class="" href="/docs/references/index.html">References</a><a class="" href="/docs/schema-notes/index.html">Schema Notes</a><a class="" href="/docs/query-notes/index.html">Query Notes</a><a class="" href="/docs/architecture/index.html">Architecture</a><a class="" href="/docs/session-notes/index.html">Session Notes</a><a class="" href="/docs/commit-reviews/index.html">Commit Reviews</a><a class="" href="/docs/prompts/index.html">Prompts</a>
+      </nav>
     </div>
-  </nav>
-
-  <main>
+  </header>
+  <main id="content" class="page">
     <div class="container">
-      <section class="hero">
-        <div class="panel">
-          <div class="eyebrow">Session 01</div>
-          <h1>Connecting with psql and creating the first bookstore table.</h1>
-          <p class="subtitle">The lesson starts with relation theory, then moves into psql inspection, then creates the first table, inserts the first row, and verifies the result with SELECT.</p>
-          <div class="grid-3 stat-grid">
-            <div class="stat"><div class="stat-value">Layer 1</div><div>Foundations</div></div>
-            <div class="stat"><div class="stat-value">35-40 min</div><div>target session length</div></div>
-            <div class="stat"><div class="stat-value">Bookstore</div><div>shared project</div></div>
+      
+      <section class="session-hero">
+        <div class="session-meta">
+          <span class="phase-pill">Foundations</span>
+          <span class="session-number">Session 01</span>
+          <h1>Why databases exist</h1>
+          <p class="lede">Explain why a relational database is useful when many people need the same country facts.</p>
+          <div class="actions">
+            
+            <a class="button primary" href="/docs/sessions/index.html">Back to session index</a>
+            <a class="button" href="/docs/sessions/session-02/index.html">Next</a>
           </div>
         </div>
-
-        <aside class="hero-side">
+        <aside class="session-side">
           <div class="panel">
-            <span class="badge badge-accent">Prerequisite</span>
-            <p><strong>What is a relation?</strong> Table, row, attribute, and tuple must be clear before psql syntax makes sense.</p>
+            <h2>Learning objective</h2>
+            <p>Explain why a relational database is useful when many people need the same country facts.</p>
           </div>
           <div class="panel">
-            <span class="badge badge-locked">Unlock rule</span>
-            <p>You must score at least 4/5 on the pre-quiz before the concept explanation unlocks.</p>
+            <h2>What this lesson protects</h2>
+            <p>Without this lesson, later design choices feel like arbitrary commands instead of responses to a real problem.</p>
           </div>
         </aside>
       </section>
 
-      <section class="section" id="learning-objective">
-        <div class="section-head">
-          <div>
-            <span class="badge badge-accent">1</span>
-            <h2>Learning Objective</h2>
-          </div>
+      <section class="section split">
+        <div class="panel">
+          <h2>Concept explanation</h2>
+          <p>A database keeps one source of truth, while files and spreadsheets often spread the same fact across many places.</p>
         </div>
-        <div class="card">
-          <p>Build the first working mental model of PostgreSQL by connecting with psql, reading catalog output with \d, creating the first bookstore table, inserting one row, and proving the row exists with SELECT.</p>
+        <div class="panel">
+          <h2>Underlying database or SQL idea</h2>
+          <p>Learn the problem a database solves before writing any SQL.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="panel">
+          <h2>PostgreSQL-specific explanation</h2>
+          <p>PostgreSQL gives that source of truth a durable home, SQL language, and rules that protect shared data.</p>
         </div>
       </section>
 
       <section class="section">
         <div class="section-head">
           <div>
-            <span class="badge badge-accent">2</span>
-            <h2>Prerequisite Concept</h2>
+            <p class="eyebrow">Pre-lab quiz</p>
+            <h2>Five questions before the lab</h2>
           </div>
+          <p>Answer these before the lab. Use the answer check only after you have made your choice.</p>
         </div>
-        <div class="card">
-          <p><strong>What is a relation?</strong> A table is a relation made of tuples (rows) and attributes (columns). The point is not the label. The point is that PostgreSQL stores and reasons about structured sets, not spreadsheets.</p>
-          <div class="grid-2">
-            <div class="alert alert-info">
-              <strong>Relation:</strong> the set-like structure.
-            </div>
-            <div class="alert alert-info">
-              <strong>Tuple:</strong> one complete row in that structure.
-            </div>
-            <div class="alert alert-info">
-              <strong>Attribute:</strong> one named column of meaning.
-            </div>
-            <div class="alert alert-info">
-              <strong>Row:</strong> the storage shape you see in SQL output.
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="pre-quiz">
-        <div class="section-head">
-          <div>
-            <span class="badge badge-accent">3</span>
-            <h2>Pre-Quiz</h2>
-          </div>
-          <p>Score 4/5 or better to unlock the concept section. Once you choose an option, you cannot change it.</p>
-        </div>
-
-        <div class="card">
-          <div class="quiz" id="pre-quiz-shell">
-            <div class="quiz-question" data-answer="b" data-explanation="A relation is a set of tuples, and tuples carry named attributes.">
-              <div class="question-num">Question 1 of 5</div>
-              <p>Which explanation best matches the word relation?</p>
-              <label class="quiz-option" data-option="a"><input type="radio" name="pre-q1" />A. Any single SQL statement.</label>
-              <label class="quiz-option" data-option="b"><input type="radio" name="pre-q1" />B. A set of tuples with named attributes.</label>
-              <label class="quiz-option" data-option="c"><input type="radio" name="pre-q1" />C. A user interface panel.</label>
-              <label class="quiz-option" data-option="d"><input type="radio" name="pre-q1" />D. A command that prints a result.</label>
-            </div>
-
-            <div class="quiz-question" data-answer="c" data-explanation="The catalog view is what tells you what relations exist and how they are shaped.">
-              <div class="question-num">Question 2 of 5</div>
-              <p>What does <code>\d</code> help you inspect in psql?</p>
-              <label class="quiz-option" data-option="a"><input type="radio" name="pre-q2" />A. Server RAM usage.</label>
-              <label class="quiz-option" data-option="b"><input type="radio" name="pre-q2" />B. A query plan.</label>
-              <label class="quiz-option" data-option="c"><input type="radio" name="pre-q2" />C. Table metadata and relationships.</label>
-              <label class="quiz-option" data-option="d"><input type="radio" name="pre-q2" />D. Backup archives.</label>
-            </div>
-
-            <div class="quiz-question" data-answer="a" data-explanation="The syntax lands cleanly only after the learner can explain the model it is expressing.">
-              <div class="question-num">Question 3 of 5</div>
-              <p>Why should the relation concept come before CREATE TABLE syntax?</p>
-              <label class="quiz-option" data-option="a"><input type="radio" name="pre-q3" />A. Syntax makes more sense when the data model already exists.</label>
-              <label class="quiz-option" data-option="b"><input type="radio" name="pre-q3" />B. psql will not run otherwise.</label>
-              <label class="quiz-option" data-option="c"><input type="radio" name="pre-q3" />C. Tables are only a GUI concept.</label>
-              <label class="quiz-option" data-option="d"><input type="radio" name="pre-q3" />D. It does not matter.</label>
-            </div>
-
-            <div class="quiz-question" data-answer="d" data-explanation="A tuple is one complete row, not the table as a whole.">
-              <div class="question-num">Question 4 of 5</div>
-              <p>Which label describes one complete row?</p>
-              <label class="quiz-option" data-option="a"><input type="radio" name="pre-q4" />A. Attribute</label>
-              <label class="quiz-option" data-option="b"><input type="radio" name="pre-q4" />B. Schema</label>
-              <label class="quiz-option" data-option="c"><input type="radio" name="pre-q4" />C. Index</label>
-              <label class="quiz-option" data-option="d"><input type="radio" name="pre-q4" />D. Tuple</label>
-            </div>
-
-            <div class="quiz-question" data-answer="b" data-explanation="The lesson is about why the model matters before the commands do.">
-              <div class="question-num">Question 5 of 5</div>
-              <p>What should you be able to explain before continuing?</p>
-              <label class="quiz-option" data-option="a"><input type="radio" name="pre-q5" />A. How to color a chart.</label>
-              <label class="quiz-option" data-option="b"><input type="radio" name="pre-q5" />B. Why a table is a relation and what its parts mean.</label>
-              <label class="quiz-option" data-option="c"><input type="radio" name="pre-q5" />C. How to use an ORM.</label>
-              <label class="quiz-option" data-option="d"><input type="radio" name="pre-q5" />D. How to deploy a website.</label>
-            </div>
-          </div>
-
-          <div class="quiz-score" id="pre-quiz-status">Answer the five questions, then press Check Pre-Quiz.</div>
-          <div class="hero-actions">
-            <button class="button" type="button" id="pre-quiz-check">Check Pre-Quiz</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="concept" hidden>
-        <div class="section-head">
-          <div>
-            <span class="badge badge-accent">4</span>
-            <h2>Concept Explanation</h2>
-          </div>
-        </div>
-        <div class="card">
-          <p>psql is the cleanest way to see PostgreSQL as it actually behaves. The prompt is not the database. It is the tool that lets you read catalog state, inspect a table definition, and verify your assumptions.</p>
-          <p>The order matters: connect, inspect, create, insert, select, then inspect again. That sequence teaches state change, not just syntax.</p>
-          <div class="grid-2">
-            <div class="alert alert-info"><strong>Why psql first:</strong> it shows the database without hiding behavior behind a GUI.</div>
-            <div class="alert alert-info"><strong>Why \d matters:</strong> it proves that the database remembers structure, not just rows.</div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="svg-maps" hidden>
-        <div class="section-head">
-          <div>
-            <span class="badge badge-accent">5</span>
-            <h2>SVG Concept Maps</h2>
-          </div>
-          <p>Mechanisms first. These diagrams show the flow and the state, not decoration.</p>
-        </div>
-
-        <div class="svg-grid">
-          <figure class="svg-panel">
-            <img src="../../../assets/svg/session-01/session-01-concept-map.svg" alt="Eight-panel concept map for Session 01" />
-            <figcaption class="caption">8-panel overview: relation, psql, catalog inspection, first table, insert, select, verification, reflection.</figcaption>
-          </figure>
-          <figure class="svg-panel">
-            <img src="../../../assets/svg/session-01/session-01-psql-loop.svg" alt="psql command loop diagram" />
-            <figcaption class="caption">psql command loop: connect, inspect, edit, verify, repeat.</figcaption>
-          </figure>
-          <figure class="svg-panel">
-            <img src="../../../assets/svg/session-01/session-01-relation-shape.svg" alt="Relation shape diagram" />
-            <figcaption class="caption">Relation shape: tuples and attributes before syntax.</figcaption>
-          </figure>
-          <figure class="svg-panel">
-            <img src="../../../assets/svg/session-01/session-01-create-table-flow.svg" alt="Create table flow diagram" />
-            <figcaption class="caption">Create table flow: definition becomes catalog state.</figcaption>
-          </figure>
-          <figure class="svg-panel">
-            <img src="../../../assets/svg/session-01/session-01-insert-select-flow.svg" alt="Insert and select flow diagram" />
-            <figcaption class="caption">Insert and select flow: one row in, one proof out.</figcaption>
-          </figure>
-        </div>
-      </section>
-
-      <section class="section" id="lab" hidden>
-        <div class="section-head">
-          <div>
-            <span class="badge badge-accent">6</span>
-            <h2>Lab</h2>
-          </div>
-        </div>
-        <div class="card">
-          <div class="alert alert-good"><strong>Lab objective:</strong> Create the first bookstore table, insert one row, and confirm it with SELECT.</div>
-          <p>This is a psql-only lab. If the <code>bookstore</code> database does not exist yet, create it first. If it already exists, use it and keep going.</p>
-          <h3>Lab Setup</h3>
-          <ul>
-            <li>Open psql and connect to PostgreSQL 17.</li>
-            <li>Create or open the <code>bookstore</code> database.</li>
-            <li>Run <code>\conninfo</code> and <code>\d</code> before making changes so you can see what is already there.</li>
+        
+    <div class="quiz-grid">
+      
+        <article class="quiz-item">
+          <h3>Question 1</h3>
+          <p>Why does Why databases exist belong in the learning sequence before later database work?</p>
+          <ul class="quiz-options">
+            <li>It removes a conceptual blind spot that later lessons depend on.</li><li>It mainly improves query speed.</li><li>It replaces the need for a schema.</li><li>It only matters for large companies.</li>
           </ul>
-          <h3>Starter SQL</h3>
-          <p>Use this as the first table in the bookstore schema:</p>
-          <pre><code>CREATE TABLE authors (
-  author_id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  full_name text NOT NULL,
-  country text NOT NULL
-);</code></pre>
-          <pre><code>INSERT INTO authors (full_name, country)
-VALUES ('Ursula K. Le Guin', 'US');</code></pre>
-          <pre><code>SELECT author_id, full_name, country
-FROM authors;</code></pre>
-          <h3>Step-by-Step</h3>
-          <ol>
-            <li>Connect to the server in psql and switch into <code>bookstore</code>.</li>
-            <li>Use <code>\d</code> to check whether the database already has relations.</li>
-            <li>Create the <code>authors</code> table exactly once.</li>
-            <li>Insert one author row and predict the result before running it.</li>
-            <li>Select the row back out and compare it with the inserted values.</li>
-            <li>Use <code>\d authors</code> to confirm the catalog now knows the table.</li>
-          </ol>
-          <h3>Common Mistakes</h3>
-          <ul>
-            <li>Skipping relation theory and treating the table like a spreadsheet.</li>
-            <li>Using the wrong database before checking the current connection.</li>
-            <li>Creating the table after trying to insert into it.</li>
-            <li>Confusing a row with the table definition.</li>
+          <details >
+            <summary>Answer check</summary>
+            <p><strong>A.</strong> Because it removes a conceptual blind spot that later lessons depend on.</p>
+          </details>
+        </article>
+      
+        <article class="quiz-item">
+          <h3>Question 2</h3>
+          <p>What is the most likely risk if we skip why databases exist?</p>
+          <ul class="quiz-options">
+            <li>Nothing changes because PostgreSQL fills the gap automatically.</li><li>The later model will have a missing rule or a weak mental model.</li><li>All joins become invalid immediately.</li><li>The database engine stops working.</li>
           </ul>
-        </div>
-      </section>
-
-      <section class="section" id="expected-files" hidden>
-        <div class="section-head">
-          <div>
-            <span class="badge badge-accent">7</span>
-            <h2>Expected Files</h2>
-          </div>
-        </div>
-        <div class="card">
-          <ul>
-            <li><code>POSTGRES.md</code></li>
-            <li><code>docker-compose.yml</code></li>
-            <li><code>README.md</code></li>
-            <li><code>docs/index.html</code></li>
-            <li><code>docs/styles.css</code></li>
-            <li><code>docs/prompts/index.html</code></li>
-            <li><code>docs/syllabus/index.html</code></li>
-            <li><code>docs/sessions/session-01/index.html</code></li>
-            <li><code>docs/session-notes/index.html</code></li>
-            <li><code>docs/quizzes/index.html</code></li>
-            <li><code>docs/architecture/index.html</code></li>
-            <li><code>assets/svg/session-01/*.svg</code></li>
+          <details >
+            <summary>Answer check</summary>
+            <p><strong>B.</strong> The later model will have a missing rule or a weak mental model.</p>
+          </details>
+        </article>
+      
+        <article class="quiz-item">
+          <h3>Question 3</h3>
+          <p>Which country-data habit does this lesson reinforce most?</p>
+          <ul class="quiz-options">
+            <li>Write more rows first and think later.</li><li>Prefer the most advanced feature available.</li><li>Think in terms of one clear rule, then encode it in SQL or schema.</li><li>Avoid documenting anything until the end.</li>
           </ul>
-        </div>
-      </section>
-
-      <section class="section" id="commit-message" hidden>
-        <div class="section-head">
-          <div>
-            <span class="badge badge-accent">8</span>
-            <h2>Commit Message</h2>
-          </div>
-        </div>
-        <div class="card">
-          <pre><code>git commit -m "session-01: relation and first table"</code></pre>
-        </div>
-      </section>
-
-      <section class="section" id="checklist" hidden>
-        <div class="section-head">
-          <div>
-            <span class="badge badge-accent">9</span>
-            <h2>Checklist</h2>
-          </div>
-        </div>
-        <div class="card">
-          <ul>
-            <li>I can define relation, tuple, attribute, and row in plain language.</li>
-            <li>I can explain why <code>\d</code> matters before I create anything.</li>
-            <li>I can create a table before inserting a row into it.</li>
-            <li>I can verify the row with <code>SELECT</code>.</li>
+          <details >
+            <summary>Answer check</summary>
+            <p><strong>C.</strong> Think in terms of one clear rule, then encode it in SQL or schema.</p>
+          </details>
+        </article>
+      
+        <article class="quiz-item">
+          <h3>Question 4</h3>
+          <p>If a teammate used a spreadsheet shortcut instead of this lesson, what would you warn them about?</p>
+          <ul class="quiz-options">
+            <li>Spreadsheets are always slower in every situation.</li><li>They never support formulas.</li><li>They cannot store country data at all.</li><li>They can hide duplicated facts and missing constraints.</li>
           </ul>
-        </div>
+          <details >
+            <summary>Answer check</summary>
+            <p><strong>D.</strong> Spreadsheets can hide duplicated facts and missing constraints.</p>
+          </details>
+        </article>
+      
+        <article class="quiz-item">
+          <h3>Question 5</h3>
+          <p>What should we be able to explain after the lab?</p>
+          <ul class="quiz-options">
+            <li>The concept in plain English, not just the command sequence.</li><li>Only the keyboard shortcuts we used.</li><li>Only the output row count.</li><li>Only the commit message format.</li>
+          </ul>
+          <details >
+            <summary>Answer check</summary>
+            <p><strong>A.</strong> The concept in plain English, not just the command sequence.</p>
+          </details>
+        </article>
+      
+    </div>
+  
       </section>
 
-      <section class="section" id="post-quiz" hidden>
-        <div class="section-head">
-          <div>
-            <span class="badge badge-accent">10</span>
-            <h2>Post Quiz</h2>
-          </div>
-          <p>Use this after the lab to prove the mental model stuck.</p>
-        </div>
-
-        <div class="card">
-          <div class="quiz" id="post-quiz-shell">
-            <div class="quiz-question" data-answer="b" data-explanation="The model has to lead the syntax or the session turns into memorization.">
-              <div class="question-num">Question 1 of 5</div>
-              <p>What changes first in Session 01: syntax or model?</p>
-              <label class="quiz-option" data-option="a"><input type="radio" name="post-q1" />A. Syntax first.</label>
-              <label class="quiz-option" data-option="b"><input type="radio" name="post-q1" />B. Model first.</label>
-              <label class="quiz-option" data-option="c"><input type="radio" name="post-q1" />C. GUI first.</label>
-              <label class="quiz-option" data-option="d"><input type="radio" name="post-q1" />D. Index first.</label>
-            </div>
-            <div class="quiz-question" data-answer="c" data-explanation="Catalog inspection is how you prove the database knows the relation.">
-              <div class="question-num">Question 2 of 5</div>
-              <p>What does <code>\d authors</code> prove after table creation?</p>
-              <label class="quiz-option" data-option="a"><input type="radio" name="post-q2" />A. The row count is infinite.</label>
-              <label class="quiz-option" data-option="b"><input type="radio" name="post-q2" />B. The server restarted.</label>
-              <label class="quiz-option" data-option="c"><input type="radio" name="post-q2" />C. The catalog now knows the table.</label>
-              <label class="quiz-option" data-option="d"><input type="radio" name="post-q2" />D. The data is normalized.</label>
-            </div>
-            <div class="quiz-question" data-answer="a" data-explanation="The relation has to exist before it can store tuples.">
-              <div class="question-num">Question 3 of 5</div>
-              <p>Why insert after CREATE TABLE instead of before?</p>
-              <label class="quiz-option" data-option="a"><input type="radio" name="post-q3" />A. Because the relation must exist before rows can be stored in it.</label>
-              <label class="quiz-option" data-option="b"><input type="radio" name="post-q3" />B. Because INSERT creates the table.</label>
-              <label class="quiz-option" data-option="c"><input type="radio" name="post-q3" />C. Because \d needs row data first.</label>
-              <label class="quiz-option" data-option="d"><input type="radio" name="post-q3" />D. Because tables are optional.</label>
-            </div>
-            <div class="quiz-question" data-answer="d" data-explanation="A tuple is one row, which is the smallest useful unit of stored data here.">
-              <div class="question-num">Question 4 of 5</div>
-              <p>Which statement best describes a tuple?</p>
-              <label class="quiz-option" data-option="a"><input type="radio" name="post-q4" />A. A server parameter.</label>
-              <label class="quiz-option" data-option="b"><input type="radio" name="post-q4" />B. A file path.</label>
-              <label class="quiz-option" data-option="c"><input type="radio" name="post-q4" />C. A table name.</label>
-              <label class="quiz-option" data-option="d"><input type="radio" name="post-q4" />D. One complete row in a relation.</label>
-            </div>
-            <div class="quiz-question" data-answer="b" data-explanation="The lesson is a model-first lesson, so the learner should explain the why before the how.">
-              <div class="question-num">Question 5 of 5</div>
-              <p>What should the learner be able to reason about after this lesson?</p>
-              <label class="quiz-option" data-option="a"><input type="radio" name="post-q5" />A. How to write React components.</label>
-              <label class="quiz-option" data-option="b"><input type="radio" name="post-q5" />B. Why the database model comes before psql commands.</label>
-              <label class="quiz-option" data-option="c"><input type="radio" name="post-q5" />C. How to avoid SQL entirely.</label>
-              <label class="quiz-option" data-option="d"><input type="radio" name="post-q5" />D. Why schemas are decorative.</label>
-            </div>
-          </div>
-          <div class="quiz-score" id="post-quiz-status">Answer and grade after the lab. The answer lock stays on.</div>
-          <div class="hero-actions">
-            <button class="button" type="button" id="post-quiz-check">Check Post-Quiz</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="reflection" hidden>
-        <div class="section-head">
-          <div>
-            <span class="badge badge-accent">11</span>
-            <h2>Reflection</h2>
-          </div>
-        </div>
-        <div class="card">
-          <ol>
-            <li>What changed in your mental model after using psql?</li>
-            <li>What did \d reveal that a SELECT could not?</li>
-            <li>Why does the first table matter for the whole bookstore project?</li>
+      <section class="section split">
+        <div class="panel">
+          <h2>Lab objective</h2>
+          <p>Compare a flat country list with a tiny relational model and explain which one better supports change.</p>
+          <h3>Step-by-step instructions</h3>
+          <ol class="ordered">
+            <li>Read the concept once more and explain it in one sentence.</li>
+            <li>Open the session notes and identify the exact file or SQL change this lesson expects.</li>
+            <li>Write or inspect the smallest possible example for the country model.</li>
+            <li>Run the SQL commands in the order shown below.</li>
+            <li>Check the result and compare it to the learning objective.</li>
           </ol>
         </div>
-      </section>
-
-      <section class="section" id="breaks-if-removed" hidden>
-        <div class="section-head">
-          <div>
-            <span class="badge badge-accent">12</span>
-            <h2>What Breaks If Removed</h2>
-          </div>
-        </div>
-        <div class="card">
-          <p>Remove the prerequisite concept and the learner cannot tell a relation from a random table. Remove psql inspection and the learner cannot see catalog state. Remove the first table lab and the bookstore project has no concrete starting point.</p>
+        <div class="panel">
+          <h2>Expected files changed</h2>
+          <ul class="bullets"><li><code>README.md</code></li><li><code>docs/index.html</code></li><li><code>docs/syllabus/index.html</code></li><li><code>docs/sessions/session-01/index.html</code></li></ul>
+          <h3>Commit checkpoint</h3>
+          <p>Use a commit title like <code>lesson-01-why-databases-exist</code>.</p>
         </div>
       </section>
 
-      <section class="section" id="what-was-learned" hidden>
-        <div class="section-head">
-          <div>
-            <span class="badge badge-accent">13</span>
-            <h2>What Was Learned</h2>
-          </div>
-        </div>
-        <div class="card">
-          <p><strong>Concept:</strong> relation theory plus the first psql workflow.</p>
-          <p><strong>Proof:</strong> the learner can create a table, insert a row, and inspect the relation with psql.</p>
+      <section class="section">
+        <div class="panel">
+          <h2>SQL commands to run</h2>
+          <pre class="code-block"><code>SELECT 'A database protects shared truth' AS note;
+SELECT 'Countries, regions, and cities need relationships' AS note;</code></pre>
+          <h3>Expected output or result</h3>
+          <p>You can explain the problem a database solves before naming any syntax.</p>
         </div>
       </section>
 
-      <section class="section" id="next-session" hidden>
-        <div class="section-head">
-          <div>
-            <span class="badge badge-good">Continue</span>
-            <h2>Next Session</h2>
-          </div>
-          <p>Finish the post-quiz, then move straight into the next lesson.</p>
+      <section class="section split">
+        <div class="panel">
+          <h2>Code and database review checklist</h2>
+          <ul class="bullets">
+            <li>Does the change stay within this lesson's tiny scope?</li>
+            <li>Does the schema or query match the English explanation?</li>
+            <li>Are we still using beginner-readable SQL?</li>
+            <li>Can we explain what would break if this step disappeared?</li>
+          </ul>
         </div>
-        <div class="card">
-          <p>When you are done here, open Session 02 and keep the bookstore sequence moving.</p>
-          <div class="hero-actions">
-            <a class="button" href="../session-02/index.html">Go to Session 02</a>
-            <a class="button-secondary" href="../index.html">Back to Session Index</a>
-          </div>
+        <div class="panel">
+          <h2>Reflection questions</h2>
+          <ul class="bullets">
+            <li>What did this lesson teach us about the shape of data?</li>
+            <li>What rule does PostgreSQL enforce for us now?</li>
+            <li>What did we practice that real teams should keep doing?</li>
+          </ul>
         </div>
       </section>
+
+      <section class="section split">
+        <div class="panel">
+          <h2>Same quiz after the lab</h2>
+          
+    <div class="quiz-grid">
+      
+        <article class="quiz-item">
+          <h3>Question 1</h3>
+          <p>Why does Why databases exist belong in the learning sequence before later database work?</p>
+          <ul class="quiz-options">
+            <li>It removes a conceptual blind spot that later lessons depend on.</li><li>It mainly improves query speed.</li><li>It replaces the need for a schema.</li><li>It only matters for large companies.</li>
+          </ul>
+          <details open>
+            <summary>Answer check</summary>
+            <p><strong>A.</strong> Because it removes a conceptual blind spot that later lessons depend on.</p>
+          </details>
+        </article>
+      
+        <article class="quiz-item">
+          <h3>Question 2</h3>
+          <p>What is the most likely risk if we skip why databases exist?</p>
+          <ul class="quiz-options">
+            <li>Nothing changes because PostgreSQL fills the gap automatically.</li><li>The later model will have a missing rule or a weak mental model.</li><li>All joins become invalid immediately.</li><li>The database engine stops working.</li>
+          </ul>
+          <details open>
+            <summary>Answer check</summary>
+            <p><strong>B.</strong> The later model will have a missing rule or a weak mental model.</p>
+          </details>
+        </article>
+      
+        <article class="quiz-item">
+          <h3>Question 3</h3>
+          <p>Which country-data habit does this lesson reinforce most?</p>
+          <ul class="quiz-options">
+            <li>Write more rows first and think later.</li><li>Prefer the most advanced feature available.</li><li>Think in terms of one clear rule, then encode it in SQL or schema.</li><li>Avoid documenting anything until the end.</li>
+          </ul>
+          <details open>
+            <summary>Answer check</summary>
+            <p><strong>C.</strong> Think in terms of one clear rule, then encode it in SQL or schema.</p>
+          </details>
+        </article>
+      
+        <article class="quiz-item">
+          <h3>Question 4</h3>
+          <p>If a teammate used a spreadsheet shortcut instead of this lesson, what would you warn them about?</p>
+          <ul class="quiz-options">
+            <li>Spreadsheets are always slower in every situation.</li><li>They never support formulas.</li><li>They cannot store country data at all.</li><li>They can hide duplicated facts and missing constraints.</li>
+          </ul>
+          <details open>
+            <summary>Answer check</summary>
+            <p><strong>D.</strong> Spreadsheets can hide duplicated facts and missing constraints.</p>
+          </details>
+        </article>
+      
+        <article class="quiz-item">
+          <h3>Question 5</h3>
+          <p>What should we be able to explain after the lab?</p>
+          <ul class="quiz-options">
+            <li>The concept in plain English, not just the command sequence.</li><li>Only the keyboard shortcuts we used.</li><li>Only the output row count.</li><li>Only the commit message format.</li>
+          </ul>
+          <details open>
+            <summary>Answer check</summary>
+            <p><strong>A.</strong> The concept in plain English, not just the command sequence.</p>
+          </details>
+        </article>
+      
+    </div>
+  
+        </div>
+        <div class="panel">
+          <h2>What PostgreSQL concept we learned</h2>
+          <p>Why databases exist</p>
+          <h3>What real-world engineering habit we practiced</h3>
+          <p>Start with the problem and the data shape before choosing a tool.</p>
+          <h3>What could break if this code, schema, or query were removed</h3>
+          <p>Without this lesson, later design choices feel like arbitrary commands instead of responses to a real problem.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        
+    <div class="panel">
+      <h2>Official PostgreSQL references</h2>
+      <p>Read these upstream pages after the lesson concept is clear. They are reference material, not a replacement for the session flow.</p>
+      <ul class="bullets">
+        <li><a href="https://www.postgresql.org/docs/current/index.html">PostgreSQL 18.4 documentation home</a></li><li><a href="https://www.postgresql.org/docs/current/tutorial-start.html">Getting Started</a></li><li><a href="https://www.postgresql.org/docs/current/app-psql.html">psql</a></li>
+      </ul>
+    </div>
+  
+      </section>
+    
     </div>
   </main>
-
-  <script>
-    function lockQuestion(question, chosenOption) {
-      if (question.dataset.locked === 'true') {
-        return;
-      }
-
-      question.dataset.locked = 'true';
-
-      question.querySelectorAll('.quiz-option').forEach((option) => {
-        option.classList.add('locked');
-        const input = option.querySelector('input');
-        if (input) {
-          input.disabled = true;
-        }
-        option.style.pointerEvents = 'none';
-      });
-
-      chosenOption.style.pointerEvents = 'auto';
-      const input = chosenOption.querySelector('input');
-      if (input) {
-        input.disabled = true;
-      }
-
-      const answer = question.dataset.answer;
-      const selected = chosenOption.dataset.option;
-      const isCorrect = selected === answer;
-      chosenOption.classList.add('selected');
-      chosenOption.classList.add(isCorrect ? 'correct' : 'wrong');
-
-      const correctOption = question.querySelector('.quiz-option[data-option="' + answer + '"]');
-      if (correctOption && correctOption !== chosenOption) {
-        correctOption.classList.add('correct');
-      }
-
-      const feedback = document.createElement('div');
-      feedback.className = 'quiz-feedback';
-      feedback.textContent = isCorrect
-        ? 'Correct. ' + (question.dataset.explanation || 'Good reasoning.')
-        : 'Not yet. The correct answer is ' + answer.toUpperCase() + '. ' + (question.dataset.explanation || 'Review the relation model.');
-      chosenOption.appendChild(feedback);
-    }
-
-    function scoreQuiz(shell) {
-      let score = 0;
-      let answered = 0;
-
-      shell.querySelectorAll('.quiz-question').forEach((question) => {
-        const selected = question.querySelector('.quiz-option.selected');
-        if (!selected) {
-          return;
-        }
-        answered += 1;
-        if (selected.dataset.option === question.dataset.answer) {
-          score += 1;
-        }
-      });
-
-      return { score, answered };
-    }
-
-    function wireQuiz(shell) {
-      shell.querySelectorAll('.quiz-option').forEach((option) => {
-        option.addEventListener('click', () => lockQuestion(option.closest('.quiz-question'), option));
-      });
-    }
-
-    wireQuiz(document.getElementById('pre-quiz-shell'));
-    wireQuiz(document.getElementById('post-quiz-shell'));
-
-    const unlockTargets = [
-      'concept',
-      'svg-maps',
-      'lab',
-      'expected-files',
-      'commit-message',
-      'checklist',
-      'post-quiz',
-      'reflection',
-      'breaks-if-removed',
-      'what-was-learned'
-    ].map((id) => document.getElementById(id));
-    const nextSession = document.getElementById('next-session');
-
-    document.getElementById('pre-quiz-check').addEventListener('click', () => {
-      const result = scoreQuiz(document.getElementById('pre-quiz-shell'));
-      const status = document.getElementById('pre-quiz-status');
-
-      if (result.answered < 5) {
-        status.textContent = 'You have answered ' + result.answered + '/5. Finish all five questions to unlock the lesson.';
-        return;
-      }
-
-      if (result.score >= 4) {
-        status.textContent = 'Pass: ' + result.score + '/5. The concept section is now unlocked.';
-        unlockTargets.forEach((target) => target && (target.hidden = false));
-      } else {
-        status.textContent = 'Score ' + result.score + '/5. Review the prerequisite concept, then try again.';
-      }
-    });
-
-    document.getElementById('post-quiz-check').addEventListener('click', () => {
-      const result = scoreQuiz(document.getElementById('post-quiz-shell'));
-      const status = document.getElementById('post-quiz-status');
-      if (result.answered < 5) {
-        status.textContent = 'You have answered ' + result.answered + '/5. Finish all five post-quiz questions to unlock the next session link.';
-        return;
-      }
-
-      if (result.score >= 4) {
-        status.textContent = 'Post-quiz passed: ' + result.score + '/5. The next session link is now unlocked.';
-        if (nextSession) {
-          nextSession.hidden = false;
-        }
-      } else {
-        status.textContent = 'Post-quiz score: ' + result.score + '/5. Review the lesson and try again before moving on.';
-      }
-    });
-  </script>
 </body>
 </html>

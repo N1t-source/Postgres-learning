@@ -1,101 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sessions - Postgres Learning</title>
-  <link rel="stylesheet" href="../styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sessions - PostgreSQL Learning Track</title>
+  <meta name="description" content="PostgreSQL learning track" />
+  <link rel="stylesheet" href="/docs/styles.css" />
 </head>
 <body>
-  <nav>
-    <div class="container nav-row">
-      <a class="nav-link brand" href="../index.html">Postgres Learning</a>
-      <a class="nav-link" href="../syllabus/index.html">Syllabus</a>
-      <a class="nav-link active" href="index.html">Sessions</a>
-      <a class="nav-link" href="../prompts/index.html">Prompts</a>
-      <a class="nav-link" href="../session-notes/index.html">Session Notes</a>
-      <a class="nav-link" href="../quizzes/index.html">Quizzes</a>
-      <a class="nav-link" href="../architecture/index.html">Architecture</a>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="/docs/index.html">
+        <span class="brand-mark">PG</span>
+        <span>
+          <strong>PostgreSQL Learning Track</strong>
+          <small>Country edition</small>
+        </span>
+      </a>
+      <nav class="nav">
+        <a class="" href="/docs/index.html">Home</a><a class="" href="/docs/syllabus/index.html">Syllabus</a><a class="active" href="/docs/sessions/index.html">Sessions</a><a class="" href="/docs/lessons/index.html">Lessons</a><a class="" href="/docs/labs/index.html">Labs</a><a class="" href="/docs/quizzes/index.html">Quizzes</a><a class="" href="/docs/references/index.html">References</a><a class="" href="/docs/schema-notes/index.html">Schema Notes</a><a class="" href="/docs/query-notes/index.html">Query Notes</a><a class="" href="/docs/architecture/index.html">Architecture</a><a class="" href="/docs/session-notes/index.html">Session Notes</a><a class="" href="/docs/commit-reviews/index.html">Commit Reviews</a><a class="" href="/docs/prompts/index.html">Prompts</a>
+      </nav>
     </div>
-  </nav>
-
-  <main>
+  </header>
+  <main id="content" class="page">
     <div class="container">
-      <div class="section-head">
-        <div>
-          <span class="badge badge-accent">Full path</span>
-          <h1>Session index</h1>
+      
+      <section class="page-heading">
+        <p class="eyebrow">Lesson index</p>
+        <h1>The full session path</h1>
+        <p class="lede">Use this page as the map of the whole curriculum. Each session page follows the same teaching scaffold so the learning rhythm stays predictable.</p>
+      </section>
+      <section class="section">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Phase</th><th>Session title</th><th>Page</th></tr></thead>
+            <tbody><tr><td>01</td><td>Foundations</td><td>Why databases exist</td><td><a href="/docs/sessions/session-01/index.html">Open</a></td></tr><tr><td>02</td><td>Foundations</td><td>Tables, rows, columns, and schemas</td><td><a href="/docs/sessions/session-02/index.html">Open</a></td></tr><tr><td>03</td><td>Foundations</td><td>Primary keys and row identity</td><td><a href="/docs/sessions/session-03/index.html">Open</a></td></tr><tr><td>04</td><td>Foundations</td><td>Data types and NULL</td><td><a href="/docs/sessions/session-04/index.html">Open</a></td></tr><tr><td>05</td><td>Foundations</td><td>What PostgreSQL is and how psql fits</td><td><a href="/docs/sessions/session-05/index.html">Open</a></td></tr><tr><td>06</td><td>SQL Foundations</td><td>SELECT, FROM, and aliases</td><td><a href="/docs/sessions/session-06/index.html">Open</a></td></tr><tr><td>07</td><td>SQL Foundations</td><td>WHERE and comparison operators</td><td><a href="/docs/sessions/session-07/index.html">Open</a></td></tr><tr><td>08</td><td>SQL Foundations</td><td>ORDER BY and LIMIT</td><td><a href="/docs/sessions/session-08/index.html">Open</a></td></tr><tr><td>09</td><td>SQL Foundations</td><td>INSERT</td><td><a href="/docs/sessions/session-09/index.html">Open</a></td></tr><tr><td>10</td><td>SQL Foundations</td><td>UPDATE and DELETE</td><td><a href="/docs/sessions/session-10/index.html">Open</a></td></tr><tr><td>11</td><td>PostgreSQL Basics</td><td>Creating a database and inspecting it</td><td><a href="/docs/sessions/session-11/index.html">Open</a></td></tr><tr><td>12</td><td>PostgreSQL Basics</td><td>Creating tables and describing them</td><td><a href="/docs/sessions/session-12/index.html">Open</a></td></tr><tr><td>13</td><td>PostgreSQL Basics</td><td>text, varchar, integer, and numeric</td><td><a href="/docs/sessions/session-13/index.html">Open</a></td></tr><tr><td>14</td><td>PostgreSQL Basics</td><td>boolean, date, time, and timestamp</td><td><a href="/docs/sessions/session-14/index.html">Open</a></td></tr><tr><td>15</td><td>PostgreSQL Basics</td><td>serial vs identity and safe dropping</td><td><a href="/docs/sessions/session-15/index.html">Open</a></td></tr><tr><td>16</td><td>Data Modeling</td><td>Entities and attributes from country requirements</td><td><a href="/docs/sessions/session-16/index.html">Open</a></td></tr><tr><td>17</td><td>Data Modeling</td><td>Regions and continents</td><td><a href="/docs/sessions/session-17/index.html">Open</a></td></tr><tr><td>18</td><td>Data Modeling</td><td>One-to-many relationships</td><td><a href="/docs/sessions/session-18/index.html">Open</a></td></tr><tr><td>19</td><td>Data Modeling</td><td>Many-to-many relationships and join tables</td><td><a href="/docs/sessions/session-19/index.html">Open</a></td></tr><tr><td>20</td><td>Data Modeling</td><td>Normalization and naming conventions</td><td><a href="/docs/sessions/session-20/index.html">Open</a></td></tr><tr><td>21</td><td>Constraints</td><td>PRIMARY KEY and NOT NULL</td><td><a href="/docs/sessions/session-21/index.html">Open</a></td></tr><tr><td>22</td><td>Constraints</td><td>UNIQUE, DEFAULT, and CHECK</td><td><a href="/docs/sessions/session-22/index.html">Open</a></td></tr><tr><td>23</td><td>Constraints</td><td>Foreign keys and referential actions</td><td><a href="/docs/sessions/session-23/index.html">Open</a></td></tr><tr><td>24</td><td>Constraints</td><td>Integrity failure cases</td><td><a href="/docs/sessions/session-24/index.html">Open</a></td></tr><tr><td>25</td><td>Joins</td><td>INNER JOIN</td><td><a href="/docs/sessions/session-25/index.html">Open</a></td></tr><tr><td>26</td><td>Joins</td><td>LEFT JOIN</td><td><a href="/docs/sessions/session-26/index.html">Open</a></td></tr><tr><td>27</td><td>Joins</td><td>RIGHT JOIN and FULL OUTER JOIN</td><td><a href="/docs/sessions/session-27/index.html">Open</a></td></tr><tr><td>28</td><td>Joins</td><td>CROSS JOIN and self joins</td><td><a href="/docs/sessions/session-28/index.html">Open</a></td></tr><tr><td>29</td><td>Aggregation</td><td>COUNT and SUM</td><td><a href="/docs/sessions/session-29/index.html">Open</a></td></tr><tr><td>30</td><td>Aggregation</td><td>AVG, MIN, and MAX</td><td><a href="/docs/sessions/session-30/index.html">Open</a></td></tr><tr><td>31</td><td>Aggregation</td><td>GROUP BY</td><td><a href="/docs/sessions/session-31/index.html">Open</a></td></tr><tr><td>32</td><td>Aggregation</td><td>HAVING and summary reports</td><td><a href="/docs/sessions/session-32/index.html">Open</a></td></tr><tr><td>33</td><td>Mock Data and Seeding</td><td>Seed files and fake data</td><td><a href="/docs/sessions/session-33/index.html">Open</a></td></tr><tr><td>34</td><td>Mock Data and Seeding</td><td>CSV import and reset scripts</td><td><a href="/docs/sessions/session-34/index.html">Open</a></td></tr><tr><td>35</td><td>Testing</td><td>Testing inserts and constraints</td><td><a href="/docs/sessions/session-35/index.html">Open</a></td></tr><tr><td>36</td><td>Testing</td><td>Testing joins and query results</td><td><a href="/docs/sessions/session-36/index.html">Open</a></td></tr><tr><td>37</td><td>Transactions</td><td>BEGIN, COMMIT, and ROLLBACK</td><td><a href="/docs/sessions/session-37/index.html">Open</a></td></tr><tr><td>38</td><td>Transactions</td><td>Atomicity and consistency</td><td><a href="/docs/sessions/session-38/index.html">Open</a></td></tr><tr><td>39</td><td>Indexes and Performance</td><td>Indexes and B-tree basics</td><td><a href="/docs/sessions/session-39/index.html">Open</a></td></tr><tr><td>40</td><td>Indexes and Performance</td><td>EXPLAIN, EXPLAIN ANALYZE, and query planning</td><td><a href="/docs/sessions/session-40/index.html">Open</a></td></tr></tbody>
+          </table>
         </div>
-        <p>Use this page as the curriculum map. Session 01 is the entry point, and the rest of the sequence is now visible instead of hidden behind a phase-1 stub.</p>
-      </div>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Layer</th>
-              <th>Sessions</th>
-              <th>Focus</th>
-              <th>Jump In</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>01-11</td>
-              <td>Foundations</td>
-              <td><a href="session-01/index.html">Open Session 01</a></td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>12-20</td>
-              <td>Internals</td>
-              <td><a href="session-12/index.html">Open a later session</a></td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>21-24</td>
-              <td>Concurrency</td>
-              <td><a href="session-21/index.html">Open a later session</a></td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>25-29</td>
-              <td>Schema Design</td>
-              <td><a href="session-25/index.html">Open a later session</a></td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>30-37</td>
-              <td>Operations</td>
-              <td><a href="session-30/index.html">Open a later session</a></td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>38-39</td>
-              <td>Performance</td>
-              <td><a href="session-38/index.html">Open a later session</a></td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td>40</td>
-              <td>Production</td>
-              <td><a href="session-40/index.html">Open Session 40</a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="grid-2 section">
-        <div class="card">
-          <h2>How to read this page</h2>
-          <p>Each session page teaches one concept deeply. The session index shows the full chain so the learner understands where the current lesson sits in the larger system.</p>
-        </div>
-        <div class="card">
-          <h2>Cross-check</h2>
-          <p>The lab index carries the same sequence with lab objectives, while the syllabus explains why each layer exists before the learner moves forward.</p>
-        </div>
-      </div>
+      </section>
+    
     </div>
   </main>
 </body>

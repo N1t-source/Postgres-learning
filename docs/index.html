@@ -1,68 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Postgres Learning Operating System</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PostgreSQL Learning Track</title>
+  <meta name="description" content="Static learning site for a country-themed PostgreSQL curriculum." />
+  <link rel="stylesheet" href="/docs/styles.css" />
 </head>
 <body>
-  <nav>
-    <div class="container nav-row">
-      <a class="nav-link brand active" href="index.html">Postgres Learning</a>
-      <a class="nav-link" href="syllabus/index.html">Syllabus</a>
-      <a class="nav-link" href="sessions/index.html">Sessions</a>
-      <a class="nav-link" href="prompts/index.html">Prompts</a>
-      <a class="nav-link" href="session-notes/index.html">Session Notes</a>
-      <a class="nav-link" href="quizzes/index.html">Quizzes</a>
-      <a class="nav-link" href="architecture/index.html">Architecture</a>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="/docs/index.html">
+        <span class="brand-mark">PG</span>
+        <span>
+          <strong>PostgreSQL Learning Track</strong>
+          <small>Country edition</small>
+        </span>
+      </a>
+      <nav class="nav">
+        <a class="active" href="/docs/index.html">Home</a><a class="" href="/docs/syllabus/index.html">Syllabus</a><a class="" href="/docs/sessions/index.html">Sessions</a><a class="" href="/docs/lessons/index.html">Lessons</a><a class="" href="/docs/labs/index.html">Labs</a><a class="" href="/docs/quizzes/index.html">Quizzes</a><a class="" href="/docs/references/index.html">References</a><a class="" href="/docs/schema-notes/index.html">Schema Notes</a><a class="" href="/docs/query-notes/index.html">Query Notes</a><a class="" href="/docs/architecture/index.html">Architecture</a><a class="" href="/docs/session-notes/index.html">Session Notes</a><a class="" href="/docs/commit-reviews/index.html">Commit Reviews</a><a class="" href="/docs/prompts/index.html">Prompts</a>
+      </nav>
     </div>
-  </nav>
-
-  <main>
+  </header>
+  <main id="content" class="page">
     <div class="container">
+      
       <section class="hero">
-        <div class="panel">
-          <div class="eyebrow">Curriculum</div>
-          <h1>Educational system, not tutorial dump.</h1>
-          <p class="subtitle">This repository teaches PostgreSQL mechanics for experienced engineers through prerequisite-first sessions, lab checkpoints, visual concept maps, and commit discipline.</p>
-          <div class="hero-actions">
-            <a class="button" href="sessions/index.html">Browse Sessions</a>
-            <a class="button-secondary" href="sessions/session-01/index.html">Open Session 01</a>
-          </div>
-          <div class="stat-grid">
-            <div class="stat">
-              <div class="stat-value">40</div>
-              <div>sessions in sequence</div>
-            </div>
-            <div class="stat">
-              <div class="stat-value">4/5</div>
-              <div>minimum pre-quiz score</div>
-            </div>
-            <div class="stat">
-              <div class="stat-value">8 + 4</div>
-              <div>SVGs per session</div>
-            </div>
-            <div class="stat">
-              <div class="stat-value">psql</div>
-              <div>primary learning tool</div>
-            </div>
+        <div class="hero-copy">
+          <p class="eyebrow">Documentation first. Understanding first.</p>
+          <h1>Learn PostgreSQL by building a country database one concept at a time.</h1>
+          <p class="lede">This repository is a static learning environment, not a feature sprint. The documentation is the source of truth, and every session teaches one beginner-readable slice of database thinking.</p>
+          <div class="actions">
+            <a class="button primary" href="/docs/syllabus/index.html">Open the syllabus</a>
+            <a class="button" href="/docs/sessions/session-01/index.html">Start Session 01</a>
           </div>
         </div>
-
-        <aside class="hero-side">
+        <aside class="hero-panel">
           <div class="panel">
-            <span class="badge badge-accent">System Rules</span>
-            <ul>
-              <li>One concept per session.</li>
-              <li>One prerequisite before syntax.</li>
-              <li>One lab, one commit, one reflection.</li>
-              <li>Mechanisms before convenience.</li>
+            <h2>Project rules</h2>
+            <ul class="bullets">
+              <li>One session, one concept, one commit.</li>
+              <li>Docs must change before code or SQL.</li>
+              <li>Quiz before lab, then the same quiz after.</li>
+              <li>Beginner-readable SQL only.</li>
             </ul>
           </div>
-          <div class="panel">
-            <span class="badge badge-good">Full path visible</span>
-            <p>Session 01 is still the first gate, but the session index now shows the entire sequence so the curriculum does not look like it stops after the opener.</p>
+          <div class="panel compass">
+            <div class="compass-ring">*</div>
+            <p>Country data gives us a familiar way to talk about tables, keys, joins, constraints, and transactions without hiding the core database ideas.</p>
           </div>
         </aside>
       </section>
@@ -70,43 +56,39 @@
       <section class="section">
         <div class="section-head">
           <div>
-            <span class="badge badge-accent">Navigation</span>
-            <h2>Where to go first</h2>
+            <p class="eyebrow">Start here</p>
+            <h2>What lives in this repo</h2>
           </div>
-          <p>The docs are arranged like a teaching system: syllabus for progression, session pages for deep work, prompts for provenance, and placeholders for areas that intentionally wait.</p>
+          <p>The pages below are the learning map. They explain the progression, the lesson format, the prompt archive, and the review flow that future AI sessions should follow before making changes.</p>
         </div>
-
-        <div class="nav-grid">
-          <a class="nav-card" href="syllabus/index.html">
-            <div class="nav-card-title">Syllabus</div>
-            <div class="nav-card-desc">Layered progression and unlock rules.</div>
-          </a>
-          <a class="nav-card" href="sessions/index.html">
-            <div class="nav-card-title">Sessions</div>
-            <div class="nav-card-desc">Full curriculum map with all 40 sessions.</div>
-          </a>
-          <a class="nav-card" href="sessions/session-01/index.html">
-            <div class="nav-card-title">Session 01</div>
-            <div class="nav-card-desc">Relation theory, psql, and the first table.</div>
-          </a>
-          <a class="nav-card" href="prompts/index.html">
-            <div class="nav-card-title">Prompts</div>
-            <div class="nav-card-desc">Handoff trail and implementation checkpoints.</div>
-          </a>
-          <a class="nav-card" href="session-notes/index.html">
-            <div class="nav-card-title">Session Notes</div>
-            <div class="nav-card-desc">Reserved for session-level notes and review.</div>
-          </a>
-          <a class="nav-card" href="quizzes/index.html">
-            <div class="nav-card-title">Quizzes</div>
-            <div class="nav-card-desc">Placeholder for the quiz bank and results.</div>
-          </a>
-          <a class="nav-card" href="architecture/index.html">
-            <div class="nav-card-title">Architecture</div>
-            <div class="nav-card-desc">Reserved for deeper system design notes.</div>
-          </a>
+        <div class="card-grid four">
+          <a class="card" href="/docs/syllabus/index.html"><strong>Syllabus</strong><span>Dependency order for the full 40-session track.</span></a>
+          <a class="card" href="/docs/sessions/index.html"><strong>Sessions</strong><span>Every lesson page in order, grouped by phase.</span></a>
+          <a class="card" href="/docs/prompts/index.html"><strong>Prompt archive</strong><span>Major project instructions and what changed because of them.</span></a>
+          <a class="card" href="/docs/architecture/index.html"><strong>Architecture</strong><span>How future AI sessions should initialize and work.</span></a>
         </div>
       </section>
+
+      <section class="section split">
+        <div class="panel">
+          <p class="eyebrow">Curriculum design</p>
+          <h2>Learning progression</h2>
+          <p>The course starts with the problem databases solve, then moves through SQL reading and writing, PostgreSQL basics, data modeling, constraints, joins, aggregates, seed data, testing, transactions, indexes, and query planning.</p>
+        </div>
+        <div class="panel">
+          <p class="eyebrow">Documentation promise</p>
+          <h2>Docs are the source of truth</h2>
+          <p>If a future change conflicts with the docs, the docs are updated first. No schema, seed, query, or application work should appear without a matching learning note and commit review.</p>
+        </div>
+      </section>
+      <section class="section">
+        <div class="panel">
+          <p class="eyebrow">Official source</p>
+          <h2>Built against the PostgreSQL docs</h2>
+          <p>This curriculum uses the official PostgreSQL documentation as its upstream technical reference. See <a href="/docs/references/index.html">the references page</a> for the current doc set and core chapter links.</p>
+        </div>
+      </section>
+    
     </div>
   </main>
 </body>

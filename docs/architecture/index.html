@@ -1,19 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Architecture - Postgres Learning</title>
-  <link rel="stylesheet" href="../styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Architecture - PostgreSQL Learning Track</title>
+  <meta name="description" content="PostgreSQL learning track" />
+  <link rel="stylesheet" href="/docs/styles.css" />
 </head>
 <body>
-  <main>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="/docs/index.html">
+        <span class="brand-mark">PG</span>
+        <span>
+          <strong>PostgreSQL Learning Track</strong>
+          <small>Country edition</small>
+        </span>
+      </a>
+      <nav class="nav">
+        <a class="" href="/docs/index.html">Home</a><a class="" href="/docs/syllabus/index.html">Syllabus</a><a class="" href="/docs/sessions/index.html">Sessions</a><a class="" href="/docs/lessons/index.html">Lessons</a><a class="" href="/docs/labs/index.html">Labs</a><a class="" href="/docs/quizzes/index.html">Quizzes</a><a class="" href="/docs/references/index.html">References</a><a class="" href="/docs/schema-notes/index.html">Schema Notes</a><a class="" href="/docs/query-notes/index.html">Query Notes</a><a class="active" href="/docs/architecture/index.html">Architecture</a><a class="" href="/docs/session-notes/index.html">Session Notes</a><a class="" href="/docs/commit-reviews/index.html">Commit Reviews</a><a class="" href="/docs/prompts/index.html">Prompts</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="page">
     <div class="container">
-      <div class="placeholder">
-        <span class="badge badge-locked">Placeholder</span>
-        <h1>Architecture notes will be filled after Session 01 lands.</h1>
-        <p>This page is reserved for deeper design notes about the curriculum system, layer unlocks, and visual standards.</p>
-      </div>
+      
+      <section class="page-heading">
+        <p class="eyebrow">Operating rules</p>
+        <h1>How future AI sessions should initialize</h1>
+        <p class="lede">Read the docs first, summarize the current state, then make the smallest possible change. The docs are the source of truth.</p>
+      </section>
+      <section class="section split">
+        <div class="panel">
+          <h2>Startup order</h2>
+          <ol class="ordered">
+            <li>Read <code>AGENTS.md</code></li>
+            <li>Read <code>README.md</code></li>
+            <li>Read <code>docs/index.html</code></li>
+            <li>Read the latest session note and commit review</li>
+            <li>Read <code>docs/prompts/index.html</code></li>
+            <li>Read the relevant lesson page</li>
+            <li>Summarize what was read before touching files</li>
+          </ol>
+        </div>
+        <div class="panel">
+          <h2>Change order</h2>
+          <ol class="ordered">
+            <li>Update docs first.</li>
+            <li>Keep the lesson slice tiny.</li>
+            <li>Explain every SQL statement in plain English.</li>
+            <li>Finish with a session note and commit review.</li>
+          </ol>
+        </div>
+      </section>
+      <section class="section">
+        <div class="panel">
+          <h2>Reference policy</h2>
+          <p>When PostgreSQL behavior needs confirmation, use the official documentation as the primary source. This repo teaches from first principles, but it should anchor technical claims in the real upstream docs.</p>
+        </div>
+      </section>
+    
     </div>
   </main>
 </body>

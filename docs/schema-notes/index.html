@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Schema Notes - PostgreSQL Learning Track</title>
+  <meta name="description" content="PostgreSQL learning track" />
+  <link rel="stylesheet" href="/docs/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="/docs/index.html">
+        <span class="brand-mark">PG</span>
+        <span>
+          <strong>PostgreSQL Learning Track</strong>
+          <small>Country edition</small>
+        </span>
+      </a>
+      <nav class="nav">
+        <a class="" href="/docs/index.html">Home</a><a class="" href="/docs/syllabus/index.html">Syllabus</a><a class="" href="/docs/sessions/index.html">Sessions</a><a class="" href="/docs/lessons/index.html">Lessons</a><a class="" href="/docs/labs/index.html">Labs</a><a class="" href="/docs/quizzes/index.html">Quizzes</a><a class="" href="/docs/references/index.html">References</a><a class="active" href="/docs/schema-notes/index.html">Schema Notes</a><a class="" href="/docs/query-notes/index.html">Query Notes</a><a class="" href="/docs/architecture/index.html">Architecture</a><a class="" href="/docs/session-notes/index.html">Session Notes</a><a class="" href="/docs/commit-reviews/index.html">Commit Reviews</a><a class="" href="/docs/prompts/index.html">Prompts</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="page">
+    <div class="container">
+      
+      <section class="page-heading">
+        <p class="eyebrow">Schema notes</p>
+        <h1>How we talk about tables and relationships</h1>
+        <p class="lede">This page explains the design language behind the country database so future schema changes can be reviewed in plain English.</p>
+      </section>
+      <section class="section split">
+        <div class="panel">
+          <h2>Design principle</h2>
+          <p>Keep each fact in the table where it belongs. Shared facts go in parent tables, row-specific facts stay in child tables, and repeated values become reference tables when the model needs it.</p>
+        </div>
+        <div class="panel">
+          <h2>Review question</h2>
+          <p>If a column could be derived from another table, ask whether storing it twice would create update drift. If the answer is yes, the schema probably needs another relationship instead of another copy.</p>
+        </div>
+      </section>
+    
+    </div>
+  </main>
+</body>
+</html>

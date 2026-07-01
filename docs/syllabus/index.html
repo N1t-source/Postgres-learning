@@ -1,103 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Syllabus - Postgres Learning</title>
-  <link rel="stylesheet" href="../styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Syllabus - PostgreSQL Learning Track</title>
+  <meta name="description" content="PostgreSQL learning track" />
+  <link rel="stylesheet" href="/docs/styles.css" />
 </head>
 <body>
-  <nav>
-    <div class="container nav-row">
-      <a class="nav-link brand" href="../index.html">Postgres Learning</a>
-      <a class="nav-link active" href="index.html">Syllabus</a>
-      <a class="nav-link" href="../sessions/session-01/index.html">Session 01</a>
-      <a class="nav-link" href="../prompts/index.html">Prompts</a>
-      <a class="nav-link" href="../session-notes/index.html">Session Notes</a>
-      <a class="nav-link" href="../quizzes/index.html">Quizzes</a>
-      <a class="nav-link" href="../architecture/index.html">Architecture</a>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="/docs/index.html">
+        <span class="brand-mark">PG</span>
+        <span>
+          <strong>PostgreSQL Learning Track</strong>
+          <small>Country edition</small>
+        </span>
+      </a>
+      <nav class="nav">
+        <a class="" href="/docs/index.html">Home</a><a class="active" href="/docs/syllabus/index.html">Syllabus</a><a class="" href="/docs/sessions/index.html">Sessions</a><a class="" href="/docs/lessons/index.html">Lessons</a><a class="" href="/docs/labs/index.html">Labs</a><a class="" href="/docs/quizzes/index.html">Quizzes</a><a class="" href="/docs/references/index.html">References</a><a class="" href="/docs/schema-notes/index.html">Schema Notes</a><a class="" href="/docs/query-notes/index.html">Query Notes</a><a class="" href="/docs/architecture/index.html">Architecture</a><a class="" href="/docs/session-notes/index.html">Session Notes</a><a class="" href="/docs/commit-reviews/index.html">Commit Reviews</a><a class="" href="/docs/prompts/index.html">Prompts</a>
+      </nav>
     </div>
-  </nav>
-
-  <main>
+  </header>
+  <main id="content" class="page">
     <div class="container">
-      <div class="section-head">
-        <div>
-          <span class="badge badge-accent">Curriculum map</span>
-          <h1>Full syllabus</h1>
-        </div>
-        <p>The full curriculum is visible here. Session 01 is still the prerequisite entry point, but every layer is now mapped so the learner can see the whole sequence.</p>
-      </div>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Layer</th>
-              <th>State</th>
-              <th>Focus</th>
-              <th>Notes</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td><span class="badge badge-good">Visible</span></td>
-              <td>Foundations</td>
-              <td>Session 01: relation theory, psql, first table, INSERT, SELECT.</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td><span class="badge badge-good">Visible</span></td>
-              <td>Internals</td>
-              <td>Pages, heap, b-tree, planner, statistics, EXPLAIN, scans.</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td><span class="badge badge-good">Visible</span></td>
-              <td>Concurrency</td>
-              <td>MVCC, locks, isolation, deadlocks, snapshots, visibility.</td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td><span class="badge badge-good">Visible</span></td>
-              <td>Schema Design</td>
-              <td>Normalization, foreign keys, indexes, partial indexes, constraints.</td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td><span class="badge badge-good">Visible</span></td>
-              <td>Operations</td>
-              <td>Backup, restore, roles, GRANT, pooling, PITR concepts.</td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td><span class="badge badge-good">Visible</span></td>
-              <td>Performance</td>
-              <td>VACUUM, autovacuum, bloat, planner, slow queries, index-only scans.</td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td><span class="badge badge-good">Visible</span></td>
-              <td>Production</td>
-              <td>Migrations, replication, monitoring, read replicas, pitfalls.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
+      
+      <section class="page-heading">
+        <p class="eyebrow">Curriculum map</p>
+        <h1>40-session progression</h1>
+        <p class="lede">The syllabus shows the dependency order for the whole course. Later phases stay locked conceptually until earlier ones make sense.</p>
+      </section>
       <section class="section">
-        <div class="grid-2">
-          <div class="card">
-            <h2>Why prerequisites still matter</h2>
-            <p>Each later layer depends on the mental model built by the earlier one. The learner should not be shown mechanics before the foundation exists to interpret them.</p>
-          </div>
-          <div class="card">
-            <h2>What comes first</h2>
-            <p>Session 01 establishes relation thinking, the psql workflow, and the first table. That is the entry point for the whole bookstore project, even though the rest of the sequence is now visible.</p>
-          </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Phase</th><th>Sessions</th><th>What it teaches</th><th>Boundary example</th></tr></thead>
+            <tbody><tr><td>Foundations</td><td>01-05</td><td>Learn the problem a database solves before writing any SQL.</td><td>Why databases exist → What PostgreSQL is and how psql fits</td></tr><tr><td>SQL Foundations</td><td>06-10</td><td>Learn the query shape before manipulating rows.</td><td>SELECT, FROM, and aliases → UPDATE and DELETE</td></tr><tr><td>PostgreSQL Basics</td><td>11-15</td><td>Learn the toolchain, object lifecycle, and type system.</td><td>Creating a database and inspecting it → serial vs identity and safe dropping</td></tr><tr><td>Data Modeling</td><td>16-20</td><td>Turn requirements into related tables with clean boundaries.</td><td>Entities and attributes from country requirements → Normalization and naming conventions</td></tr><tr><td>Constraints</td><td>21-24</td><td>Protect the data before relying on it for analysis.</td><td>PRIMARY KEY and NOT NULL → Integrity failure cases</td></tr><tr><td>Joins</td><td>25-28</td><td>Use foreign keys and join logic to read across tables.</td><td>INNER JOIN → CROSS JOIN and self joins</td></tr><tr><td>Aggregation</td><td>29-32</td><td>Reduce many rows into counts and totals.</td><td>COUNT and SUM → HAVING and summary reports</td></tr><tr><td>Mock Data and Seeding</td><td>33-34</td><td>Build reliable development data before production data exists.</td><td>Seed files and fake data → CSV import and reset scripts</td></tr><tr><td>Testing</td><td>35-36</td><td>Prove inserts, joins, and constraints behave correctly.</td><td>Testing inserts and constraints → Testing joins and query results</td></tr><tr><td>Transactions</td><td>37-38</td><td>Make related writes succeed or fail together.</td><td>BEGIN, COMMIT, and ROLLBACK → Atomicity and consistency</td></tr><tr><td>Indexes and Performance</td><td>39-40</td><td>Learn when indexes help and how EXPLAIN explains the plan.</td><td>Indexes and B-tree basics → EXPLAIN, EXPLAIN ANALYZE, and query planning</td></tr></tbody>
+          </table>
         </div>
       </section>
+      <section class="section split">
+        <div class="panel">
+          <h2>Dependency rule</h2>
+          <p>Every later lesson depends on the mental model created by earlier lessons. We do not teach performance before query shape, or joins before foreign keys.</p>
+        </div>
+        <div class="panel">
+          <h2>Completion rule</h2>
+          <p>Each session is a tiny slice that fits into one commit and one review. If the quiz score is below the target, the lesson repeats instead of moving on.</p>
+        </div>
+      </section>
+    
     </div>
   </main>
 </body>

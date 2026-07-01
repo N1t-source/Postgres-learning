@@ -1,62 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prompts - Postgres Learning</title>
-  <link rel="stylesheet" href="../styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prompts - PostgreSQL Learning Track</title>
+  <meta name="description" content="PostgreSQL learning track" />
+  <link rel="stylesheet" href="/docs/styles.css" />
 </head>
 <body>
-  <nav>
-    <div class="container nav-row">
-      <a class="nav-link brand" href="../index.html">Postgres Learning</a>
-      <a class="nav-link" href="../syllabus/index.html">Syllabus</a>
-      <a class="nav-link" href="../sessions/session-01/index.html">Session 01</a>
-      <a class="nav-link" href="../session-notes/index.html">Session Notes</a>
-      <a class="nav-link" href="../quizzes/index.html">Quizzes</a>
-      <a class="nav-link" href="../architecture/index.html">Architecture</a>
-      <a class="nav-link active" href="index.html">Prompts</a>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="/docs/index.html">
+        <span class="brand-mark">PG</span>
+        <span>
+          <strong>PostgreSQL Learning Track</strong>
+          <small>Country edition</small>
+        </span>
+      </a>
+      <nav class="nav">
+        <a class="" href="/docs/index.html">Home</a><a class="" href="/docs/syllabus/index.html">Syllabus</a><a class="" href="/docs/sessions/index.html">Sessions</a><a class="" href="/docs/lessons/index.html">Lessons</a><a class="" href="/docs/labs/index.html">Labs</a><a class="" href="/docs/quizzes/index.html">Quizzes</a><a class="" href="/docs/references/index.html">References</a><a class="" href="/docs/schema-notes/index.html">Schema Notes</a><a class="" href="/docs/query-notes/index.html">Query Notes</a><a class="" href="/docs/architecture/index.html">Architecture</a><a class="" href="/docs/session-notes/index.html">Session Notes</a><a class="" href="/docs/commit-reviews/index.html">Commit Reviews</a><a class="active" href="/docs/prompts/index.html">Prompts</a>
+      </nav>
     </div>
-  </nav>
-
-  <main>
+  </header>
+  <main id="content" class="page">
     <div class="container">
-      <div class="section-head">
-        <div>
-          <span class="badge badge-accent">Prompt trail</span>
-          <h1>Implementation checkpoints</h1>
+      
+      <section class="page-heading">
+        <p class="eyebrow">Prompt archive</p>
+        <h1>Major instructions that shaped the project</h1>
+        <p class="lede">The archive is append-only. Every major project prompt gets a page so future sessions can see what changed and why.</p>
+      </section>
+      <section class="section">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Prompt</th><th>Date</th><th>Session</th><th>Purpose</th><th>Archive</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>Project initialization</td>
+                <td>2026-06-30</td>
+                <td>Pre-curriculum</td>
+                <td>Define the 40-session PostgreSQL learning track and the docs-first architecture.</td>
+                <td><a href="/docs/prompts/2026-06-30-project-initialization.html">Open prompt page</a></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <p>Phase 1 keeps a short prompt ledger so the curriculum can be resumed without losing the reasoning behind the structure.</p>
-      </div>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Checkpoint</th>
-              <th>Purpose</th>
-              <th>Output</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Architecture pass</td>
-              <td>Reverse engineer the teaching system before writing PostgreSQL content.</td>
-              <td>Layered curriculum, session anatomy, quiz policy, SVG rules.</td>
-            </tr>
-            <tr>
-              <td>Phase 1 shell</td>
-              <td>Lay down the repo's static documentation structure.</td>
-              <td>Landing page, syllabus, session 01, placeholders, shared styles.</td>
-            </tr>
-            <tr>
-              <td>Session 01 design</td>
-              <td>Anchor the first lesson in relation theory and psql usage.</td>
-              <td>Pre-quiz gate, prerequisite concept, table creation lab, visuals.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      </section>
+    
     </div>
   </main>
 </body>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Initialization Commit Review - PostgreSQL Learning Track</title>
+  <meta name="description" content="PostgreSQL learning track" />
+  <link rel="stylesheet" href="/docs/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="/docs/index.html">
+        <span class="brand-mark">PG</span>
+        <span>
+          <strong>PostgreSQL Learning Track</strong>
+          <small>Country edition</small>
+        </span>
+      </a>
+      <nav class="nav">
+        <a class="" href="/docs/index.html">Home</a><a class="" href="/docs/syllabus/index.html">Syllabus</a><a class="" href="/docs/sessions/index.html">Sessions</a><a class="" href="/docs/lessons/index.html">Lessons</a><a class="" href="/docs/labs/index.html">Labs</a><a class="" href="/docs/quizzes/index.html">Quizzes</a><a class="" href="/docs/references/index.html">References</a><a class="" href="/docs/schema-notes/index.html">Schema Notes</a><a class="" href="/docs/query-notes/index.html">Query Notes</a><a class="" href="/docs/architecture/index.html">Architecture</a><a class="" href="/docs/session-notes/index.html">Session Notes</a><a class="active" href="/docs/commit-reviews/index.html">Commit Reviews</a><a class="" href="/docs/prompts/index.html">Prompts</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="page">
+    <div class="container">
+      
+      <section class="page-heading">
+        <p class="eyebrow">Commit review</p>
+        <h1>Pre-curriculum initialization review</h1>
+        <p class="lede">This review records the initial system-building change as a learning checkpoint rather than a feature drop.</p>
+      </section>
+      <section class="section split">
+        <div class="panel">
+          <h2>Files changed</h2>
+          <ul class="bullets">
+            <li><code>AGENTS.md</code> and <code>README.md</code></li>
+            <li><code>docs/</code> static site scaffold and generated lesson pages</li>
+            <li><code>db/</code> placeholder folder structure</li>
+            <li><code>scripts/build-postgres-learning.mjs</code></li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h2>Concept learned</h2>
+          <p>A learning system needs operating rules, dependency order, and documentation structure before it needs product features.</p>
+        </div>
+      </section>
+      <section class="section split">
+        <div class="panel">
+          <h2>Verification result</h2>
+          <ul class="bullets">
+            <li>The generator ran successfully and produced the docs tree.</li>
+            <li>The home page, references page, and representative lesson pages were inspected.</li>
+            <li>Lesson pages now include official PostgreSQL documentation links.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h2>Not allowed yet</h2>
+          <p>We should not mistake the scaffold for completed lessons. The structure is ready, but future sessions still need to earn each SQL file, schema change, test, and commit one lesson at a time.</p>
+        </div>
+      </section>
+    
+    </div>
+  </main>
+</body>
+</html>
